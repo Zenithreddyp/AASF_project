@@ -1,4 +1,4 @@
- /* Reset & base styles */
+/* Base reset */
 * {
   margin: 0;
   padding: 0;
@@ -9,51 +9,46 @@ html, body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  
+  font-family: Arial, sans-serif;
 }
+
+/* Layout container */
 .firstpage {
   display: flex;
- 
   width: 100vw;
   height: 100vh;
   background-color: #414141;
 }
 
-.video {
-    position: relative;
-  border-radius: 20px;
- width: 80%;
- top: 60px;
- left: 60px;
-  object-fit: cover;
-
- 
-}
-
-
+/* Left - video */
 .videohalf {
   width: 50%;
   position: relative;
   overflow: hidden;
 }
 
-.video-text {
-  position: absolute;
-  top: 74%;
-  color: gray;
-  left: 25%;
-  font-size: 35px;
-  font-weight: bold;
-  /* text-shadow: 0 0 10px thistle; */
- 
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
 }
 
-/* Right half - Login */
+.video-text {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2vw;
+  font-weight: bold;
+  color: gray;
+}
+
+/* Right - login */
 .loginhalf {
   width: 50%;
-  background-color:#414141;
+  background-color: #414141;
   display: flex;
-  position: relative;
   justify-content: center;
   align-items: center;
 }
@@ -61,32 +56,28 @@ html, body {
 .loginbox {
   background-color: white;
   width: 60%;
-  position: absolute;
-  display: flex;
-   flex-direction: column; 
- 
-  left: 10%;
-gap: 025px;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(91, 5, 5, 0.1);
-  /* width: 400px; */
   height: 60%;
+  display: flex;
+  flex-direction: column;
+  padding: 3%;
+  gap: 10%;
+  border-radius: 1vw;
+  box-shadow: 0 0 2vw rgba(0, 0, 0, 0.1);
 }
 
 .loginbox h2 {
-  margin-bottom: 20px;
+  font-size: 2vw;
   color: #333;
 }
 
 .loginbox input {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 0px;
-  
+  padding: 1vw;
+  font-size: 1vw;
   background-color: #333;
   color: white;
-  border-radius: 4px;
+  border-radius: 0.5vw;
+  border: none;
 }
 
 .loginbox input::placeholder {
@@ -95,15 +86,14 @@ gap: 025px;
 
 .loginbox button {
   width: 50%;
-
-  padding: 12px;
+  padding: 1vw;
+  font-size: 1vw;
   background-color: #007bff;
   color: white;
-
-  margin-left: 85px;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.5vw;
   cursor: pointer;
+  align-self: center;
 }
 
 .loginbox button:hover {
