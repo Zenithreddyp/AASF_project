@@ -1,0 +1,8 @@
+pandas: pip install pandas
+
+sqlalchemy: pip install sqlalchemy
+
+sklearn: pip install scikit-learn
+
+COPY PASTE:
+pip install pandas sqlalchemy scikit-learn
