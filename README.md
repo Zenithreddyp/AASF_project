@@ -19,9 +19,9 @@ pip package manager
 bash
 Copy
 Edit
-git clone https://github.com/your-username/AASF_project.git
+git clone https://github.com/Zenithreddyp/AASF_project.git
 cd AASF_project
-2. Set Up a Virtual Environment
+3. Set Up a Virtual Environment
 bash
 Copy
 Edit
