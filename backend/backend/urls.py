@@ -15,8 +15,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
+
+# 🔽 Import your custom registration view from your app (e.g. api/views.py)
+from users.views import CreateUserView,UserListView
+
+# 🔽 Import JWT views from DRF SimpleJWT for login and token refresh
+from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("users/accessdata/",UserListView.as_view(),name="all_users"),
+    path("users/user/create/",CreateUserView.as_view(),name="register"),
+    path("users/token/", TokenObtainPairView.as_view(), name="get_token"),
+    path("users/token/refresh/",TokenRefreshView.as_view(),name="refresh token"),
+
+    path("users-auth/",include("rest_framework.urls")),
+
+    path("users/",include("users.urls"))
 ]
