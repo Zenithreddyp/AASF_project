@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import GetCart,AddCartorGetItem,RemoveCartItem,ListallOrders,OrderPlaced,CancelOrder
+from .views import GetCart,AddCartorGetItem,RemoveCartItem,ListallOrders,OrderPlaced,CancelOrder,CartItemUpdateView,ClearCart
 
 
 urlpatterns = [
