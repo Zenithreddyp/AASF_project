@@ -12,13 +12,23 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta #added manually
-from dotenv import load_dotenv #added manually
+# from dotenv import load_dotenv #added manually
 import os #added manually
+import environ #reads .env files
 
-load_dotenv() #added manually
+# load_dotenv() #added manually
+
+
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+#adding manually
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -59,7 +69,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "users",
     "rest_framework",
-    "corsheaders"
+    "corsheaders",
+    "products",
 ]
 
 MIDDLEWARE = [
@@ -98,10 +109,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST', default='localhost'),
+        'PORT': env('DB_PORT', default='5432'),
     }
-}
+} 
 
 
 # Password validation

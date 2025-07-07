@@ -46,3 +46,11 @@ class DeleteShippingAddress(generics.DestroyAPIView):
 
     def get_queryset(self):
         return ShippingAddress.objects.filter(user=self.request.user)
+
+
+class UpdateShippingAddressView(generics.UpdateAPIView):
+    serializer_class = ShippingAddressSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return ShippingAddress.objects.filter(user=self.request.user)
