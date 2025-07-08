@@ -1,0 +1,65 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+body{
+    background-color: #414141;
+}
+.navbar{
+    display: flex;
+    background-color: white;
+    height: 10vh;
+    color: black;
+    border-radius: 20px;
+
+}
+.navbarlinks li.active {
+  border-bottom: 3px solid black;
+  padding-bottom: 0.7rem;
+  color: orange;
+ 
+}
+
+.videomini{
+    height: 10vh;
+    width: 25%;
+    border-radius: 20px;
+}
+.logo{
+    width: 25%;
+    display:flex;
+    justify-content: center; 
+  align-items: center;
+  font-size:  1.8rem;
+    
+}
+
+.navbarlinks{
+ display: flex;
+  justify-content: center; 
+  align-items: center;
+width: 40%;
+ gap: 5%;
+ list-style-type: none;
+ font-size: 1.2rem;
+}
+
+   .searchbar {
+    width: 35%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+padding-left: 20px;
+
+
+  
+}
+.searchbar input{
+    width: 95%;
+    border-radius: 20px;
+    height: 5vh;
+}
+
+
