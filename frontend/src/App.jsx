@@ -1,17 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
-import Page1 from './page1';
+import React from 'react'
+import Navbar from './pagesfile/Navbar'
+import Page1 from './pagesfile/Page1'
+// import { BrowserRouter, Route, Routes } from 'react-router-dom'
+// import Home from './pagesfile/Home'
 
-function App() {
-  const [count, setCount] = useState(0);
-
+const App = () => {
   return (
-    <>
-      <Page1 />
-    </>
-  );
+    <div className="app">
+      <Navbar />
+      {/* <Page1 /> */}
+    </div>
+  )
 }
 
-export default App;
+export default App
