@@ -1,9 +1,9 @@
 import React from 'react';
 import '../styles/Cart.css';
 
-function Cart(){
+function Cart() {
     return <div>
-        CARTTTT
+        CART
     </div>
 }
 

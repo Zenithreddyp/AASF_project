@@ -1,4 +1,29 @@
- .headerslider{
-    display: flex;
-    flex-direction: column;
- } 
+ .home-wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #222; /* page bg */
+  padding: 2vh 0;
+  overflow: auto;
+}
+
+.home-content {
+  width: 90vw;
+  max-height: 95vh;
+  background: white;
+  border-radius: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 2vh 2vw;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.home-body {
+  padding-top: 2vh;
+  font-size: 1.1rem;
+  color: black;
+  line-height: 1.6;
+}

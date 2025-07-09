@@ -9,18 +9,6 @@ import CartPage from './pages/Cart'
 import Error404Page from './pages/Error404Page'
 import Header from './pages/Header'
 
-function Logout() {
-  localStorage.clear()
-  return <Navigate to="/login" />
-
-}
-
-function RegisterAndLogout() {
-  localStorage.clear()
-  return <Register />
-}
-
-
 
 const App = () => {
   return (
@@ -29,10 +17,7 @@ const App = () => {
         <Route
           path="/"
           element={
-            <>
-
-              <Home />
-            </>
+            <Home />
           }
         />
 
@@ -66,6 +51,16 @@ const App = () => {
       </Routes>
     </BrowserRouter>
   )
+}
+function Logout() {
+  localStorage.clear()
+  return <Navigate to="/login" />
+
+}
+
+function RegisterAndLogout() {
+  localStorage.clear()
+  return <Register />
 }
 
 export default App

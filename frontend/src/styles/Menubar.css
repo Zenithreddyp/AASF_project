@@ -1,0 +1,32 @@
+.menubar {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 1vh 2vw;
+  background-color: white;
+  margin: 2vh auto;
+  width: 90vw;
+  margin-top: 5vh;
+  height: 10vh;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+
+.menu-item {
+  padding: 1vh 2vw;
+  font-size: 1rem;
+  margin-right: 1vw;
+  background: orange;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.menu-item:hover {
+  background: #ff9800;
+  color: white;
+  transform: translateY(-2px);
+}
