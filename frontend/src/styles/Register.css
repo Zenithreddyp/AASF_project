@@ -1,0 +1,101 @@
+/* Base reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+}
+
+/* Layout container */
+.firstpage {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: #414141;
+}
+
+/* Left - video */
+.videohalf {
+  width: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.video-text {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2vw;
+  font-weight: bold;
+  color: gray;
+}
+
+/* Right - Register */
+.Registerhalf {
+  width: 50%;
+  background-color: #414141;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Registerbox {
+  background-color: white;
+  width: 60%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  padding: 3%;
+  gap: 10%;
+  border-radius: 1vw;
+  box-shadow: 0 0 2vw rgba(0, 0, 0, 0.1);
+}
+
+.Registerbox h2 {
+  font-size: 2vw;
+  color: #333;
+}
+
+.Registerbox input {
+  width: 100%;
+  padding: 1vw;
+  font-size: 1vw;
+  background-color: #333;
+  color: white;
+  border-radius: 0.5vw;
+  border: none;
+}
+
+.Registerbox input::placeholder {
+  color: white;
+}
+
+.Registerbox button {
+  width: 50%;
+  padding: 1vw;
+  font-size: 1vw;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0.5vw;
+  cursor: pointer;
+  align-self: center;
+}
+
+.Registerbox button:hover {
+  background-color: #0056b3;
+}

@@ -1,15 +1,62 @@
 import React from 'react'
-import Navbar from './pagesfile/Navbar'
-import Page1 from './pagesfile/Page1'
-// import { BrowserRouter, Route, Routes } from 'react-router-dom'
-// import Home from './pagesfile/Home'
+import Navbar from './pages/Navbar'
+import Login from './pages/login'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import Home from './pages/Home'
+import ProtectedRoute from './components/ProtectedRoute'
+import Register from './pages/Register'
+import CartPage from './pages/Cart'
+
+function Logout() {
+  localStorage.clear()
+  return <Navigate to="/login"/>
+
+}
+
+function RegisterAndLogout() {
+  localStorage.clear()
+  return <Register />
+}
+
+
 
 const App = () => {
   return (
-    <div className="app">
-      <Navbar />
-      {/* <Page1 /> */}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Navbar />
+              <Home />
+            </>
+          }
+        />
+
+        <Route
+          path="/login"
+          element={
+            <Login />
+          }       
+        />
+
+        <Route
+          path="/register"
+          element={
+            <RegisterAndLogout />
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <CartPage />
+            </ProtectedRoute>
+          }       
+        />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

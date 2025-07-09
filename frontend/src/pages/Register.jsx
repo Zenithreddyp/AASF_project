@@ -1,7 +1,7 @@
 import React from 'react';
-import './Page1.css';
+import '../styles/Register.css';
 
-function Page1() {
+function Register() {
     return (
         <div className="firstpage">
 
@@ -18,16 +18,16 @@ function Page1() {
             </div>
 
 
-            <div className="loginhalf">
-                <div className="loginbox">
-                    <h2>Login</h2>
+            <div className="Registerhalf">
+                <div className="Registerbox">
+                    <h2>Register</h2>
                     <input type="text" placeholder="Username" />
                     <input type="password" placeholder="Password" />
-                    <button>Login</button>
+                    <button>Register</button>
                 </div>
             </div>
         </div>
     );
 }
 
-export default Page1;
+export default Register;
