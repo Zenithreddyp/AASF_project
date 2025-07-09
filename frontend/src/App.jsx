@@ -7,10 +7,11 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Register from './pages/Register'
 import CartPage from './pages/Cart'
 import Error404Page from './pages/Error404Page'
+import Header from './pages/Header'
 
 function Logout() {
   localStorage.clear()
-  return <Navigate to="/login"/>
+  return <Navigate to="/login" />
 
 }
 
@@ -29,7 +30,7 @@ const App = () => {
           path="/"
           element={
             <>
-              <Navbar />
+
               <Home />
             </>
           }
@@ -39,7 +40,7 @@ const App = () => {
           path="/login"
           element={
             <Login />
-          }       
+          }
         />
 
         <Route
@@ -54,13 +55,13 @@ const App = () => {
             <ProtectedRoute>
               <CartPage />
             </ProtectedRoute>
-          }       
+          }
         />
         <Route
           path="/*"
           element={
-            <Error404Page/>
-          }  
+            <Error404Page />
+          }
         />
       </Routes>
     </BrowserRouter>

@@ -1,17 +1,33 @@
-// import React from 'react'
-// import './Header.css'
+import React from 'react'
+import '../styles/Header.css'
+import { useEffect, useState } from 'react'
 
-// const Header = () => {
-//     return (
-//         <div className='header'>
+const Header = () => {
+    const [showFirst, setShowFirst] = useState(true)
 
-//             <div className='headertext'>
-//                 Explore the Infinity
-//             </div>
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setShowFirst(prev => !prev)
+        }, 3000)
 
+        return () => clearInterval(interval)
+    }, [])
 
-//         </div>
-//     )
-// }
+    return (
 
-// export default Header
+        <div className="header">
+            <img
+                src="/header1.png"
+                className={`bg-image ${showFirst ? 'visible' : 'hidden'}`}
+                alt="Header 1"
+            />
+            <img
+                src="/header2.png"
+                className={`bg-image ${!showFirst ? 'visible' : 'hidden'}`}
+                alt="Header 2"
+            />
+            <div className="headertext">Explore the Infinity</div>
+        </div>
+    )
+}
+export default Header

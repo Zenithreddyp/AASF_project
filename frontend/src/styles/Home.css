@@ -1,1 +1,4 @@
- 
+ .headerslider{
+    display: flex;
+    flex-direction: column;
+ } 
