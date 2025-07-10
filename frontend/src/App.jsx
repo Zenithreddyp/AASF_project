@@ -6,8 +6,19 @@ import Home from './pages/Home'
 import ProtectedRoute from './components/ProtectedRoute'
 import Register from './pages/Register'
 import CartPage from './pages/Cart'
-import Error404Page from './pages/Error404Page'
-import Header from './pages/Header'
+// import Error404Page from './pages/Error404Page'
+
+function Logout() {
+  localStorage.clear()
+  return <Navigate to="/login"/>
+
+}
+
+function RegisterAndLogout() {
+  localStorage.clear()
+  return <Register />
+}
+
 
 
 const App = () => {
@@ -17,24 +28,38 @@ const App = () => {
         <Route
           path="/"
           element={
-            <Home />
+            <>
+              {/* <Navbar /> */}
+              <Home />
+            </>
           }
         />
 
+        <Route
+          path="/login"
+          element={
+            <Login />
+          }       
+        />
 
+        <Route
+          path="/register"
+          element={
+            <RegisterAndLogout />
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <CartPage />
+            </ProtectedRoute>
+          }       
+        />
+        
       </Routes>
     </BrowserRouter>
   )
 }
-// function Logout() {
-//   localStorage.clear()
-//   return <Navigate to="/login" />
-
-// }
-
-// function RegisterAndLogout() {
-//   localStorage.clear()
-//   return <Register />
-// }
 
 export default App

@@ -23,8 +23,8 @@ const Navbar = () => {
                     <li onClick={() => setmenu("home")} className={menu === "home" ? "active" : ""} > Home</li >
                     <li onClick={() => setmenu("cart")} className={menu === "cart" ? "active" : ""} >Cart</li>
                     <li onClick={() => setmenu("orders")} className={menu === "orders" ? "active" : ""} >Orders</li>
-                    <li onClick={() => setmenu("login")} className={menu === "login" ? "active" : ""} > login</li >
-                    
+                    <li onClick={() => setmenu("profile")} className={menu === "profile" ? "active" : ""} > Profile</li >
+                    <li onClick={() => setmenu("about")} className={menu === "about" ? "active" : ""}> About Us</li >
                 </ul >
 
 

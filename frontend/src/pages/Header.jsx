@@ -1,33 +1,37 @@
-import React from 'react'
-import '../styles/Header.css'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import '../styles/Header.css';
+
+const images = [
+  '/header1.png',
+  '/header2.png',
+];
 
 const Header = () => {
-    const [showFirst, setShowFirst] = useState(true)
+  const [current, setCurrent] = useState(0);
+  const [fade, setFade] = useState(true);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setShowFirst(prev => !prev)
-        }, 3000)
+  useEffect(() => {
+    const fadeTimeout = setTimeout(() => setFade(false), 2500);
+    const slideTimeout = setTimeout(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+      setFade(true);
+    }, 3000);
+    return () => {
+      clearTimeout(fadeTimeout);
+      clearTimeout(slideTimeout);
+    };
+  }, [current]);
 
-        return () => clearInterval(interval)
-    }, [])
-
-    return (
-
-        <div className="header">
-            <img
-                src="/header1.png"
-                className={`bg-image ${showFirst ? 'visible' : 'hidden'}`}
-                alt="Header 1"
-            />
-            <img
-                src="/header2.png"
-                className={`bg-image ${!showFirst ? 'visible' : 'hidden'}`}
-                alt="Header 2"
-            />
-            <div className="headertext">Explore the Infinity</div>
-        </div>
-    )
+  return (
+    <div className="header">
+      <img
+        src={images[current]}
+        alt="header"
+        className={`header-img ${fade ? 'fade-in' : 'fade-out'}`}
+      />
+      <div className="header-overlay-text">The Ultimate</div>
+    </div>
+  );
 }
-export default Header
+
+export default Header;

@@ -7,8 +7,7 @@ import Menubar from './menubar.jsx'
 import Recoms from './Recoms.jsx'
 
 
-
-const Home = () => {
+function Home() {
     return (
         <div className='homeslider'>
             <Navbar />
