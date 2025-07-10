@@ -29,7 +29,7 @@ const Header = () => {
         alt="header"
         className={`header-img ${fade ? 'fade-in' : 'fade-out'}`}
       />
-      <div className="header-overlay-text">The Ultimate</div>
+      <div className="header-overlay-text"> Explore The Ultimate</div>
     </div>
   );
 }

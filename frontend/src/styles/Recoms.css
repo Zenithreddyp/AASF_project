@@ -1,0 +1,21 @@
+ .recom-container {
+  width: 95vw;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  background-color:aliceblue;
+  padding: 5vw;
+  /* overflow-y: auto; */
+}
+
+.recom-item {
+  width:20vw;
+  height: 30vh;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  font-weight: bold;
+}

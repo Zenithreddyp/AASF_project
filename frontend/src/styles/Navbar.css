@@ -9,8 +9,9 @@ body{
 }
 .navbar{
     display: flex;
-    background-color: white;
+    background-color:aliceblue;
     height: 10vh;
+    width: 95vw;
     color: black;
     border-radius: 20px;
 
@@ -25,11 +26,10 @@ body{
 .navbarlinks li:hover {
   color: #ff9800; /* orange */
   cursor: pointer;
-  background: rgba(0,0,0,0.05);
+
   border-radius: 8px;
-  transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
   transform: translateY(-6px);
-  box-shadow: 0 6px 18px -6px rgba(0,0,0,0.15);
+  
 }
 
 .videomini{
@@ -62,7 +62,7 @@ width: 40%;
   justify-content: center;
   align-items: center;
 padding-left: 20px;
-
+border-radius: 10px;
 
   
 }

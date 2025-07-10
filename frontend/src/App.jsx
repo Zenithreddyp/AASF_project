@@ -10,7 +10,7 @@ import CartPage from './pages/Cart'
 
 function Logout() {
   localStorage.clear()
-  return <Navigate to="/login"/>
+  return <Navigate to="/login" />
 
 }
 
@@ -29,7 +29,7 @@ const App = () => {
           path="/"
           element={
             <>
-              {/* <Navbar /> */}
+
               <Home />
             </>
           }
@@ -39,7 +39,7 @@ const App = () => {
           path="/login"
           element={
             <Login />
-          }       
+          }
         />
 
         <Route
@@ -54,9 +54,9 @@ const App = () => {
             <ProtectedRoute>
               <CartPage />
             </ProtectedRoute>
-          }       
+          }
         />
-        
+
       </Routes>
     </BrowserRouter>
   )
