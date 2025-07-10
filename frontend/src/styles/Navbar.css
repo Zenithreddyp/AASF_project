@@ -45,9 +45,9 @@ html, body {
 }
 
 .navbarlinks li.active {
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid #414141;
   padding-bottom: 0.7rem;
-  color: orange;
+  color: rgb(220, 91, 11);
 }
 
 .navbarlinks li:hover {
@@ -93,7 +93,7 @@ html, body {
 
   .navbarlinks {
     width: 100%;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     justify-content: center;
     gap: 1rem;
   }

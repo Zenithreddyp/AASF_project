@@ -3,7 +3,7 @@ import '../styles/Recoms.css'
 const Recoms = () => {
     return (
         <div className='recoms'>
-
+            .
         </div>
     )
 }

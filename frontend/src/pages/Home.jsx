@@ -10,7 +10,7 @@ import Recoms from './Recoms.jsx'
 
 const Home = () => {
     return (
-        <div className='headerslider'>
+        <div className='homeslider'>
             <Navbar />
             <Header />
             <Menubar />

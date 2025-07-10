@@ -1,7 +1,7 @@
 .header {
    display: flex;
   position: relative;
-  width: 100%;
+  width: 90vw;
   height: 50vh;
   margin: 0 auto; 
   margin-top: 5vh; 

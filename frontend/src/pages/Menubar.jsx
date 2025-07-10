@@ -1,4 +1,4 @@
-// Menubar.jsx
+
 import React from 'react';
 import '../styles/Menubar.css';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,6 @@ const Menubar = () => {
         "Mobiles",
         "Laptops",
         "Shoes",
-        "Stationary",
         "Watches",
         "Tablets",
         "Headphones",
@@ -18,18 +17,21 @@ const Menubar = () => {
     ];
 
     return (
-        <div className="menubar">
+        <>
 
-            {categories.map((item) => (
-                <div
-                    key={item}
-                    className="menu-item"
-                    onClick={() => navigate(`/${item.toLowerCase()}`)}
-                >
-                    {item}
-                </div>
-            ))}
-        </div>
+            <div className="menubar">
+
+                {categories.map((item) => (
+                    <div
+                        key={item}
+                        className="menu-item"
+                        onClick={() => navigate(`/${item.toLowerCase()}`)}
+                    >
+                        {item}
+                    </div>
+                ))}
+            </div>
+        </>
     );
 };
 

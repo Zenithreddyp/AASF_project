@@ -13,20 +13,27 @@
   scrollbar-width: thin;
   scrollbar-color: #888 transparent;
 }
+.menutext{
+  margin-top: 2vh;
+  background-color: orange;
+  font-size: 2rem;
+  margin-left: 2vw;
+  border-radius: 15px;
+  width: 20vw;
+}
 
 .menu-item {
   padding: 1vh 2vw;
   font-size: 1rem;
-  margin-right: 1vw;
+  margin-right: 3.5vw;
   background: orange;
   border-radius: 8px;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.3s, transform 0.2s;
+  
 }
 
 .menu-item:hover {
-  background: #ff9800;
-  color: white;
-  transform: translateY(-2px);
+ 
+   transform: translateY(-2px);
 }

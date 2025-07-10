@@ -58,9 +58,9 @@ html, body {
   width: 60%;
   height: 60%;
   display: flex;
+  align-items: center;
   flex-direction: column;
-  padding: 3%;
-  gap: 10%;
+ gap: 15%;
   border-radius: 1vw;
   box-shadow: 0 0 2vw rgba(0, 0, 0, 0.1);
 }
@@ -71,9 +71,11 @@ html, body {
 }
 
 .loginbox input {
-  width: 100%;
+  width: 80%;
   padding: 1vw;
   font-size: 1vw;
+  align-items: center;
+  
   background-color: #333;
   color: white;
   border-radius: 0.5vw;
@@ -87,7 +89,7 @@ html, body {
 .loginbox button {
   width: 50%;
   padding: 1vw;
-  font-size: 1vw;
+  font-size: 2vw;
   background-color: #007bff;
   color: white;
   border: none;
@@ -99,3 +101,21 @@ html, body {
 .loginbox button:hover {
   background-color: #0056b3;
 }
+@media screen and (max-width: 480px) {
+  .firstpage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    }
+    .videohalf{
+      width: 90vw;
+      height: 40vh;
+
+    }
+    .loginhalf{
+      width: 100vw;
+      height: 60vh;
+    }
+  }
+

@@ -21,46 +21,20 @@ const App = () => {
           }
         />
 
-        <Route
-          path="/login"
-          element={
-            <Login />
-          }
-        />
 
-        <Route
-          path="/register"
-          element={
-            <RegisterAndLogout />
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <ProtectedRoute>
-              <CartPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/*"
-          element={
-            <Error404Page />
-          }
-        />
       </Routes>
     </BrowserRouter>
   )
 }
-function Logout() {
-  localStorage.clear()
-  return <Navigate to="/login" />
+// function Logout() {
+//   localStorage.clear()
+//   return <Navigate to="/login" />
 
-}
+// }
 
-function RegisterAndLogout() {
-  localStorage.clear()
-  return <Register />
-}
+// function RegisterAndLogout() {
+//   localStorage.clear()
+//   return <Register />
+// }
 
 export default App
