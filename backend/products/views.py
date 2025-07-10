@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics 
-from .serializers import ProductSerializer
-from rest_framework.permissions import IsAuthenticated,AllowAny   #	These control who can access the view (authentication permissions)
-from .models import Products
+from .serializers import ProductSerializer,ProductImageSerializer
+from rest_framework.permissions import IsAuthenticated,AllowAny,IsAdminUser   #	These control who can access the view (authentication permissions)
+from .models import Products,ProductImage
+
+from rest_framework.parsers import MultiPartParser, FormParser
 
 # Create your views here.
 
@@ -23,6 +25,7 @@ class getproductsearch(generics.ListAPIView):
         rating_above=self.request.query_params.get("rating")
 
         # add size to 
+        queryset = Products.objects.all()
 
 
         if name:
@@ -66,3 +69,22 @@ class ProductDetail(generics.RetrieveAPIView):
     queryset = Products.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [AllowAny]
+
+
+class AddProductsAsAdmin(generics.CreateAPIView):
+    queryset = Products.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
+    parser_classes = [MultiPartParser, FormParser]
+
+
+class Allproducts(generics.ListAPIView):
+    queryset=Products.objects.all()
+    serializer_class=ProductSerializer
+    permission_classes=[AllowAny]
+
+
+class DeleteProduct(generics.DestroyAPIView):
+    queryset = Products.objects.all()
+    serializer_class=ProductSerializer
+    permission_classes=[AllowAny]

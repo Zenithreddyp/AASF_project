@@ -14,26 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-# class CustomerProfileSerializer(serializers.ModelSerializer):
-#     user = UserSerializer()  # nested
 
-#     class Meta:
-#         model = CustomerProfile
-#         fields = ["user", "phonenumber", "address"]
-
-#     def create(self, validated_data):
-#         user_data=validated_data.pop("user")
-#         user = User.objects.create_user(**user_data) #Creates a new Django User using the extracted data.
-#         profile = CustomerProfile.objects.create(user=user,**validated_data)
-#         return profile
-
-#     def validate_phonenumber(self, value):
-#         if not value.isdigit():
-#             raise serializers.ValidationError("Phone number must contain only digits.")
-#         if len(value) != 10:
-#             raise serializers.ValidationError("Phone number must be between 10.")
-#         return value
-    
 
 class ShippingAddressSerializer(serializers.ModelSerializer):
     class Meta:

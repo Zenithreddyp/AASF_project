@@ -163,3 +163,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True #added manually #addin development only
 CORS_ALLOW_CREDENTIALS= True #added manually
+
+
+
+# The absolute path to the directory where uploaded files will be stored.
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# The URL that will serve the media files.
+MEDIA_URL = '/media/'
