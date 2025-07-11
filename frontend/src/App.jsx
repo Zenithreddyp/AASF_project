@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import ProtectedRoute from './components/ProtectedRoute'
 import Register from './pages/Register'
 import CartPage from './pages/Cart'
+import ProductPage from './pages/Productpage'
 
 
 function Logout() {
@@ -48,6 +49,10 @@ const App = () => {
           element={
             <RegisterAndLogout />
           }
+        />
+        <Route
+          path="/product"
+          element={<ProductPage />}
         />
         <Route
           path="/cart"

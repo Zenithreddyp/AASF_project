@@ -18,7 +18,7 @@ body{
 }
 .navbarlinks li.active {
   border-bottom: 3px solid black;
-  padding-bottom: 0.7rem;
+  padding-bottom: 0.1rem;
   color: orange;
  
 }

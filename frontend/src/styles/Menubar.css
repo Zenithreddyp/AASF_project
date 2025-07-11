@@ -20,13 +20,13 @@
   background-color: orange;
   border-radius: 6px;
   cursor: pointer;
-  transition: padding 0.2s ease;
   font-size: 16px;
   flex-shrink: 0;
+  transition: padding-bottom 0.5s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .menu-item:hover {
-  background-color:#414141;
+  background-color: orange;
   color: white;
-  padding: 2vh;
+  padding-bottom: 2vh; 
 }
