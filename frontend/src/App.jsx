@@ -6,7 +6,7 @@ import Home from './pages/Home'
 import ProtectedRoute from './components/ProtectedRoute'
 import Register from './pages/Register'
 import CartPage from './pages/Cart'
-// import Error404Page from './pages/Error404Page'
+
 
 function Logout() {
   localStorage.clear()
@@ -25,6 +25,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+
         <Route
           path="/"
           element={

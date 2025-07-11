@@ -3,7 +3,7 @@ import React from 'react'
 import '../styles/Home.css'
 import Navbar from './Navbar.jsx'
 import Header from './Header.jsx'
-import Menubar from './menubar.jsx'
+import Menubar from './Menubar.jsx'
 import Recoms from './Recoms.jsx'
 
 

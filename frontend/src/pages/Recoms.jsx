@@ -1,7 +1,8 @@
-import React from 'react'
-import '../styles/Recoms.css'
+import React from 'react';
+import '../styles/Recoms.css';
+
 const Recoms = () => {
-    const items = Array.from({ length: 80 }, (_, i) => `Item ${i + 1}`);
+    const items = Array.from({ length: 40 }, (_, i) => `Item ${i + 1}`);
 
     return (
         <>
@@ -9,7 +10,6 @@ const Recoms = () => {
                 based on your profile
             </div>
             <div className="recom-container">
-
                 {items.map((item, index) => (
                     <div className="recom-item" key={index}>
                         {item}
@@ -18,6 +18,6 @@ const Recoms = () => {
             </div>
         </>
     );
-}
+};
 
-export default Recoms
+export default Recoms;
