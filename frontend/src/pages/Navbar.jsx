@@ -1,9 +1,16 @@
-import React from 'react'
-import '../styles/Navbar.css'
-import { useState } from 'react'
+import React, { useState } from 'react';
+import '../styles/Navbar.css';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const [menu, setmenu] = useState("home");
+    const navigate = useNavigate();
+
+    const handleMenuClick = (path) => {
+        setmenu(path);
+        navigate(`/${path}`);
+    };
+
     return (
         <>
             <div className="navbar">
@@ -20,22 +27,18 @@ const Navbar = () => {
                 </div>
 
                 <ul className="navbarlinks">
-                    <li onClick={() => setmenu("home")} className={menu === "home" ? "active" : ""} > Home</li >
-                    <li onClick={() => setmenu("cart")} className={menu === "cart" ? "active" : ""} >Cart</li>
-                    <li onClick={() => setmenu("orders")} className={menu === "orders" ? "active" : ""} >Orders</li>
-                    <li onClick={() => setmenu("profile")} className={menu === "profile" ? "active" : ""} > Profile</li >
-
-                </ul >
-
+                    <li onClick={() => handleMenuClick("home")} className={menu === "home" ? "active" : ""}>Home</li>
+                    <li onClick={() => handleMenuClick("cart")} className={menu === "cart" ? "active" : ""}>Cart</li>
+                    <li onClick={() => handleMenuClick("orders")} className={menu === "orders" ? "active" : ""}>Orders</li>
+                    <li onClick={() => handleMenuClick("profile")} className={menu === "profile" ? "active" : ""}>Profile</li>
+                </ul>
 
                 <div className="searchbar">
                     <input type="text" placeholder="search here" />
-
                 </div>
-            </div >
-
+            </div>
         </>
-    )
-}
+    );
+};
 
-export default Navbar
+export default Navbar;

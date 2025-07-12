@@ -1,0 +1,63 @@
+ .payment-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: #f5faff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.payment-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-section label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+textarea, input[type="text"] {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  resize: none;
+}
+
+.amount-section {
+  font-size: 1.2rem;
+  text-align: right;
+  color: #222;
+  font-weight: 600;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.success-msg {
+  text-align: center;
+  margin-top: 15px;
+  color: green;
+  font-weight: 600;
+}

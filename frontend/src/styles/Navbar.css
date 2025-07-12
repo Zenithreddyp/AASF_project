@@ -59,6 +59,7 @@ width: 40%;
    .searchbar {
     width: 35%;
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
 padding-left: 20px;
@@ -70,6 +71,9 @@ border-radius: 10px;
     width: 95%;
     border-radius: 20px;
     height: 5vh;
+    position: absolute;
+    padding-left: 1vw;
+
 }
 
 

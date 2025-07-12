@@ -20,7 +20,7 @@
 .product-image {
   max-width: 100%;
   max-height: 70vh;
-  border-radius: 1vh;
+  border-radius: 3vh;
   object-fit: contain;
 }
 

@@ -5,8 +5,9 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import ProtectedRoute from './components/ProtectedRoute'
 import Register from './pages/Register'
-import CartPage from './pages/Cart'
 import ProductPage from './pages/Productpage'
+import PaymentPage from './pages/Paymentpage'
+import CartPage from './pages/Cartpage'
 
 
 function Logout() {
@@ -50,6 +51,8 @@ const App = () => {
             <RegisterAndLogout />
           }
         />
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route
           path="/product"
           element={<ProductPage />}
