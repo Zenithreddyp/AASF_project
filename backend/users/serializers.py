@@ -1,9 +1,15 @@
 from django.contrib.auth.models import User
-from rest_framework import serializers #compulsory becoz of serilizer 
+from rest_framework import serializers,validators #compulsory becoz of serilizer 
 from .models import ShippingAddress
 import requests
 
 class UserSerializer(serializers.ModelSerializer):
+
+    username=serializers.CharField(
+        max_length=150,validators=[validators.UniqueValidator(queryset=User.objects.all(),message="This user name already taken.")]
+    )
+
+
     class Meta:
         model = User
         fields = ["id", "username", "password"]
@@ -12,7 +18,22 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+    
+class ChangePasswordSerializer(serializers.Serializer):     ###
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
 
+    def validate_old_password(self,value):
+        user=self.context["request"].user
+        if user.check_password(value):
+            return value
+        raise serializers.ValidationError("Prev password is incorrect.")
+    
+    def save(self,*args, **kwargs):
+        user=self.context["request"].user
+        user.set_password(self.validated_data["new_password"])
+        user.save()
+        return user
 
 
 

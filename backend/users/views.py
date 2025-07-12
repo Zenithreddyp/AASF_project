@@ -1,7 +1,8 @@
+from django.http import Http404
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from rest_framework import generics 
-from .serializers import UserSerializer,ShippingAddressSerializer
+from rest_framework import generics ,response #Sends back a JSON response
+from .serializers import UserSerializer,ShippingAddressSerializer,ChangePasswordSerializer
 from rest_framework.permissions import IsAuthenticated,AllowAny   #	These control who can access the view (authentication permissions)
 from .models import ShippingAddress
 
@@ -10,11 +11,24 @@ from .models import ShippingAddress
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [AllowAny] 
+    permission_classes = [AllowAny]
+
+class UpdateUserPassworwView(generics.UpdateAPIView):
+    serializer_class=ChangePasswordSerializer
+    permission_classes=[IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user 
+
+    def update(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return response.Response({"detail": "Password updated successfully."}, status=status.HTTP_200_OK)
 
 
 
-class UserListView(generics.ListAPIView):
+class UserListView(generics.ListAPIView): #for my sake
     serializer_class = UserSerializer
     permission_classes = [AllowAny] 
 
@@ -54,3 +68,15 @@ class UpdateShippingAddressView(generics.UpdateAPIView):
 
     def get_queryset(self):
         return ShippingAddress.objects.filter(user=self.request.user)
+
+
+class DefaultShippingAddress(generics.RetrieveAPIView):
+    serializer_class=ShippingAddressSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        address=ShippingAddress.objects.filter(user=self.request.user,is_default=True).first()
+        if(address):
+            raise Http404("No default address set.")
+
+        return ShippingAddress.objects.filter(user=self.request.user,is_default=True)
