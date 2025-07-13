@@ -8,6 +8,9 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
+from django.http import FileResponse
+from .invoice_generator import InvoiceGenerator
+
 # Create your views here.
 
 class GetCart(generics.ListAPIView):
@@ -25,7 +28,7 @@ class AddCartorGetItem(generics.ListCreateAPIView):
     def get_queryset(self):
         return Cartitem.objects.filter(cart__user=self.request.user)
     
-    def perform_create(self, serializer):
+    def perform_create(self, serializer):     #very important
         cart, created = Cart.objects.get_or_create(user=self.request.user, is_ordered=False)   # important
         serializer.save(cart=cart)
         
@@ -93,4 +96,16 @@ class CancelOrder(generics.UpdateAPIView):
 
         serializer.save(status="Cancelled")
     
+
+def download_invoice(request, order_id):
+    order = Orders.objects.get(id=order_id, user=request.user)
+    invoice = InvoiceGenerator(order)
+    pdf = invoice.generate()
+    return FileResponse(pdf, as_attachment=True, filename=f'invoice_ZEDOVA_{order.id}.pdf')
+
+def generate_and_save_invoice(request, order_id):
+    order = Orders.objects.get(id=order_id, user=request.user)
+    invoice = InvoiceGenerator(order)
+    invoice.save_to_order()
+    return FileResponse(invoice.buffer, as_attachment=True, filename=f'invoice_ZEDOVA_{order.id}.pdf')
 

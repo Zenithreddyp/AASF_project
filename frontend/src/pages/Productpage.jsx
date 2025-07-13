@@ -38,6 +38,12 @@ const ProductPage = () => {
         alert('Item added to cart!');
     };
 
+
+
+
+
+
+    
     const buyNow = () => {
         navigate('/payment', { state: item });
     };
