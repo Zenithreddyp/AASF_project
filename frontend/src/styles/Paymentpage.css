@@ -1,63 +1,98 @@
- .payment-container {
-  max-width: 600px;
-  margin: 50px auto;
-  background-color: #f5faff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', sans-serif;
+
+.paymentpage {
+    background-color: #414141;
+    min-height: 100vh;
+    width: 100vw;
+    padding: 4vh 3vw 2vh 3vw;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
-.payment-container h2 {
-  text-align: center;
-  margin-bottom: 25px;
-  color: #333;
+.payment-container {
+    background-color: aliceblue;
+    padding: 4vh 4vw;
+    font-family: Arial, sans-serif;
+    border-radius: 2vh;
+    width: 100%;
+    max-width: 90vw;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
+
+
+.payment-form-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 5vw;
+    margin-top: 4vh;
+    flex-wrap: wrap;
+}
+
+.address-section,
 .form-section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    flex: 1;
+    min-width: 40vw;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
 }
 
-.form-section label {
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-textarea, input[type="text"] {
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  resize: none;
-}
-
-.amount-section {
-  font-size: 1.2rem;
-  text-align: right;
-  color: #222;
-  font-weight: 600;
+input,
+textarea {
+    padding: 1.2vh 1vw;
+    border: 1px solid #ccc;
+    border-radius: 1vh;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 button {
-  background-color: #4caf50;
-  color: white;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: 0.3s ease;
+    background-color: #28a745;
+    color: white;
+    padding: 1.5vh 2vw;
+    border: none;
+    border-radius: 1vh;
+    font-size: 1rem;
+    cursor: pointer;
+    width: fit-content;
 }
 
 button:hover {
-  background-color: #45a049;
+    background-color: #218838;
 }
 
 .success-msg {
-  text-align: center;
-  margin-top: 15px;
-  color: green;
-  font-weight: 600;
+    color: green;
+    font-weight: bold;
+    margin-top: 2vh;
+}
+
+.amount-section {
+    font-size: 1.5rem;
+    margin-top: 2vh;
+}
+
+
+@media (max-width: 768px) {
+    .payment-form-wrapper {
+        flex-direction: column;
+        gap: 4vh;
+    }
+
+    .address-section,
+    .form-section {
+        min-width: 80vw;
+    }
+
+    .amount-section {
+        font-size: 1.2rem;
+    }
+
+    button {
+        width: 100%;
+        text-align: center;
+    }
 }
