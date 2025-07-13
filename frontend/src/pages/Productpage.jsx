@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/ProductPage.css';
 
@@ -6,19 +6,6 @@ const ProductPage = () => {
     const location = useLocation();
     const item = location.state;
     const navigate = useNavigate();
-
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const images = item?.images || [];
-
-    useEffect(() => {
-        if (images.length > 1) {
-            const interval = setInterval(() => {
-                setCurrentIndex((prev) => (prev + 1) % images.length);
-            }, 3000);
-
-            return () => clearInterval(interval);
-        }
-    }, [images]);
 
     if (!item) {
         return <div>No product data found. Please go back and select a product.</div>;
@@ -42,20 +29,15 @@ const ProductPage = () => {
         navigate('/payment', { state: item });
     };
 
-    const currentImage = images.length > 0 ? images[currentIndex].image : '/fallback.png';
-
     return (
         <div className="product-container">
             <div className="product-image-section">
-                <img
-                    src={currentImage}
-                    alt={item.name}
-                />
+                <img src={item.img} alt={item.name} className="product-image" />
             </div>
             <div className="product-details-section">
                 <h2 className="product-name">{item.name}</h2>
-                <p className="product-cost">{item.cost || `₹${item.price}`}</p>
-                <p className="product-desc">{item.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}</p>
+                <p className="product-cost">{item.cost}</p>
+                <p className="product-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <div className="product-buttons">
                     <button onClick={buyNow}>Buy Now</button>
                     <button onClick={addToCart}>Add to Cart</button>

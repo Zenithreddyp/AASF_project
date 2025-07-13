@@ -24,12 +24,6 @@ from users.views import CreateUserView,UserListView
 from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
 
 
-from django.conf import settings
-from django.conf.urls.static import static
-
-
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("users/accessdata/",UserListView.as_view(),name="all_users"),
@@ -42,6 +36,3 @@ urlpatterns = [
     path("users/",include("users.urls")),
     path("prod/",include("products.urls"))
 ]
-
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
