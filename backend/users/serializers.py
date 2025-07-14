@@ -9,7 +9,6 @@ class UserSerializer(serializers.ModelSerializer):
         max_length=150,validators=[validators.UniqueValidator(queryset=User.objects.all(),message="This user name already taken.")]
     )
 
-
     class Meta:
         model = User
         fields = ["id", "username", "password"]

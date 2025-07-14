@@ -1,5 +1,5 @@
 import { jwtDecode } from "jwt-decode";
-import api from "../api/api";  // public API
+import {publicApi} from "../api/axiospublic";  
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 
 export const validateToken = async () => {
@@ -13,8 +13,7 @@ export const validateToken = async () => {
     const now = Date.now() / 1000;
 
     if (decoded.exp < now) {
-      // Token expired, try refresh
-      const res = await api.post("/users/token/refresh/", {
+      const res = await publicApi.post("/users/token/refresh/", {
         refresh: refreshToken,
       });
 

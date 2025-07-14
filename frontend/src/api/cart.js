@@ -3,12 +3,12 @@ import { validateToken } from "../components/authCheck";
 
 export const addtocart = async (item) => {
 
-  // const isAuth = await validateToken();
-  // if (!isAuth) {
-  //   alert("Please login to add items to cart.");
-  //   window.location.href = "/login";  // or use navigate if inside a component
-  //   return;
-  // }
+  const isAuth = await validateToken();
+  if (!isAuth) {
+    alert("Please login to add items to cart.");
+    window.location.href = "/login";  // or use navigate if inside a component
+    return;
+  }
 
   try {
     const res = await privateApi.post("/cart/cart/add/", {
