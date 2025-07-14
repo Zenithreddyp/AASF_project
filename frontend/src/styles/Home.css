@@ -1,4 +1,12 @@
- .headerslider{
-    display: flex;
-    flex-direction: column;
- } 
+.html,body{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+.homeslider{
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+ overflow-y: auto;
+ align-items: center;
+}

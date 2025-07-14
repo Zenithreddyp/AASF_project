@@ -8,13 +8,16 @@ class Products(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.IntegerField()
-    image = models.ImageField(upload_to="products/")
     category = models.CharField(max_length=50)
-    brand=models.CharField(max_length=50)
-    rating=models.DecimalField(max_digits=1,decimal_places=1)
+    brand = models.CharField(max_length=50)
+    rating = models.DecimalField(max_digits=2, decimal_places=1)
 
-    
+    def __str__(self):
+        return self.name
 
-    
+class ProductImage(models.Model):
+    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='products/')
 
-    
+    def __str__(self):
+        return f"Image for {self.product.name}"

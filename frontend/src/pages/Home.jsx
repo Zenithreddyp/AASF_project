@@ -1,13 +1,19 @@
 
 import React from 'react'
 import '../styles/Home.css'
-import Header from './Header.jsx'
 import Navbar from './Navbar.jsx'
-const Home = () => {
+import Header from './Header.jsx'
+import Menubar from './Menubar.jsx'
+import Recoms from './Recoms.jsx'
+
+
+function Home() {
     return (
-        <div className='headerslider'>
+        <div className='homeslider'>
             <Navbar />
             <Header />
+            <Menubar />
+            <Recoms />
 
 
         </div>

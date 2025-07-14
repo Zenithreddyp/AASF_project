@@ -1,9 +1,15 @@
 from django.contrib.auth.models import User
-from rest_framework import serializers #compulsory becoz of serilizer 
+from rest_framework import serializers,validators #compulsory becoz of serilizer 
 from .models import ShippingAddress
 import requests
 
 class UserSerializer(serializers.ModelSerializer):
+
+    username=serializers.CharField(
+        max_length=150,validators=[validators.UniqueValidator(queryset=User.objects.all(),message="This user name already taken.")]
+    )
+
+
     class Meta:
         model = User
         fields = ["id", "username", "password"]
@@ -12,28 +18,24 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
-
-
-# class CustomerProfileSerializer(serializers.ModelSerializer):
-#     user = UserSerializer()  # nested
-
-#     class Meta:
-#         model = CustomerProfile
-#         fields = ["user", "phonenumber", "address"]
-
-#     def create(self, validated_data):
-#         user_data=validated_data.pop("user")
-#         user = User.objects.create_user(**user_data) #Creates a new Django User using the extracted data.
-#         profile = CustomerProfile.objects.create(user=user,**validated_data)
-#         return profile
-
-#     def validate_phonenumber(self, value):
-#         if not value.isdigit():
-#             raise serializers.ValidationError("Phone number must contain only digits.")
-#         if len(value) != 10:
-#             raise serializers.ValidationError("Phone number must be between 10.")
-#         return value
     
+class ChangePasswordSerializer(serializers.Serializer):     ###
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+    def validate_old_password(self,value):
+        user=self.context["request"].user
+        if user.check_password(value):
+            return value
+        raise serializers.ValidationError("Prev password is incorrect.")
+    
+    def save(self,*args, **kwargs):
+        user=self.context["request"].user
+        user.set_password(self.validated_data["new_password"])
+        user.save()
+        return user
+
+
 
 class ShippingAddressSerializer(serializers.ModelSerializer):
     class Meta:

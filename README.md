@@ -1,5 +1,29 @@
 # 🧠 Official AASF Project
 
+*Empowering Innovation, Accelerating Impact, Unleashing Potential*
+
+[![Last Commit](https://img.shields.io/github/last-commit/Zenithreddyp/AASF_project?color=informational)](https://github.com/Zenithreddyp/AASF_project/commits)
+![Top Language](https://img.shields.io/github/languages/top/Zenithreddyp/AASF_project)
+![Language Count](https://img.shields.io/github/languages/count/Zenithreddyp/AASF_project)
+
+
+---
+
+## 🛠️ Built with the tools and technologies:
+
+![Django](https://img.shields.io/badge/Django-092E20?logo=django&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?logo=axios&logoColor=white)
+![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)
+![JSON](https://img.shields.io/badge/JSON-black?logo=json&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikit-learn&logoColor=white)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-100000?logo=sqlalchemy&logoColor=white)
+
+
+---
+
 This repository contains the full-stack **AASF Project**, with a **Django** + **Django REST Framework** backend and a **React** + **Vite** frontend.
 
 ---
@@ -58,7 +82,7 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
-### 3. Frontend Setup
+### 3. Frontend Setup (In a new terminal)
 
   **Install Node Dependencies**
 

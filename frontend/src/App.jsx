@@ -5,9 +5,10 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import ProtectedRoute from './components/ProtectedRoute'
 import Register from './pages/Register'
-import CartPage from './pages/Cart'
-import Error404Page from './pages/Error404Page'
-import Header from './pages/Header'
+import ProductPage from './pages/Productpage'
+import PaymentPage from './pages/Paymentpage'
+import CartPage from './pages/Cartpage'
+
 
 function Logout() {
   localStorage.clear()
@@ -26,6 +27,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+
         <Route
           path="/"
           element={
@@ -49,6 +51,12 @@ const App = () => {
             <RegisterAndLogout />
           }
         />
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route
+          path="/product"
+          element={<ProductPage />}
+        />
         <Route
           path="/cart"
           element={
@@ -57,12 +65,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/*"
-          element={
-            <Error404Page />
-          }
-        />
+
       </Routes>
     </BrowserRouter>
   )

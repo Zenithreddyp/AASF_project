@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        input,
+        textarea,
+        button {
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .image-input {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>🛒 Add New Product</h2>
+
+    <form id="productForm" action="http://127.0.0.1:8000/prod/products/add/special/pass_zenith" method="POST"
+        enctype="multipart/form-data">
+
+        <label>Name:</label>
+        <input type="text" name="name" required>
+
+        <label>Description:</label>
+        <textarea name="description" required></textarea>
+
+        <label>Price:</label>
+        <input type="text" name="price" required>
+
+        <label>Stock:</label>
+        <input type="number" name="stock" required>
+
+        <label>Category:</label>
+        <input type="text" name="category" required>
+
+        <label>Brand:</label>
+        <input type="text" name="brand" required>
+
+        <label>Rating:</label>
+        <input type="number" step="0.1" name="rating" required>
+
+        <label>Product Images:</label>
+        <div id="image-fields">
+            <div class="image-input">
+                <input type="file" name="uploaded_images" multiple>
+            </div>
+        </div>
+        <br><br>
+        <button type="submit">Submit Product</button>
+    </form>
+
+</body>
+
+</html>

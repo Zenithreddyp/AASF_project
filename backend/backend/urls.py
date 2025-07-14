@@ -33,5 +33,6 @@ urlpatterns = [
 
     path("users-auth/",include("rest_framework.urls")),
 
-    path("users/",include("users.urls"))
+    path("users/",include("users.urls")),
+    path("prod/",include("products.urls"))
 ]

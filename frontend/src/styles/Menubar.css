@@ -1,0 +1,32 @@
+.menubar {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  align-items: center;
+  padding: 10px;
+  background-color: aliceblue;
+ width: 95vw;
+  gap: 10vh;
+  border-radius: 15px;
+}
+.recom{
+  font-size: 2rem;
+  padding: 3px;
+  background-color: orange;
+  border-radius: 15px;
+}
+.menu-item {
+  padding: 8px 16px;
+  background-color: orange;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: padding-bottom 0.5s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu-item:hover {
+  background-color: orange;
+  color: white;
+  padding-bottom: 2vh; 
+}
