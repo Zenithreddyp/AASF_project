@@ -1,13 +1,22 @@
 import { privateApi } from "./axiosprivate";
+import { validateToken } from "../components/authCheck";
 
 export const addtocart = async (item) => {
+
+  // const isAuth = await validateToken();
+  // if (!isAuth) {
+  //   alert("Please login to add items to cart.");
+  //   window.location.href = "/login";  // or use navigate if inside a component
+  //   return;
+  // }
+
   try {
     const res = await privateApi.post("/cart/cart/add/", {
       product: item.id,
       quantity: 1,
     });
 
-    if (response.status === 201) {
+    if (res.status === 201) {
       alert("Added to cart successfully!");
     }
   } catch (error) {
@@ -37,7 +46,7 @@ export const removeItem = async (cartItemId) => {
   }
 };
 
-export const placeOrder = async (cartItemId) => {
+export const placeOrder = async () => {
   try {
     await privateApi.post("/cart/cart/order");
     alert("Prder placed");
@@ -84,7 +93,7 @@ export const downloadInvoice = async (orderId) => {
 
   try {
     const res = await privateApi.get(`/api/invoice/download/${orderId}/`, {
-      responseType: 'blob', // very important to receive PDF as a blob
+      responseType: 'blob', // very imp to receive PDF as a blob
     });
 
     const blob = new Blob([response.data], { type: "application/pdf" });

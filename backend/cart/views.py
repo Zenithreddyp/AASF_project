@@ -30,7 +30,21 @@ class AddCartorGetItem(generics.ListCreateAPIView):
     
     def perform_create(self, serializer):     #very important
         cart, created = Cart.objects.get_or_create(user=self.request.user, is_ordered=False)   # important
-        serializer.save(cart=cart)
+
+        product = serializer.validated_data['product']
+        quantity = serializer.validated_data['quantity']
+
+        existing_item = Cartitem.objects.filter(cart=cart, product=product).first()
+
+        if existing_item:
+            existing_item.quantity += quantity
+            existing_item.total_price = existing_item.product.price * existing_item.quantity
+            existing_item.save()
+        else:
+            serializer.save(cart=cart)
+
+
+
         
 class CartItemUpdateView(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]

@@ -1,2 +1,4 @@
-export const ACCESS_TOKEN = "access";
-export const REFRESH_TOKEN = "refresh"
+// export const ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUyNDI4MzA1LCJpYXQiOjE3NTI0MjY1MDUsImp0aSI6ImE2OTE5ZWFjY2I0MTQ0NjJhMTQ2MmI4MTlkMDAzYTk4IiwidXNlcl9pZCI6Mn0.oCnLI_w1GPK7IDXCSyhCDjRdJePx0aRg4u2mNmjudZM";
+// export const REFRESH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1MjUxMjkwNSwiaWF0IjoxNzUyNDI2NTA1LCJqdGkiOiJkZjg0NjA0NjJlZDM0ZTg1OWQ3MGNlNGExM2YxMTQ3YSIsInVzZXJfaWQiOjJ9.GI6gPVp07Ghr3fp0_sdVYgXwCixFKernLk-pMCOABoo"
+export const ACCESS_TOKEN = "access"
+export const REFRESH_TOKEN = "refrsh"

@@ -71,7 +71,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "products",
-    "recommendationsforhome"
+    "recommendationsforhome",
+    "cart"
+
 ]
 
 MIDDLEWARE = [
