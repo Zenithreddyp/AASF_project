@@ -39,6 +39,9 @@
 .cart-info {
   flex: 1;
 }
+.cart-page h2{
+  color: #c45500;
+}
 
 .cart-info h3 {
   margin: 0 0 0.5rem;

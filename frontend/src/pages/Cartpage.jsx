@@ -7,8 +7,8 @@ const CartPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-        setCartItems(storedCart);
+        const Cart = JSON.parse(localStorage.getItem('cart')) || [];
+        setCartItems(Cart);
     }, []);
 
     const deleteItem = (id) => {
