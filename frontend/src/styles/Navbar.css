@@ -24,7 +24,7 @@ body{
 }
 
 .navbarlinks li:hover {
-  color: #ff9800; /* orange */
+  color: #ff9800;
   cursor: pointer;
 
   border-radius: 8px;

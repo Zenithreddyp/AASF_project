@@ -56,7 +56,6 @@
   transition: transform 0.4s ease;
 }
 
-/* ✅ Only when hovering over the image itself */
 .recom-image img:hover {
   transform: scale(1.1) ;
 }
