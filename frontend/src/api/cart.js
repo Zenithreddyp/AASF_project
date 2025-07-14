@@ -2,17 +2,16 @@ import { privateApi } from "./axiosprivate";
 import { validateToken } from "../components/authCheck";
 
 export const addtocart = async (item) => {
-
   const isAuth = await validateToken();
   if (!isAuth) {
     alert("Please login to add items to cart.");
-    window.location.href = "/login";  // or use navigate if inside a component
+    window.location.href = "/login"; // or use navigate if inside a component
     return;
   }
 
   try {
     const res = await privateApi.post("/cart/cart/add/", {
-      product: item.id,
+      product_id: item.id,
       quantity: 1,
     });
 
@@ -20,26 +19,34 @@ export const addtocart = async (item) => {
       alert("Added to cart successfully!");
     }
   } catch (error) {
-    console.error("Add to cart failed:", error);
-    alert("Failed to add to cart.");
+    if (error.response) {
+      console.error("Backend validation error:", error.response.data);
+      alert("Error: " + JSON.stringify(error.response.data));
+    } else {
+      console.error("Add to cart failed:", error);
+      alert("Failed to add to cart.");
+    }
   }
 };
 
-export const updateQuantity = async (cartItemId, newQuantity) => {
+export const updateQuant = async (cartItemId, newQuantity) => {
   try {
-    const res = await privateApi.put(`/cart/item/${cartItemId}/update/`, {
+    const res = await privateApi.put(`cart/cart/update/${cartItemId}/`, {
       quantity: newQuantity,
     });
     alert("Quantity updated!");
+    return res;
   } catch (error) {
     console.error("Error updating quantity:", error);
     alert("Failed to update quantity");
+    return null;
   }
 };
 
 export const removeItem = async (cartItemId) => {
   try {
-    await privateApi.delete(`/cart/remove/${cartItemId}/`);
+    const res = await privateApi.delete(`/cart/cart/remove/${cartItemId}/`);
+    return res;
     alert("Item removed");
   } catch (error) {
     console.error("Remove failed", error);
@@ -55,10 +62,9 @@ export const placeOrder = async () => {
   }
 };
 
-
 export const dispCart = async () => {
   try {
-    const res = await privateApi.get("/cart/");
+    const res = await privateApi.get("/cart/cart/");
     return res.data;
   } catch (error) {
     console.error("Error fetching cart:", error);
@@ -73,27 +79,23 @@ export const cancelOrder = async (orderId) => {
   } catch (error) {
     console.error("Cancellation failed", error);
   }
-  
 };
-
 
 export const clearCart = async () => {
   try {
     await privateApi.delete("/cart/cart/clear");
     alert("Cart cleared");
   } catch (error) {
-    console.error("Cart clearing failed",error);
+    console.error("Cart clearing failed", error);
   }
 };
-
-
 
 export const downloadInvoice = async (orderId) => {
   const token = localStorage.getItem("ACCESS_TOKEN");
 
   try {
     const res = await privateApi.get(`/api/invoice/download/${orderId}/`, {
-      responseType: 'blob', // very imp to receive PDF as a blob
+      responseType: "blob", // very imp to receive PDF as a blob
     });
 
     const blob = new Blob([response.data], { type: "application/pdf" });

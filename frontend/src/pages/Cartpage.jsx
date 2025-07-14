@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/CartPage.css";
 import { useNavigate } from "react-router-dom";
-import { dispCart } from "../api/cart";
+import { dispCart, removeItem, updateQuant } from "../api/cart";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -12,12 +12,22 @@ const CartPage = () => {
     // setCartItems(storedCart);
     const fetchCart = async () => {
       const data = await dispCart();
-      const formattedCart = data.map((item) => ({
+      console.log("Cart response from backend:", data);
+
+      const cart = data[0];
+
+      if (!cart?.items) {
+        console.error("Cart has no items");
+        return;
+      }
+
+      const formattedCart = cart.items.map((item) => ({
         id: item.id,
         quantity: item.quantity,
         name: item.product.name,
-        cost: item.product.cost, // e.g., ₹60,000
-        img: item.product.img,
+        prod_id: item.product.id,
+        cost: parseFloat(item.product.price),
+        img: item.product.images[0]?.image, // use the first image
       }));
       setCartItems(formattedCart);
     };
@@ -25,32 +35,65 @@ const CartPage = () => {
     fetchCart();
   }, []);
 
-  const deleteItem = (id) => {
-    const updatedCart = cartItems.filter((item) => item.id !== id);
-    setCartItems(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  const deleteItem = async (id) => {
+    // const updatedCart = cartItems.filter((item) => item.id !== id);
+    // setCartItems(updatedCart);
+    // localStorage.setItem("cart", JSON.stringify(updatedCart));
+    try {
+      const res = await removeItem(id);
+
+      if (res.status === 200 || res.status === 204) {
+        const Updatedcart = cartItems.filter((item) => item.id !== id);
+        setCartItems(Updatedcart);
+      }
+    } catch (error) {
+      console.error("Failed to delete item", error);
+    }
+
   };
 
-  const updateQuantity = (id, change) => {
-    const updatedCart = cartItems.map((item) => {
-      if (item.id === id) {
-        const newQty = item.quantity + change;
-        return { ...item, quantity: newQty < 1 ? 1 : newQty };
+  const updateQuantity = async (id, newquantity) => {
+    // const updatedCart = cartItems.map((item) => {
+    //   if (item.id === id) {
+    //     const newQty = item.quantity + change;
+    //     return { ...item, quantity: newQty < 1 ? 1 : newQty };
+    //   }
+    //   return item;
+    // });
+    // setCartItems(updatedCart);
+    // localStorage.setItem("cart", JSON.stringify(updatedCart));
+    if (newquantity <= 0) {
+      alert("Quantity cannot be zero");
+      return;
+    }
+
+    try {
+      const res = await updateQuant(id, newquantity);
+      if (res.status === 200) {
+        const updatedCart = cartItems.map((item) => {
+          if (item.id === id) {
+            return { ...item, quantity: newquantity };
+          }
+          return item;
+        });
+        setCartItems(updatedCart);
+      } else {
+        console.error("Update failed:", res);
       }
-      return item;
-    });
-    setCartItems(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    } catch (error) {
+      console.error("Updating failed", error);
+    }
   };
+
   const getTotalQuantity = () => {
     return cartItems.reduce((sum, item) => sum + item.quantity, 0);
   };
 
   const getTotalPrice = () => {
-    return cartItems.reduce((total, item) => {
-      const price = Number((item.cost || "0").replace(/[₹,]/g, ""));
-      return total + price * item.quantity;
-    }, 0);
+    return cartItems.reduce(
+      (total, item) => total + item.cost * item.quantity,
+      0
+    );
   };
 
   return (
@@ -66,21 +109,17 @@ const CartPage = () => {
               <div className="cart-info">
                 <h3>{item.name}</h3>
                 <p>Price: {item.cost}</p>
-                <p>
-                  Subtotal: ₹
-                  {Number((item.cost || "0").replace(/[₹,]/g, "")) *
-                    item.quantity}
-                </p>
+                <p>Subtotal: ₹{(item.cost || 0) * item.quantity}</p>
                 <div className="cart-controls">
                   <button
-                    onClick={() => updateQuantity(item.id, -1)}
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
                     className="qty-btn"
                   >
                     −
                   </button>
                   <span>{item.quantity}</span>
                   <button
-                    onClick={() => updateQuantity(item.id, 1)}
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
                     className="qty-btn"
                   >
                     +
