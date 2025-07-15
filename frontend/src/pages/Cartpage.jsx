@@ -68,7 +68,7 @@ const CartPage = () => {
 
                     <button
                         className="order-btn"
-                        onClick={() => navigate('/payment', { state: cartItems[0] })}
+                        onClick={() => navigate('/payment', { state: cartItems })}
                     >
                         Proceed to Buy ({getTotalQuantity()} items)
 

@@ -4,23 +4,41 @@ import '../styles/Paymentpage.css';
 
 const PaymentPage = () => {
     const location = useLocation();
-    const data = location.state;
-    const items = Array.isArray(data) ? data : [data];
     const navigate = useNavigate();
+
+    const data = location.state;
+
+
+    if (!data) {
+        return (
+            <div style={{ padding: "20px", textAlign: "center" }}>
+                ❌ No products selected. Please go back and add items to your cart.
+                <br />
+                <button onClick={() => navigate(-1)} style={{ marginTop: "10px" }}>⬅️ Go Back</button>
+            </div>
+        );
+    }
+
+    const items = Array.isArray(data) ? data : [data];
 
     const [savedAddresses, setSavedAddresses] = useState([]);
     const [selectedIndex, setSelectedIndex] = useState(null);
     const [showForm, setShowForm] = useState(false);
 
     const [fullname, setFullname] = useState('');
+    const [pincode, setpincode] = useState('');
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
-    const [upi, setUpi] = useState('');
     const [submitted, setSubmitted] = useState(false);
 
-    const totalPrice = items.reduce((acc, item) => acc + Number(item.cost?.replace(/[₹,]/g, '')) * (item.quantity || 1), 0);
+    const totalPrice = items.reduce((acc, item) => {
+        const cost = typeof item.cost === 'string'
+            ? Number(item.cost.replace(/[₹,]/g, ''))
+            : Number(item.cost || 0);
+        return acc + cost * (item.quantity || 1);
+    }, 0);
 
     useEffect(() => {
         const stored = JSON.parse(localStorage.getItem('userAddresses')) || [];
@@ -39,17 +57,25 @@ const PaymentPage = () => {
         setAddress(addr.address);
         setCity(addr.city);
         setState(addr.state);
+        setpincode(addr.pincode);
         setShowForm(false);
     };
 
+    const deleteAddress = (index) => {
+        const updated = savedAddresses.filter((_, i) => i !== index);
+        setSavedAddresses(updated);
+        localStorage.setItem('userAddresses', JSON.stringify(updated));
+        setSelectedIndex(null);
+    };
+
     const handlePayment = () => {
-        if (!fullname || !phone || !address || !city || !state || !upi) {
+        if (!fullname || !phone || !address || !city || !state) {
             alert("Please fill all the fields.");
             return;
         }
 
         if (selectedIndex === null) {
-            const newAddress = { fullname, phone, address, city, state };
+            const newAddress = { fullname, phone, address, city, state, pincode };
             const updated = [...savedAddresses, newAddress];
             setSavedAddresses(updated);
             localStorage.setItem('userAddresses', JSON.stringify(updated));
@@ -78,18 +104,28 @@ const PaymentPage = () => {
                     <div className="saved-addresses">
                         <h3>Select Saved Address</h3>
                         {savedAddresses.map((addr, index) => (
-                            <div key={index} className={`address-card ${selectedIndex === index ? 'selected' : ''}`}>
-                                <input
-                                    type="radio"
-                                    name="selectedAddress"
-                                    checked={selectedIndex === index}
-                                    onChange={() => selectAddress(index)}
-                                />
-                                <div>
-                                    <p><strong>{addr.fullname}</strong> - {addr.phone}</p>
-                                    <p>{addr.address}, {addr.city}, {addr.state}</p>
+                            <div
+                                key={index}
+                                className={`address-card ${selectedIndex === index ? 'selected' : ''}`}
+                            >
+                                <div className="address-card-top">
+                                    <input
+                                        type="radio"
+                                        name="selectedAddress"
+                                        checked={selectedIndex === index}
+                                        onChange={() => selectAddress(index)}
+                                    />
+                                    <div>
+                                        <p><strong>{addr.fullname}</strong> - {addr.phone}</p>
+                                        <p>{addr.address}, {addr.city}, {addr.state} - {addr.pincode}</p>
+                                    </div>
                                 </div>
+
+                                <button className="delete-btn" onClick={() => deleteAddress(index)}>
+                                    🗑 Delete
+                                </button>
                             </div>
+
                         ))}
                         <button
                             className="new-address-btn"
@@ -101,6 +137,7 @@ const PaymentPage = () => {
                                 setAddress('');
                                 setCity('');
                                 setState('');
+                                setpincode('');
                             }}
                         >
                             + New Address
@@ -150,23 +187,46 @@ const PaymentPage = () => {
                                 onChange={(e) => setState(e.target.value)}
                                 placeholder="State"
                             />
+
+                            <label>Pincode:</label>
+                            <input
+                                type="text"
+                                value={pincode}
+                                onChange={(e) => setpincode(e.target.value)}
+                                placeholder="Pincode"
+                            />
                         </div>
                     )}
 
                     <div className="form-section">
-                        <label>UPI ID:</label>
-                        <input
-                            type="text"
-                            value={upi}
-                            onChange={(e) => setUpi(e.target.value)}
-                            placeholder="e.g., yourname@upi"
-                        />
+
 
                         <div className="amount-section">
                             <p>Total Amount: <strong>₹{totalPrice}</strong></p>
                         </div>
 
-                        <button onClick={handlePayment}>Confirm Payment</button>
+                        <button
+                            onClick={() => {
+                                if (!fullname || !phone || !address || !city || !state) {
+                                    alert("Please fill all the fields.");
+                                    return;
+                                }
+
+                                if (selectedIndex === null) {
+                                    const newAddress = { fullname, phone, address, city, state, pincode };
+                                    const updated = [...savedAddresses, newAddress];
+                                    setSavedAddresses(updated);
+                                    localStorage.setItem('userAddresses', JSON.stringify(updated));
+                                }
+
+                                navigate('/upi', {
+                                    state: { amount: totalPrice }
+                                });
+                            }}
+                        >
+                            Proceed to Payment
+                        </button>
+
 
                         {submitted && <p className="success-msg">✅ Payment Completed Successfully!</p>}
                     </div>

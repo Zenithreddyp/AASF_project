@@ -30,7 +30,7 @@ const Navbar = () => {
                     <li onClick={() => handleMenuClick("home")} className={menu === "home" ? "active" : ""}>Home</li>
                     <li onClick={() => handleMenuClick("cart")} className={menu === "cart" ? "active" : ""}>Cart</li>
                     <li onClick={() => handleMenuClick("orders")} className={menu === "orders" ? "active" : ""}>Orders</li>
-                    <li onClick={() => handleMenuClick("profile")} className={menu === "profile" ? "active" : ""}>Profile</li>
+                    <li onClick={() => handleMenuClick("login")} className={menu === "profile" ? "active" : ""}>Profile</li>
                 </ul>
 
                 <div className="searchbar">
