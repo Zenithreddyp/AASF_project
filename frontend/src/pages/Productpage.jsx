@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/ProductPage.css';
+import Navbar from './Navbar';
 
 const ProductPage = () => {
     const location = useLocation();
@@ -30,20 +31,23 @@ const ProductPage = () => {
     };
 
     return (
-        <div className="product-container">
-            <div className="product-image-section">
-                <img src={item.img} alt={item.name} className="product-image" />
-            </div>
-            <div className="product-details-section">
-                <h2 className="product-name">{item.name}</h2>
-                <p className="product-cost">{item.cost}</p>
-                <p className="product-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <div className="product-buttons">
-                    <button onClick={buyNow}>Buy Now</button>
-                    <button onClick={addToCart}>Add to Cart</button>
+        <>
+            <Navbar />
+            <div className="product-container">
+                <div className="product-image-section">
+                    <img src={item.img} alt={item.name} className="product-image" />
+                </div>
+                <div className="product-details-section">
+                    <h2 className="product-name">{item.name}</h2>
+                    <p className="product-cost">{item.cost}</p>
+                    <p className="product-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    <div className="product-buttons">
+                        <button onClick={buyNow}>Buy Now</button>
+                        <button onClick={addToCart}>Add to Cart</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

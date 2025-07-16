@@ -8,6 +8,7 @@ import Register from './pages/Register'
 import ProductPage from './pages/Productpage'
 import PaymentPage from './pages/Paymentpage'
 import CartPage from './pages/Cartpage'
+import SearchPage from './pages/Searchpage'
 
 
 function Logout() {
@@ -44,6 +45,7 @@ const App = () => {
             <Login />
           }
         />
+        <Route path="/search" element={<SearchPage />} />
 
         <Route
           path="/register"
