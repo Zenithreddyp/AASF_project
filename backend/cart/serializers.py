@@ -16,12 +16,7 @@ class CartitemSerializers(serializers.ModelSerializer):
         write_only=True,
         source="product",
     )
-    # cart_id = serializers.PrimaryKeyRelatedField(
-    # queryset=Cart.objects.all(),
-    # write_only=True,
-    # source="cart",
-    # required=False
-    # )
+
 
     class Meta:
         model = Cartitem
@@ -45,4 +40,10 @@ class OrdersSerializers(serializers.ModelSerializer):
     class Meta:
         model = Orders
         fields = "__all__"
+        extra_kwargs = {
+            'total_price': {'required': False},
+            'shipping_address': {'required': False},
+            'cart': {'required': False},
+            'user': {'required': False},
+        }
 

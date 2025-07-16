@@ -19,7 +19,7 @@ class GetCart(generics.ListAPIView):
     permission_classes=[IsAuthenticated]
 
     def get_queryset(self):
-        return Cart.objects.filter(user=self.request.user,is_ordered=False)
+        return Cart.objects.filter(user=self.request.user,is_ordered=False).order_by("-created_at")
 
 class CreateCart(generics.CreateAPIView):
     serializer_class=CartSerializers
@@ -36,7 +36,7 @@ class DeleteCart(generics.DestroyAPIView):
 
     def get_object(self):
         # removes the last created cart for the auth user
-        return Cart.objects.filter(user=self.request.user).order_by('-created_at').first()
+        return Cart.objects.filter(user=self.request.user,is_ordered=False).order_by('-created_at').first()
 
 
 class AddCartorGetItem(generics.ListCreateAPIView):
@@ -50,7 +50,7 @@ class AddCartorGetItem(generics.ListCreateAPIView):
         product = serializer.validated_data['product']
         quantity = serializer.validated_data['quantity']
         
-        cart = serializer.validated_data.get('cart')
+        cart = Cart.objects.filter(user=self.request.user,is_ordered=False).order_by("-created_at").first()
         if not cart:
             cart = Cart.objects.create(user=self.request.user)
 
@@ -142,17 +142,32 @@ class ListallOrders(generics.ListAPIView):
         return Orders.objects.filter(user=self.request.user)
     
 class OrderPlaced(generics.CreateAPIView):
+    
     serializer_class=OrdersSerializers
     permission_classes=[IsAuthenticated]
 
     def perform_create(self, serializer):
+        user = self.request.user
         cart = Cart.objects.filter(user=self.request.user, is_ordered=False).order_by('-created_at').first()
-        
+        print("i came here")
+
         if not cart:
             raise ValidationError("No active cart found to place an order.")
+        
+        total_price = sum(item.product.price * item.quantity for item in cart.items.all())
+
+        shipping_address = self.request.data.get('shipping_address')
+        if not shipping_address:
+            raise ValidationError("Shipping address is required.")
+
         cart.is_ordered=True
         cart.save()
-        serializer.save(user=self.request.user,cart=cart)  
+        serializer.save(
+            user=user,
+            cart=cart,
+            total_price=total_price,
+            shipping_address=shipping_address
+        )
 
 class CancelOrder(generics.UpdateAPIView):
     serializer_class=OrdersSerializers

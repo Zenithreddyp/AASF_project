@@ -43,7 +43,7 @@ class Orders(models.Model):
 
     status = models.CharField(max_length=20,choices=STATUS_CHOICES ,default='Pending')
     shipping_address = models.CharField(max_length=255)
-    invoice=models.FileField(upload_to="invoice/",null=True,blank=True)
+    # invoice=models.FileField(upload_to="invoice/",null=True,blank=True)
     
     
     

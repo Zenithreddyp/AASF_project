@@ -29,7 +29,7 @@ const CartPage = () => {
         cost: parseFloat(item.product.price),
         img: item.product.images[0]?.image, // use the first image
       }));
-      
+
       setCartItems(formattedCart);
     };
 
@@ -50,7 +50,6 @@ const CartPage = () => {
     } catch (error) {
       console.error("Failed to delete item", error);
     }
-
   };
 
   const updateQuantity = async (id, newquantity) => {
@@ -139,7 +138,7 @@ const CartPage = () => {
 
           <button
             className="order-btn"
-            onClick={() => navigate("/payment", { state: cartItems[0] })}
+            onClick={() => navigate("/payment", { state: cartItems })}
           >
             Proceed to Buy ({getTotalQuantity()} items)
           </button>

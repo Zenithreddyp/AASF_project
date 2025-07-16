@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/ProductPage.css";
 
-import { addtocart, singleprodCart } from "../api/cart";
+import {dispCart, addtocart, singleprodCart } from "../api/cart";
+
+
 
 const ProductPage = () => {
   const location = useLocation();
   const item = location.state;
   const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
+
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = item?.images || [];
@@ -47,10 +51,23 @@ const ProductPage = () => {
   };
 
   const buyNow = async () => {
+    
     await singleprodCart(item);
-    
-    navigate("/payment", { state: { item} });
-    
+
+    const data = await dispCart();
+    const cart = data[0];
+
+    const formattedCart = cart.items.map((item) => ({
+      id: item.id,
+      quantity: item.quantity,
+      name: item.product.name,
+      prod_id: item.product.id,
+      cost: parseFloat(item.product.price),
+      img: item.product.images[0]?.image, // use the first image
+    }));
+    setCartItems(formattedCart);
+
+    navigate("/payment", { state:  formattedCart  });
   };
 
   const currentImage =

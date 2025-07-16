@@ -49,7 +49,6 @@ export const singleprodCart = async (item) => {
 
       if (res2.status === 201) {
         alert("Added to cart successfully!");
-        
       }
     }
   } catch (error) {
@@ -57,16 +56,17 @@ export const singleprodCart = async (item) => {
   }
 };
 
-
-export const removetempcart = async (cart_id) => {
+export const removetempcart = async () => {
   try {
-    await privateApi.delete(`/cartdelete/temp/cart/${cart_id}/`);
+    await privateApi.delete(`/cart/delete/temp/cart/`);
     console.log("Temporary cart removed.");
   } catch (error) {
-    console.error("Error removing temp cart:", error.response?.data || error.message);
+    console.error(
+      "Error removing temp cart:",
+      error.response?.data || error.message
+    );
   }
 };
-
 
 export const updateQuant = async (cartItemId, newQuantity) => {
   try {
@@ -92,12 +92,18 @@ export const removeItem = async (cartItemId) => {
   }
 };
 
-export const placeOrder = async () => {
+export const placeOrder = async (shippingAddress) => {
   try {
-    await privateApi.post("/cart/cart/order");
+    const formattedAddress = `${shippingAddress.full_name}, ${shippingAddress.phone_number}, ${shippingAddress.address}, ${shippingAddress.city}, ${shippingAddress.state}, ${shippingAddress.postal_code}`;
+
+    const response = await privateApi.post("/cart/cart/order/", {
+      shipping_address: formattedAddress,
+    });    
     alert("Prder placed");
+    return response.data;
   } catch (error) {
-    console.error("Order failed", error);
+    console.error("Order failed", error.response?.data || error.message);
+    throw error;
   }
 };
 

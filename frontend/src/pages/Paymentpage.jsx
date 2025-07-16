@@ -3,12 +3,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/Paymentpage.css";
 
 import { fetchuserAllAddress, addNewAddress } from "../api/useraddress";
-import { removetempcart } from "../api/cart";
+import { placeOrder, removetempcart } from "../api/cart";
 
 const PaymentPage = () => {
   const location = useLocation();
 
-//   const { cart_id, ...rest } =  || {};
+  //   const { cart_id, ...rest } =  || {};
   const data = location.state;
 
   const items = Array.isArray(data) ? data : [data];
@@ -28,10 +28,13 @@ const PaymentPage = () => {
 
   const [cartRemoved, setCartRemoved] = useState(false);
 
-  const totalPrice = items.reduce(
-    (acc, item) => acc + (Number(item.cost) || 1) * (item.quantity || 1),
-    0
-  );
+  const [paymentCompleted, setPaymentCompleted] = useState(false);
+
+  const totalPrice = items.reduce((acc, item) => {
+    console.log("Item:", item);         // Log full item object
+    console.log("Cost:", item?.cost); 
+    return acc + (Number(item.cost) || 0) * (item.quantity || 1);
+  }, 0);
 
   useEffect(() => {
     // const stored = JSON.parse(localStorage.getItem('userAddresses')) || [];
@@ -43,7 +46,14 @@ const PaymentPage = () => {
     const fetchalladdress = async () => {
       try {
         const data = await fetchuserAllAddress();
-        setSavedAddresses(data);
+        const transformed = data.map((addr) => ({
+          fullname: addr.full_name,
+          phone: addr.phone_number,
+          address: addr.address,
+          city: addr.city,
+          state: addr.state,
+        }));
+        setSavedAddresses(transformed);
         if (data.length === 0) setShowForm(true);
       } catch (error) {
         console.error("Failed fettching addresss", error);
@@ -63,7 +73,21 @@ const PaymentPage = () => {
     setState(addr.state);
     setShowForm(false);
   };
-  
+
+  //  start of removing start     very important
+
+//   useEffect(() => {
+//     const handlePageHide = (event) => {
+//       if (!paymentCompleted && !event.persisted) {
+//         navigator.sendBeacon("/cart/delete/temp/cart/");
+//       }
+//     };
+
+//     window.addEventListener("pagehide", handlePageHide);
+//     return () => window.removeEventListener("pagehide", handlePageHide);
+//   }, [paymentCompleted]);
+
+  //  end of removing start
 
   const handlePayment = async () => {
     const missingFields = [];
@@ -91,7 +115,24 @@ const PaymentPage = () => {
 
     if (res) {
       alert("Payment successful!");
+    //   setPaymentCompleted(true);
       localStorage.removeItem("cart");
+      setSubmitted(true);
+
+      //add mark as orderd
+      try {
+        await placeOrder({
+          full_name: fullname,
+          phone_number: phone,
+          address: address,
+          city: city,
+          state: state,
+          postal_code: "100000", // or use the actual postal code if you have it
+        });
+        console.log("Order placed");
+      } catch (error) {
+        console.error("Error placing order:", error.message);
+      }
     }
   };
 
