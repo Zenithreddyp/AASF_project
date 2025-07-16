@@ -18,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validated_data)
         return user
     
-class ChangePasswordSerializer(serializers.Serializer):     ###
+class ChangePasswordSerializer(serializers.Serializer):   
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
 
@@ -39,31 +39,40 @@ class ChangePasswordSerializer(serializers.Serializer):     ###
 class ShippingAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShippingAddress
-        fields = ["id", "phone_number","postal_code","address","town","city","state", "created_at",]
+        fields = ["id","full_name", "phone_number","postal_code","address","city","state", "created_at",]
         extra_kwargs = {"created_at": {"read_only": True}}
+    #     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # full_name = models.CharField(max_length=100)
+    # phone_number = models.CharField(max_length=10)
+    # address = models.TextField()
+    # city = models.CharField(max_length=50)
+    # state = models.CharField(max_length=50)
+    # postal_code = models.CharField(max_length=6)
+    # created_at = models.DateTimeField(auto_now_add=True)
+    # is_default = models.BooleanField(default=False)
         
-    def validate_postal_code(self, value):
-        try:
-            response = requests.get(f"https://api.postalpincode.in/pincode/{value}", timeout=5)
-        except:
-            raise serializers.ValidationError("Could not connect")
+    # def validate_postal_code(self, value):
+    #     try:
+    #         response = requests.get(f"https://api.postalpincode.in/pincode/{value}", timeout=5)
+    #     except:
+    #         raise serializers.ValidationError("Could not connect")
 
-        if response.status_code != 200:
-            raise serializers.ValidationError("couldnt fetching PIN code info")
+    #     if response.status_code != 200:
+    #         raise serializers.ValidationError("couldnt fetching PIN code info")
 
-        data = response.json()
-        if data[0]["Status"] != "Success" or not data[0]["PostOffice"]:
-            raise serializers.ValidationError("please enter valid  PIN code")
+    #     data = response.json()
+    #     if data[0]["Status"] != "Success" or not data[0]["PostOffice"]:
+    #         raise serializers.ValidationError("please enter valid  PIN code")
 
-        self.post_office_info = data[0]["PostOffice"][0]
+    #     self.post_office_info = data[0]["PostOffice"][0]
 
-        return value
+    #     return value
 
-    def validate(self, attrs):
-        if hasattr(self, "post_office_info"):
-            post_office = self.post_office_info
-            if not attrs.get("city"):
-                attrs["city"] = post_office.get("District")
-            if not attrs.get("state"):
-                attrs["state"] = post_office.get("State")
-        return attrs
+    # def validate(self, attrs):
+    #     if hasattr(self, "post_office_info"):
+    #         post_office = self.post_office_info
+    #         if not attrs.get("city"):
+    #             attrs["city"] = post_office.get("District")
+    #         if not attrs.get("state"):
+    #             attrs["state"] = post_office.get("State")
+    #     return attrs

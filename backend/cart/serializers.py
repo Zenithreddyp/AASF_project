@@ -16,10 +16,16 @@ class CartitemSerializers(serializers.ModelSerializer):
         write_only=True,
         source="product",
     )
+    # cart_id = serializers.PrimaryKeyRelatedField(
+    # queryset=Cart.objects.all(),
+    # write_only=True,
+    # source="cart",
+    # required=False
+    # )
 
     class Meta:
         model = Cartitem
-        fields = ["id","product","product_id", "quantity", "total_price"]
+        fields = ["id","product","product_id", "quantity", "total_price",]
         extra_kwargs={"total_price":{"read_only":True}}
 
 

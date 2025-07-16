@@ -1,3 +1,4 @@
+from django.forms import ValidationError
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics 
@@ -20,6 +21,23 @@ class GetCart(generics.ListAPIView):
     def get_queryset(self):
         return Cart.objects.filter(user=self.request.user,is_ordered=False)
 
+class CreateCart(generics.CreateAPIView):
+    serializer_class=CartSerializers
+    permission_classes=[IsAuthenticated]
+    queryset = Cart.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+    
+class DeleteCart(generics.DestroyAPIView):
+    serializer_class = CartSerializers
+    permission_classes = [IsAuthenticated]
+
+
+    def get_object(self):
+        # removes the last created cart for the auth user
+        return Cart.objects.filter(user=self.request.user).order_by('-created_at').first()
+
 
 class AddCartorGetItem(generics.ListCreateAPIView):
     serializer_class=CartitemSerializers
@@ -28,11 +46,13 @@ class AddCartorGetItem(generics.ListCreateAPIView):
     def get_queryset(self):
         return Cartitem.objects.filter(cart__user=self.request.user)
     
-    def perform_create(self, serializer):     #very important
-        cart, created = Cart.objects.get_or_create(user=self.request.user, is_ordered=False)   # important
-
+    def perform_create(self, serializer):
         product = serializer.validated_data['product']
         quantity = serializer.validated_data['quantity']
+        
+        cart = serializer.validated_data.get('cart')
+        if not cart:
+            cart = Cart.objects.create(user=self.request.user)
 
         existing_item = Cartitem.objects.filter(cart=cart, product=product).first()
 
@@ -126,10 +146,13 @@ class OrderPlaced(generics.CreateAPIView):
     permission_classes=[IsAuthenticated]
 
     def perform_create(self, serializer):
-        cart=Cart.objects.get(user=self.request.user,is_ordered=False)
+        cart = Cart.objects.filter(user=self.request.user, is_ordered=False).order_by('-created_at').first()
+        
+        if not cart:
+            raise ValidationError("No active cart found to place an order.")
         cart.is_ordered=True
         cart.save()
-        serializer.save(user=self.request.user)  
+        serializer.save(user=self.request.user,cart=cart)  
 
 class CancelOrder(generics.UpdateAPIView):
     serializer_class=OrdersSerializers
@@ -142,6 +165,10 @@ class CancelOrder(generics.UpdateAPIView):
 
         serializer.save(status="Cancelled")
     
+
+
+
+
 
 def download_invoice(request, order_id):
     order = Orders.objects.get(id=order_id, user=request.user)

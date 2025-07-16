@@ -29,6 +29,7 @@ const CartPage = () => {
         cost: parseFloat(item.product.price),
         img: item.product.images[0]?.image, // use the first image
       }));
+      
       setCartItems(formattedCart);
     };
 

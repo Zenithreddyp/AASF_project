@@ -29,6 +29,45 @@ export const addtocart = async (item) => {
   }
 };
 
+export const singleprodCart = async (item) => {
+  const isAuth = await validateToken();
+  if (!isAuth) {
+    alert("Please login to buy items.");
+    window.location.href = "/login";
+    return;
+  }
+  try {
+    const res1 = await privateApi.post("/cart/create/new/cart/");
+
+    if (res1.status === 201) {
+      // const cart_id = res1.data.id;
+
+      const res2 = await privateApi.post("/cart/cart/add/", {
+        product_id: item.id,
+        quantity: 1,
+      });
+
+      if (res2.status === 201) {
+        alert("Added to cart successfully!");
+        
+      }
+    }
+  } catch (error) {
+    console.error("Error:", error.response?.data || "Failed to add to cart.");
+  }
+};
+
+
+export const removetempcart = async (cart_id) => {
+  try {
+    await privateApi.delete(`/cartdelete/temp/cart/${cart_id}/`);
+    console.log("Temporary cart removed.");
+  } catch (error) {
+    console.error("Error removing temp cart:", error.response?.data || error.message);
+  }
+};
+
+
 export const updateQuant = async (cartItemId, newQuantity) => {
   try {
     const res = await privateApi.put(`cart/cart/update/${cartItemId}/`, {
@@ -90,6 +129,7 @@ export const clearCart = async () => {
   }
 };
 
+//not in use yet
 export const downloadInvoice = async (orderId) => {
   const token = localStorage.getItem("ACCESS_TOKEN");
 
