@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Recoms.css";
 import { useNavigate } from "react-router-dom";
-import { fetchAllProducts } from "../api/productlist";
+import { fetchAllProducts } from "../api/product";
 
 const Recoms = () => {
   const navigate = useNavigate();

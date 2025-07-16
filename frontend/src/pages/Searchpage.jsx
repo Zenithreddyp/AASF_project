@@ -69,6 +69,7 @@ const SearchPage = () => {
         );
         setResults(filtered);
     }, [searchTerm]);
+    
 
     const goToProduct = (item) => {
         navigate('/product', { state: item });

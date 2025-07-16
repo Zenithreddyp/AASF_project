@@ -4,3 +4,8 @@ export const fetchAllProducts = async () => {
   const res = await publicApi.get("/prod/products/all/");
   return res.data;
 };
+
+
+export const searchProduct = async () => {
+  
+}
