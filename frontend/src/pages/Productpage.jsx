@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/ProductPage.css";
+import Navbar from "./Navbar";
 
-import {dispCart, addtocart, singleprodCart } from "../api/cart";
-
-
+import { dispCart, addtocart, singleprodCart } from "../api/cart";
 
 const ProductPage = () => {
   const location = useLocation();
   const item = location.state;
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
-
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = item?.images || [];
@@ -51,7 +49,6 @@ const ProductPage = () => {
   };
 
   const buyNow = async () => {
-    
     await singleprodCart(item);
 
     const data = await dispCart();
@@ -67,30 +64,33 @@ const ProductPage = () => {
     }));
     setCartItems(formattedCart);
 
-    navigate("/payment", { state:  formattedCart  });
+    navigate("/payment", { state: formattedCart });
   };
 
   const currentImage =
     images.length > 0 ? images[currentIndex].image : "/fallback.png";
 
   return (
-    <div className="product-container">
-      <div className="product-image-section">
-        <img src={currentImage} alt={item.name} />
-      </div>
-      <div className="product-details-section">
-        <h2 className="product-name">{item.name}</h2>
-        <p className="product-cost">{item.cost || `₹${item.price}`}</p>
-        <p className="product-desc">
-          {item.description ||
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
-        </p>
-        <div className="product-buttons">
-          <button onClick={buyNow}>Buy Now</button>
-          <button onClick={handleaddToCart}>Add to Cart</button>
+    <>
+      <Navbar />
+      <div className="product-container">
+        <div className="product-image-section">
+          <img src={currentImage} alt={item.name} />
+        </div>
+        <div className="product-details-section">
+          <h2 className="product-name">{item.name}</h2>
+          <p className="product-cost">{item.cost || `₹${item.price}`}</p>
+          <p className="product-desc">
+            {item.description ||
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
+          </p>
+          <div className="product-buttons">
+            <button onClick={buyNow}>Buy Now</button>
+            <button onClick={handleaddToCart}>Add to Cart</button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../styles/CartPage.css";
 import { useNavigate } from "react-router-dom";
+import Navbar from "./Navbar";
+
 import { dispCart, removeItem, updateQuant } from "../api/cart";
 
 const CartPage = () => {
@@ -97,54 +99,57 @@ const CartPage = () => {
   };
 
   return (
-    <div className="cart-page">
-      <h2>Your Cart</h2>
-      {cartItems.length === 0 ? (
-        <p className="empty-cart">Your CartPage is empty.</p>
-      ) : (
-        <>
-          {cartItems.map((item) => (
-            <div key={item.id} className="cart-item">
-              <img src={item.img} alt={item.name} className="cart-image" />
-              <div className="cart-info">
-                <h3>{item.name}</h3>
-                <p>Price: {item.cost}</p>
-                <p>Subtotal: ₹{(item.cost || 0) * item.quantity}</p>
-                <div className="cart-controls">
-                  <button
-                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                    className="qty-btn"
-                  >
-                    −
-                  </button>
-                  <span>{item.quantity}</span>
-                  <button
-                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    className="qty-btn"
-                  >
-                    +
-                  </button>
-                  <button
-                    onClick={() => deleteItem(item.id)}
-                    className="delete-btn"
-                  >
-                    🗑️ Delete
-                  </button>
+    <>
+      <Navbar/>
+      <div className="cart-page">
+        <h2>Your Cart</h2>
+        {cartItems.length === 0 ? (
+          <p className="empty-cart">Your CartPage is empty.</p>
+        ) : (
+          <>
+            {cartItems.map((item) => (
+              <div key={item.id} className="cart-item">
+                <img src={item.img} alt={item.name} className="cart-image" />
+                <div className="cart-info">
+                  <h3>{item.name}</h3>
+                  <p>Price: {item.cost}</p>
+                  <p>Subtotal: ₹{(item.cost || 0) * item.quantity}</p>
+                  <div className="cart-controls">
+                    <button
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      className="qty-btn"
+                    >
+                      −
+                    </button>
+                    <span>{item.quantity}</span>
+                    <button
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      className="qty-btn"
+                    >
+                      +
+                    </button>
+                    <button
+                      onClick={() => deleteItem(item.id)}
+                      className="delete-btn"
+                    >
+                      🗑️ Delete
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-          <h3 className="total-price">Total: ₹{getTotalPrice()}</h3>
+            ))}
+            <h3 className="total-price">Total: ₹{getTotalPrice()}</h3>
 
-          <button
-            className="order-btn"
-            onClick={() => navigate("/payment", { state: cartItems })}
-          >
-            Proceed to Buy ({getTotalQuantity()} items)
-          </button>
-        </>
-      )}
-    </div>
+            <button
+              className="order-btn"
+              onClick={() => navigate("/payment", { state: cartItems })}
+            >
+              Proceed to Buy ({getTotalQuantity()} items)
+            </button>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 

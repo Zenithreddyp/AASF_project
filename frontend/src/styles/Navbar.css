@@ -17,7 +17,7 @@ body{
 
 }
 .navbarlinks li.active {
-  border-bottom: 3px solid black;
+  border-bottom: 2px solid black;
   padding-bottom: 0.1rem;
   color: orange;
  
@@ -68,12 +68,10 @@ border-radius: 10px;
   
 }
 .searchbar input{
-    width: 95%;
+    width: 80%;
     border-radius: 20px;
     height: 5vh;
     position: absolute;
-    padding-left: 1vw;
-
+text-align: center;
 }
-
 

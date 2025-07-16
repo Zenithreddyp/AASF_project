@@ -35,7 +35,7 @@ export const addNewAddress = async (shippingaddress) => {
       address: shippingaddress.address,
       city: shippingaddress.city,
       state: shippingaddress.state,
-      postal_code: "100000",
+      postal_code: shippingaddress.pincode,
     });
     
 
