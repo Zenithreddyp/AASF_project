@@ -70,10 +70,11 @@ INSTALLED_APPS = [
     "users",
     "rest_framework",
     "corsheaders",
-    "products",
+    "backend.products",
     "recommendationsforhome",
-    "cart"
-
+    "cart",
+    "backend.payment",
+    "paypal.standard.ipn",
 ]
 
 MIDDLEWARE = [
@@ -174,3 +175,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # The URL that will serve the media files.
 MEDIA_URL = '/media/'
+
+# Paypal integration
+PAYPAL_RECEIVER_EMAIL = 'bms_2024023@iiitm.ac.in' #where cash is paid into
+PAYPAL_TEST = True
