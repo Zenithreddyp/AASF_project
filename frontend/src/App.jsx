@@ -9,6 +9,8 @@ import ProductPage from './pages/Productpage'
 import PaymentPage from './pages/Paymentpage'
 import CartPage from './pages/Cartpage'
 import SearchPage from './pages/Searchpage'
+import UPIPage from './pages/UPIpage'
+import Orders from './pages/Orderspage'
 
 
 function Logout() {
@@ -46,7 +48,7 @@ const App = () => {
           }
         />
         <Route path="/search" element={<SearchPage />} />
-
+        <Route path="/upi" element={<UPIPage />} />
         <Route
           path="/register"
           element={
@@ -55,6 +57,7 @@ const App = () => {
         />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/orders" element={<Orders />} />
         <Route
           path="/product"
           element={<ProductPage />}

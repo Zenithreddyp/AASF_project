@@ -69,23 +69,6 @@ const PaymentPage = () => {
         setSelectedIndex(null);
     };
 
-    const handlePayment = () => {
-        if (!fullname || !phone || !address || !city || !state) {
-            alert("Please fill all the fields.");
-            return;
-        }
-
-        if (selectedIndex === null) {
-            const newAddress = { fullname, phone, address, city, state, pincode };
-            const updated = [...savedAddresses, newAddress];
-            setSavedAddresses(updated);
-            localStorage.setItem('userAddresses', JSON.stringify(updated));
-        }
-
-        setSubmitted(true);
-        alert("Payment successful!");
-        localStorage.removeItem('cart');
-    };
 
     useEffect(() => {
         if (submitted) {
@@ -102,6 +85,7 @@ const PaymentPage = () => {
             <div className="paymentpage">
                 <div className="payment-container">
                     <h2>Complete Your Payment</h2>
+                    <h5>note:please refresh for any discomfort</h5>
 
                     {savedAddresses.length > 0 && (
                         <div className="saved-addresses">
@@ -223,8 +207,13 @@ const PaymentPage = () => {
                                     }
 
                                     navigate('/upi', {
-                                        state: { amount: totalPrice }
+                                        state: {
+                                            amount: totalPrice,
+                                            items,
+                                            address: { fullname, phone, address, city, state, pincode }
+                                        }
                                     });
+
                                 }}
                             >
                                 Proceed to Payment

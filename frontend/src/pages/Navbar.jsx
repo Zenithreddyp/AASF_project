@@ -43,7 +43,7 @@ const Navbar = () => {
             <div className="searchbar">
                 <input
                     type="text"
-                    placeholder="search here"
+                    placeholder="start searching"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyDown={handleSearchKeyPress}
