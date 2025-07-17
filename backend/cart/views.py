@@ -70,26 +70,14 @@ class CartItemUpdateView(generics.UpdateAPIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request, pk):
-        # cart_item = Cartitem.objects.get(pk=pk,user=self.request.user)
-        # new_quantity = request.data.get("quantity")
-        # if new_quantity is None or int(new_quantity) <= 0:
-        #     return Response({"error": "Invalid quantity"}, status=status.HTTP_400_BAD_REQUEST)
-        # cart_item.quantity = int(new_quantity)
-        # cart_item.total_price = cart_item.product.price * cart_item.quantity
-        # cart_item.save()
-        # serializer = CartitemSerializers(cart_item)
-        # return Response(serializer.data, status=status.HTTP_200_OK)
         user = self.request.user
-        try:
-            latest_cart = Cart.objects.filter(user=user, is_ordered=False).order_by("-created_at").first()
+        latest_cart = Cart.objects.filter(user=user, is_ordered=False).order_by("-created_at").first()
 
-            if not latest_cart:
-                return Response({"error": "No active cart found"}, status=status.HTTP_404_NOT_FOUND)
+        if not latest_cart:
+            return Response({"error": "No active cart found"}, status=status.HTTP_404_NOT_FOUND)
 
-            cart_item = Cartitem.objects.get(pk=pk, cart=latest_cart)
+        cart_item = Cartitem.objects.get(pk=pk, cart=latest_cart)
 
-        except Cartitem.DoesNotExist:
-            return Response({"error": "Item not found in the latest cart"}, status=status.HTTP_404_NOT_FOUND)
 
         new_quantity = request.data.get("quantity")
 

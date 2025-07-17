@@ -29,7 +29,7 @@ const ProductPage = () => {
       <div>No product data found. Please go back and select a product.</div>
     );
   }
-
+  
   // const addToCart = () => {
   //     const cart = JSON.parse(localStorage.getItem('cart')) || [];
   //     const existingIndex = cart.findIndex(product => product.id === item.id);
@@ -64,7 +64,9 @@ const ProductPage = () => {
     }));
     setCartItems(formattedCart);
 
-    navigate("/payment", { state: formattedCart });
+    navigate("/payment", {
+      state: { from: "product", items: formattedCart },
+    });
   };
 
   const currentImage =
