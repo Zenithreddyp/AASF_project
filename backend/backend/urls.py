@@ -42,7 +42,10 @@ urlpatterns = [
     path("users/",include("users.urls")),
     path("prod/",include("products.urls")),
 
-    path("cart/",include("cart.urls"))
+    path("cart/",include("cart.urls")),
+
+    path("", include("payment.urls")),
+    path("", include("paypal.standard.ipn.urls"))
 ]
 
 
