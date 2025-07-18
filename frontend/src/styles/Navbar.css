@@ -10,8 +10,9 @@ body{
 .navbar{
     display: flex;
     background-color:aliceblue;
+    justify-content: center;
     height: 10vh;
-    width: 95vw;
+    width: 100vw;
     color: black;
     border-radius: 20px;
 
@@ -72,6 +73,7 @@ border-radius: 10px;
     border-radius: 20px;
     height: 5vh;
     position: absolute;
-text-align: center;
+    padding-left: 2vh;
 }
+
 

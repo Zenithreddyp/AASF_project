@@ -1,0 +1,39 @@
+ .upi-page {
+    width: 95vw;
+    margin: auto;
+    border-radius: 15px;
+}
+
+.payment-summary {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.upi-address p {
+    margin: 4px 0;
+}
+
+.upi-section {
+    text-align: center;
+}
+
+.qr-code {
+    width: 200px;
+    height: 200px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+}
+
+.pay-btn {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+}

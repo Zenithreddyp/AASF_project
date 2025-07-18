@@ -9,6 +9,8 @@ import ProductPage from "./pages/Productpage";
 import PaymentPage from "./pages/Paymentpage";
 import CartPage from "./pages/Cartpage";
 import SearchPage from "./pages/Searchpage";
+import UPIPage from "./pages/UPIpage";
+import Orders from "./pages/Orderspage";
 
 function Logout() {
   localStorage.clear();
@@ -35,11 +37,24 @@ const App = () => {
 
         <Route path="/login" element={<Login />} />
         <Route path="/search" element={<SearchPage />} />
+        <Route path="/upi" element={<UPIPage />} />
 
         <Route path="/register" element={<RegisterAndLogout />} />
         <Route path="/payment" element={<PaymentPage />} />
 
         <Route path="/product" element={<ProductPage />} />
+        <Route
+          path="/orders"
+          element={
+            <ProtectedRoute>
+              <Orders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+        path="/logout"
+        element={<Logout />}
+        />
         <Route
           path="/cart"
           element={

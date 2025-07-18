@@ -5,7 +5,7 @@ import { validateToken } from "../components/authCheck";
 
 const Navbar = () => {
   const [menu, setmenu] = useState("home");
-  const [searchTerm, setSearchTerm] = useState(""); // 🔹 Step 1
+  const [searchTerm, setSearchTerm] = useState("");
 
   const navigate = useNavigate();
 
@@ -28,8 +28,7 @@ const Navbar = () => {
 
   const handleSearchKeyPress = (e) => {
     if (e.key === "Enter" && searchTerm.trim()) {
-      // 🔹 Step 2
-      navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`); // 🔹 Step 3
+      navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
     }
   };
 
@@ -78,7 +77,7 @@ const Navbar = () => {
       <div className="searchbar">
         <input
           type="text"
-          placeholder="search here"
+          placeholder="start searching"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={handleSearchKeyPress}

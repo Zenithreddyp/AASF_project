@@ -107,6 +107,18 @@ export const placeOrder = async (shippingAddress) => {
   }
 };
 
+
+export const retriveallorders = async () => {
+  try {
+    const res = await privateApi.get("/cart/orders/");    
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    return [];
+  }
+}
+
+
 export const dispCart = async () => {
   try {
     const res = await privateApi.get("/cart/cart/");
