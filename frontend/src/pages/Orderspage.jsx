@@ -12,7 +12,8 @@ const Orders = () => {
 
     return (
         <>
-            <Navbar />
+            <Navbar currentPage="orders" />
+
             <div className="orders-page">
                 <h2>Your Orders</h2>
                 {orders.length === 0 ? (
