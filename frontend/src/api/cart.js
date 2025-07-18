@@ -19,13 +19,7 @@ export const addtocart = async (item) => {
       alert("Added to cart successfully!");
     }
   } catch (error) {
-    if (error.response) {
-      console.error("Backend validation error:", error.response.data);
-      alert("Error: " + JSON.stringify(error.response.data));
-    } else {
-      console.error("Add to cart failed:", error);
-      alert("Failed to add to cart.");
-    }
+    alert("Failed to add to cart.");
   }
 };
 
@@ -85,8 +79,9 @@ export const updateQuant = async (cartItemId, newQuantity) => {
 export const removeItem = async (cartItemId) => {
   try {
     const res = await privateApi.delete(`/cart/cart/remove/${cartItemId}/`);
-    return res;
+    
     alert("Item removed");
+    return res;
   } catch (error) {
     console.error("Remove failed", error);
   }
@@ -147,7 +142,11 @@ export const clearCart = async () => {
   }
 };
 
+
+
 //not in use yet
+
+
 export const downloadInvoice = async (orderId) => {
   const token = localStorage.getItem("ACCESS_TOKEN");
 
