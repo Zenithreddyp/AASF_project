@@ -2,78 +2,84 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  
 }
-body{
-    background-color: #414141;
-}
-.navbar{
-    display: flex;
-    background-color:aliceblue;
-    justify-content: center;
-    height: 10vh;
-    width: 100vw;
-    color: black;
-    border-radius: 20px;
 
+body {
+  background-color: rgb(248, 248, 248);
+   /* Set Roboto as the default font */
 }
-.navbarlinks li.active {
-  border-bottom: 2px solid black;
+
+.navbar {
+  display: flex;
+  background-color: rgb(44, 95, 121);
+  justify-content: center;
+  height: 10vh;
+  width: 100vw;
+  color: black;
+  font-family: 'Roboto', sans-serif;
+}
+
+.navbarlinks li {
   padding-bottom: 0.1rem;
-  color: orange;
- 
+  color: rgb(0, 0, 0);
+  transition: color 0.3s ease, transform 0.3s ease, border-radius 0.3s ease;
+}
+
+.navbarlinks li.active {
+  border-bottom: 2px solid rgb(0, 0, 0);
+  padding-bottom: 0.1rem;
+  color: rgb(237, 232, 208);
+  transition: color 0.3s ease, transform 0.3s ease, border-radius 0.3s ease;
 }
 
 .navbarlinks li:hover {
-  color: #ff9800; 
+  color: rgb(237, 232, 208);
   cursor: pointer;
-
   border-radius: 8px;
   transform: translateY(-6px);
-  
 }
 
-.videomini{
-    height: 10vh;
-    width: 25%;
-    border-radius: 20px;
+.videomini {
+  height: 10vh;
+  width: 25%;
+  border-radius: 20px;
+  margin: 10px;
 }
-.logo{
-    width: 25%;
-    display:flex;
-    justify-content: center; 
+
+.logo {
+  width: 25%;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  font-size:  1.8rem;
-    
+  font-size: 1.8rem;
+  /* font-family: 'Montserrat', sans-serif; Removed this specific font, it will now inherit Roboto */
 }
 
-.navbarlinks{
- display: flex;
-  justify-content: center; 
+.navbarlinks {
+  display: flex;
+  justify-content: center;
   align-items: center;
-width: 40%;
- gap: 5%;
- list-style-type: none;
- font-size: 1.2rem;
+  width: 40%;
+  gap: 5%;
+  list-style-type: none;
+  font-size: 1.2rem;
 }
 
-   .searchbar {
-    width: 35%;
+.searchbar {
+  width: 35%;
   display: flex;
   position: relative;
   justify-content: center;
   align-items: center;
-padding-left: 20px;
-border-radius: 10px;
-
-  
-}
-.searchbar input{
-    width: 80%;
-    border-radius: 20px;
-    height: 5vh;
-    position: absolute;
-    padding-left: 2vh;
+  padding-left: 20px;
+  border-radius: 10px;
 }
 
-
+.searchbar input {
+  width: 80%;
+  border-radius: 20px;
+  height: 5vh;
+  position: absolute;
+  padding-left: 2vh;
+  /* font-family: 'Montserrat', sans-serif; Removed this specific font, it will now inherit Roboto */
+}
