@@ -2,20 +2,25 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/Searchpage.css";
 import { searchProduct } from "../api/product";
+
 const SearchPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const searchTerm = queryParams.get("query")?.toLowerCase() || "";
 
-  const [items, setItems] = useState([]);
+  const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
   useEffect(() => {
+    setLoading(true);
+    setError(null);
     searchProduct(searchTerm)
       .then((data) => {
-        setItems(data);
+        // console.log(data);
+        setResults(data);
         setLoading(false);
       })
       .catch((err) => {
@@ -23,29 +28,22 @@ const SearchPage = () => {
         setError("Failed to load recommendations");
         setLoading(false);
       });
-  }, []);
-
-if (loading) {
-  return <div className="loading">Loading recommendations...</div>;
-}
-
-if (error) {
-  return <div className="error">Error: {error}</div>;
-}
-
-
-  const [results, setResults] = useState([]);
-
-  useEffect(() => {
-    const filtered = items.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm)
-    );
-    setResults(filtered);
   }, [searchTerm]);
 
   const goToProduct = (item) => {
     navigate("/product", { state: item });
+    // navigate(`/product/${item.id}`);
   };
+
+  if (loading) {
+    return <div className="loading">Loading recommendations...</div>;
+  }
+
+  if (error) {
+    return <div className="error">Error: {error}</div>;
+  }
+
+
 
   return (
     <div className="search-page">
@@ -61,7 +59,7 @@ if (error) {
               >
                 <div className="search-card-inner">
                   <div className="search-card-image">
-                    <img src={item.img} alt={item.name} />
+                    <img src={item.images[0].image} alt={item.name} />
                   </div>
                   <div className="search-card-details">
                     <div className="search-card-name">{item.name}</div>

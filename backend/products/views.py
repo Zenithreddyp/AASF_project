@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics 
@@ -23,11 +24,11 @@ class getproductsearch(generics.ListAPIView):
 
     def get_queryset(self):
         name = self.request.query_params.get('name', None)
-        category = self.request.query_params.get("category")
-        brand=self.request.query_params.get("brand")
-        min_price = self.request.query_params.get("min_price")
-        max_price = self.request.query_params.get("max_price")
-        rating_above=self.request.query_params.get("rating")
+        # category = self.request.query_params.get("category")
+        # brand=self.request.query_params.get("brand")
+        # min_price = self.request.query_params.get("min_price")
+        # max_price = self.request.query_params.get("max_price")
+        # rating_above=self.request.query_params.get("rating")
 
         # add size to 
         queryset = Products.objects.all()
@@ -38,18 +39,19 @@ class getproductsearch(generics.ListAPIView):
             matched_products = hybrid_search(name, products)
             matched_ids = [p["id"] for p in matched_products]
             queryset = queryset.filter(id__in=matched_ids)
-        if category:
-            queryset = queryset.filter(category__icontains=category)
-        if min_price:
-            queryset = queryset.filter(price__gte=min_price)
-        if max_price:
-            queryset = queryset.filter(price__lte=max_price)
-        if rating_above:
-            queryset = queryset.filter(rating__gte=rating_above)
-        if brand:
-            queryset = queryset.filter(brand__icontains=brand)
+        # if category:
+        #     queryset = queryset.filter(category__icontains=category)
+        # if min_price:
+        #     queryset = queryset.filter(price__gte=min_price)
+        # if max_price:
+        #     queryset = queryset.filter(price__lte=max_price)
+        # if rating_above:
+        #     queryset = queryset.filter(rating__gte=rating_above)
+        # if brand:
+        #     queryset = queryset.filter(brand__icontains=brand)
+        
 
-        return Products.objects.all()
+        return queryset
     
 
 class getcategorysearch(generics.ListAPIView):

@@ -6,8 +6,9 @@ export const fetchAllProducts = async () => {
 };
 
 
-export const searchProduct = async (name) => {
-  const res = await publicApi.get(`/prod/products/search/?name=${name}`)
+export const searchProduct = async (searchterm) => {
+  const res = await publicApi.get(`/prod/products/search/?name=${searchterm}`)
+  console.log(res.data);
   return res.data;
 }
 
