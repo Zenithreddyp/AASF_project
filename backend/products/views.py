@@ -5,19 +5,24 @@ from .serializers import ProductSerializer,ProductImageSerializer
 from rest_framework.permissions import IsAuthenticated,AllowAny,IsAdminUser   #	These control who can access the view (authentication permissions)
 from .models import Products,ProductImage
 
+from machine_learning.smartsearch import hybrid_search,fetch_products
+
 from rest_framework.parsers import MultiPartParser, FormParser
 
 # Create your views here.
 
- #complwted with string must be done by varshith (with nlo)
+from fuzzywuzzy import fuzz
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 
 class getproductsearch(generics.ListAPIView):
     serializer_class=ProductSerializer
     permission_classes=[AllowAny]
 
+
     def get_queryset(self):
-        name = self.request.query_params.get('name', None)    #http://localhost:8000/products/search/?name=phone&category=electronics&min_price=500&max_price=100
+        name = self.request.query_params.get('name', None)
         category = self.request.query_params.get("category")
         brand=self.request.query_params.get("brand")
         min_price = self.request.query_params.get("min_price")
@@ -29,7 +34,10 @@ class getproductsearch(generics.ListAPIView):
 
 
         if name:
-            queryset = queryset.filter(name__icontains=name)
+            products = fetch_products()
+            matched_products = hybrid_search(name, products)
+            matched_ids = [p["id"] for p in matched_products]
+            queryset = queryset.filter(id__in=matched_ids)
         if category:
             queryset = queryset.filter(category__icontains=category)
         if min_price:

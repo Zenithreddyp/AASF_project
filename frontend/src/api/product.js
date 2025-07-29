@@ -1,4 +1,4 @@
-import { publicApi } from "./axiospublic"; // or `api` if you're using single instance
+import { publicApi } from "./axiospublic"; 
 
 export const fetchAllProducts = async () => {
   const res = await publicApi.get("/prod/products/all/");
@@ -6,6 +6,8 @@ export const fetchAllProducts = async () => {
 };
 
 
-export const searchProduct = async () => {
-  
+export const searchProduct = async (name) => {
+  const res = await publicApi.get(`/prod/products/search/?name=${name}`)
+  return res.data;
 }
+

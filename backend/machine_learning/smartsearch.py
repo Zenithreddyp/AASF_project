@@ -2,7 +2,7 @@
 from fuzzywuzzy import fuzz
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from your_app.models import Products  # app import chey
+from backend.products.models import Products  # app import chey(completed)
 
 def fetch_products():
     all_products = Products.objects.all()
@@ -49,17 +49,5 @@ def hybrid_search(query, products):
         if prod["id"] not in seen_ids:
             final.append(prod)
             seen_ids.add(prod["id"])
+
     return final
-
-if __name__ == "__main__":
-    import os
-    import django
-
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "your_project.settings")  # project name pettu ikkada
-    django.setup()
-
-    query = input("Search: ")
-    products = fetch_products()
-    results = hybrid_search(query, products)
-
-    result_dict = {"product_ids": [r["id"] for r in results]}
