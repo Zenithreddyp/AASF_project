@@ -150,12 +150,36 @@
 
 /* New style to hide the invoice content during PDF generation if desired */
 
-.order-invoice-content {
+/*.order-invoice-content {
 
     /* You can add styles here if you want to visually hide or adjust the content
 
      while it's being captured by html2canvas, though it's usually not necessary
 
-     as the capture is very fast. */
+     as the capture is very fast. 
 
+}
+/* Orderspage.css */
+
+/* ... (your existing CSS) ... */
+
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /*background-color: rgba(0, 0, 0, 0.9); /* Dark semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; /* Ensure it's on top of all other content */
+}
+
+.download-video {
+    margin-top: 70%;
+  max-width: 30%; /* Adjust size as needed */
+  max-height: 10%; /* Adjust size as needed */
+  border-radius: 10px; /* Optional: adds rounded corners to the video */
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); /* Optional: a subtle glow */
 }
