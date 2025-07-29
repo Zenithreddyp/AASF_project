@@ -77,7 +77,7 @@ const ProductPage = () => {
       <Navbar />
       <div className="product-container">
         <div className="product-image-section">
-          <img src={currentImage} alt={item.name} />
+          <img src={currentImage} alt={item.name} className="product-image" />
         </div>
         <div className="product-details-section">
           <h2 className="product-name">{item.name}</h2>

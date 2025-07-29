@@ -11,6 +11,7 @@ import CartPage from "./pages/Cartpage";
 import SearchPage from "./pages/Searchpage";
 import UPIPage from "./pages/UPIpage";
 import Orders from "./pages/Orderspage";
+import Footer from "./pages/Footer";
 
 function Logout() {
   localStorage.clear();
@@ -64,6 +65,7 @@ const App = () => {
           }
         />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };

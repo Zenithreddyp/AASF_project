@@ -5,4 +5,4 @@ sqlalchemy: pip install sqlalchemy
 sklearn: pip install scikit-learn
 
 COPY PASTE:
-pip install pandas sqlalchemy scikit-learn
+pip install pandas sqlalchemy scikit-learn fuzzywuzzy
