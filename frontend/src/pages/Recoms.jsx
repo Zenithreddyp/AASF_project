@@ -66,11 +66,7 @@ const Recoms = () => {
                 <img
                   src={
                     item.images && item.images.length > 0
-<<<<<<< HEAD
                       ? item.images[0].image
-=======
-                      ? `${item.images[0].image}`
->>>>>>> cce01acfb3f06cedca5a4be47f9f953ba33673a6
                       : "/fallback.png"
                   }
                   alt={item.name}
