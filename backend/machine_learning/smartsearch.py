@@ -20,7 +20,7 @@ def fetch_products():
         })
     return products
 
-def fuzzy_search(query, products, threshold=40):
+def fuzzy_search(query, products, threshold=55):
     results = []
     for product in products:
         combined = (product["name"] + " " + product["description"]).lower()

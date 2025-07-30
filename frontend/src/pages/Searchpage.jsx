@@ -13,21 +13,28 @@ const SearchPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   useEffect(() => {
-    setLoading(true);
-    setError(null);
-    searchProduct(searchTerm)
-      .then((data) => {
-        // console.log(data);
-        setResults(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Failed to load products", err);
-        setError("Failed to load recommendations");
-        setLoading(false);
-      });
+    const cacheKey = `search-query-${searchTerm}`;
+    const cachedData = localStorage.getItem(cacheKey);
+
+    if (cachedData) {
+      setResults(JSON.parse(cachedData));
+      setLoading(false);
+    } else {
+      setLoading(true);
+      setError(null);
+      searchProduct(searchTerm)
+        .then((data) => {
+          setResults(data);
+          localStorage.setItem(cacheKey, JSON.stringify(data));
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error("Failed to load products", err);
+          setError("Failed to load search results");
+          setLoading(false);
+        });
+    }
   }, [searchTerm]);
 
   const goToProduct = (item) => {
@@ -42,8 +49,6 @@ const SearchPage = () => {
   if (error) {
     return <div className="error">Error: {error}</div>;
   }
-
-
 
   return (
     <div className="search-page">
