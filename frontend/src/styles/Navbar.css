@@ -12,7 +12,7 @@ body {
 
 .navbar {
   display: flex;
-  background-color: rgb(44, 95, 121);
+  background-color: #7494ec;
   justify-content: space-around; /* Changed to space-around for better distribution */
   align-items: center; /* Added to vertically center items */
   height: 10vh;

@@ -52,14 +52,6 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="logo">
-        <video
-          className="videomini"
-          src="/Vedio.mp4" // Make sure this path is correct
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
         Zedova
       </div>
 

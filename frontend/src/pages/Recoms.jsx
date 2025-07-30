@@ -10,9 +10,17 @@ const Recoms = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const cachedData = localStorage.getItem("recomProducts");
+
+    if (cachedData) {
+      setItems(JSON.parse(cachedData));
+      setLoading(false);
+    }
+
     fetchAllProducts()
       .then((data) => {
         setItems(data);
+        localStorage.setItem("recomProducts", JSON.stringify(data));
         setLoading(false);
       })
       .catch((err) => {
@@ -58,7 +66,11 @@ const Recoms = () => {
                 <img
                   src={
                     item.images && item.images.length > 0
+<<<<<<< HEAD
                       ? item.images[0].image
+=======
+                      ? `${item.images[0].image}`
+>>>>>>> cce01acfb3f06cedca5a4be47f9f953ba33673a6
                       : "/fallback.png"
                   }
                   alt={item.name}

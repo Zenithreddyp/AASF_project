@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated,AllowAny,IsAdminUser   #	
 from .models import Products,ProductImage
 
 from machine_learning.smartsearch import hybrid_search,fetch_products
+from machine_learning.recoprod import fetch_data, recoprod
 
 from rest_framework.parsers import MultiPartParser, FormParser
 
@@ -52,6 +53,17 @@ class getproductsearch(generics.ListAPIView):
         
 
         return queryset
+    
+class getrecoms(generics.ListAPIView):
+    serializer_class=ProductSerializer
+    permission_classes=[IsAuthenticated]
+        # if data is empty, display all products
+    def get_queryset(self):
+        top4=recoprod(self.request.user)
+        matched_ids = [p for p in top4]
+        queryset = queryset.filter(id__in=matched_ids)
+
+
     
 
 class getcategorysearch(generics.ListAPIView):
