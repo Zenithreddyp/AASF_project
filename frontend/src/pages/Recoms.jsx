@@ -5,7 +5,6 @@ import { fetchAllProducts } from "../api/product";
 
 const Recoms = () => {
   const navigate = useNavigate();
-
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,56 +21,6 @@ const Recoms = () => {
         setLoading(false);
       });
   }, []);
-  // const items = [
-  //     {
-  //         id: 1,
-  //         name: 'iPhone 14 Pro Max',
-  //         cost: '₹1,29,999',
-  //         img: './header1.png',
-  //     },
-  //     {
-  //         id: 2,
-  //         name: 'Samsung Galaxy S23 Ultra',
-  //         cost: '₹1,24,499',
-  //         img: './header2.png',
-  //     },
-  //     {
-  //         id: 3,
-  //         name: 'OnePlus 11R',
-  //         cost: '₹45,999',
-  //         img: './header1.png',
-  //     },
-  //     {
-  //         id: 4,
-  //         name: 'Realme GT Neo 3',
-  //         cost: '₹36,999',
-  //         img: './header2.png',
-  //     },
-  //     {
-  //         id: 5,
-  //         name: 'Nothing Phone (2)',
-  //         cost: '₹44,999',
-  //         img: './header2.png',
-  //     },
-  //     {
-  //         id: 6,
-  //         name: 'Google Pixel 7A',
-  //         cost: '₹41,999',
-  //         img: './header1.png',
-  //     },
-  //     {
-  //         id: 7,
-  //         name: 'Redmi Note 13 Pro+',
-  //         cost: '₹31,999',
-  //         img: './header2.png',
-  //     },
-  //     {
-  //         id: 8,
-  //         name: 'Motorola Edge 40',
-  //         cost: '₹29,999',
-  //         img: './header1.png',
-  //     },
-  // ];
 
   const goToProduct = (item) => {
     navigate("/product", { state: item });
@@ -87,7 +36,16 @@ const Recoms = () => {
 
   return (
     <>
-      <div className="recom">based on your profile</div>
+      <div className="recom">Based on your profile</div>
+      <div className="singlerecom">
+        <img className="basicimage" src="/header1.png" alt="" />
+        <img className="basicimage" src="/header1.png" alt="" />
+
+        <img className="basicimage" src="/header1.png" alt="" />
+        <img className="basicimage" src="/header1.png" alt="" />
+
+      </div>
+      <p className="newlyadded">newly added</p>
       <div className="recom-container">
         {items.map((item, index) => (
           <div
@@ -100,9 +58,7 @@ const Recoms = () => {
                 <img
                   src={
                     item.images && item.images.length > 0
-                      ? `${
-                          item.images[0].image
-                        }`
+                      ? item.images[0].image
                       : "/fallback.png"
                   }
                   alt={item.name}
