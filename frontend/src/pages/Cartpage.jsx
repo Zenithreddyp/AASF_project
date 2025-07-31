@@ -100,7 +100,7 @@ const CartPage = () => {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="cart-page">
         <h2>Your Cart</h2>
         {cartItems.length === 0 ? (
@@ -142,7 +142,11 @@ const CartPage = () => {
 
             <button
               className="order-btn"
-              onClick={() => navigate("/payment", { state: cartItems })}
+              onClick={() =>
+                navigate("/payment", {
+                  state: { from: "cart", items: cartItems },
+                })
+              }
             >
               Proceed to Buy ({getTotalQuantity()} items)
             </button>

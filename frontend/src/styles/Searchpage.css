@@ -92,3 +92,20 @@
   grid-column: span 4;
   text-align: center;
 }
+
+
+.loading {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #555;
+  text-align: center;
+  padding: 2rem;
+}
+
+.error {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: red;
+  text-align: center;
+  padding: 2rem;
+}

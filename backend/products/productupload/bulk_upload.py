@@ -42,9 +42,7 @@ def upload_products():
                     try:
                         response = requests.get(path_or_url, timeout=10)
                         if response.status_code == 200:
-                            # --- THIS IS THE FIX ---
-                            # Generate a reliable filename instead of guessing from the URL.
-                            # We'll create a name like "Merry_Lawn_image1.png"
+
                             clean_product_name = "".join(c for c in row['name'] if c.isalnum() or c in (' ', '_')).rstrip()
                             filename = f"{clean_product_name.replace(' ', '_')}_{key}.png"
                             
@@ -52,9 +50,9 @@ def upload_products():
                                 ('uploaded_images', (filename, response.content, 'image/png'))
                             )
                         else:
-                            print(f"  ↳ ⚠️  Warning: Failed to download image from URL: {path_or_url}")
+                            print(f"   ⚠️  Warning: Failed to download image from URL: {path_or_url}")
                     except requests.exceptions.RequestException as e:
-                        print(f"  ↳ ⚠️  Warning: Could not download {path_or_url}. Error: {e}")
+                        print(f"   ⚠️  Warning: Could not download {path_or_url}. Error: {e}")
 
                 elif os.path.exists(path_or_url):
                     f = open(path_or_url, 'rb')
@@ -63,7 +61,7 @@ def upload_products():
                         ('uploaded_images', (os.path.basename(path_or_url), f))
                     )
                 else:
-                    print(f"  ↳ ⚠️  Warning: File or URL not found for {key}: {path_or_url}")
+                    print(f"   ⚠️  Warning: File or URL not found for {key}: {path_or_url}")
 
             # Now, send the request
             try:
@@ -77,7 +75,7 @@ def upload_products():
                 for f in local_files_to_close:
                     f.close()
 
-    print("\n🎉 Bulk upload complete!")
+    print("\n Bulk upload complete!")
 
 
 if __name__ == "__main__":

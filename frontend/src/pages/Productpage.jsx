@@ -29,7 +29,7 @@ const ProductPage = () => {
       <div>No product data found. Please go back and select a product.</div>
     );
   }
-
+  
   // const addToCart = () => {
   //     const cart = JSON.parse(localStorage.getItem('cart')) || [];
   //     const existingIndex = cart.findIndex(product => product.id === item.id);
@@ -64,7 +64,9 @@ const ProductPage = () => {
     }));
     setCartItems(formattedCart);
 
-    navigate("/payment", { state: formattedCart });
+    navigate("/payment", {
+      state: { from: "product", items: formattedCart },
+    });
   };
 
   const currentImage =
@@ -75,7 +77,7 @@ const ProductPage = () => {
       <Navbar />
       <div className="product-container">
         <div className="product-image-section">
-          <img src={currentImage} alt={item.name} />
+          <img src={currentImage} alt={item.name} className="product-image" />
         </div>
         <div className="product-details-section">
           <h2 className="product-name">{item.name}</h2>

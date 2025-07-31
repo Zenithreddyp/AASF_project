@@ -1,0 +1,3 @@
+--save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
+html2canvas
+jspdf

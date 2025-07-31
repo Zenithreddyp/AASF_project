@@ -8,9 +8,10 @@ import { placeOrder, removetempcart } from "../api/cart";
 
 const PaymentPage = () => {
   const location = useLocation();
+  const frompage = location.state?.from;
   const navigate = useNavigate();
-  //   const { cart_id, ...rest } =  || {};
-  const data = location.state;
+  const data = location.state?.items||[];
+
   if (!data) {
     return (
       <div style={{ padding: "20px", textAlign: "center" }}>
@@ -90,16 +91,31 @@ const PaymentPage = () => {
 
   //  start of removing start     very important
 
-  //   useEffect(() => {
-  //     const handlePageHide = (event) => {
-  //       if (!paymentCompleted && !event.persisted) {
-  //         navigator.sendBeacon("/cart/delete/temp/cart/");
-  //       }
-  //     };
+  // useEffect(() => {
+  //   const isReload =
+  //     performance.getEntriesByType("navigation")[0]?.type === "reload";
 
-  //     window.addEventListener("pagehide", handlePageHide);
-  //     return () => window.removeEventListener("pagehide", handlePageHide);
-  //   }, [paymentCompleted]);
+  //   const cleanupTempCart = () => {
+  //     if (frompage === "product" && !paymentCompleted && !isReload) {
+  //       removetempcart();
+  //     }
+  //   };
+  //   const handlePageHide = (event) => {
+  //     if (!event.persisted && !isReload) {
+  //       navigator.sendBeacon("/cart/delete/temp/cart/");
+  //     }
+  //   };
+
+  //   window.addEventListener("pagehide", handlePageHide);
+
+  //   return () => {
+  //     window.removeEventListener("pagehide", handlePageHide);
+  //     if (!isReload) {
+  //       cleanupTempCart(); 
+  //     }
+  //   };
+
+  // }, [frompage, paymentCompleted]);
 
   //  end of removing start
   const deleteAddress = (index) => {
@@ -135,7 +151,7 @@ const PaymentPage = () => {
 
     if (res) {
       alert("Payment successful!");
-      //   setPaymentCompleted(true);
+      setPaymentCompleted(true);
       localStorage.removeItem("cart");
       setSubmitted(true);
 

@@ -8,3 +8,9 @@ pytz
 sqlparse
 psycopg2-binary
 python-dotenv
+pandas 
+sqlalchemy 
+scikit-learn 
+fuzzywuzzy
+django-environ
+reportlab

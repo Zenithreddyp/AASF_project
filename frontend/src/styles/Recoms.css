@@ -1,21 +1,37 @@
-  .recom-container {
+.recom-container {
   width: 95vw;
   height: auto;
   display: flex;
   flex-wrap: wrap;
   gap: 3vh;
-  background-color:aliceblue;
+  background-color:rgb(248,248,248);
   padding: 5vw;
   border-radius: 15px;
   overflow-y: auto;
-} 
+}
+.basicrecom{
+  width: 95vw;
+  height: 10vh;
+   overflow-y: auto;
+background-color: rgb(248,248,248);
+  display: flex;
+  gap: 3vh;
+}
+.basicimage :hover{
+  box-shadow: 0 20px 30px rgba(65, 65, 65, 0.3);
+  cursor: pointer;
+}
 
+.basicimage{
+  height: 45vh;
+  width: 20vw;
+  padding-left: 3vh;
 
-
+}
 .recom-item {
   width: 20vw;
   height: 50vh;
-  background-color: white;
+  background-color: rgb(236,236,236);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,6 +82,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
 }
 
 .recom-name {
@@ -78,3 +95,4 @@
   font-size: 0.9rem;
   color: #2e2e2e;
 }
+/* added */
