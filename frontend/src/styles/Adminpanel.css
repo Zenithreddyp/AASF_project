@@ -37,3 +37,94 @@
 .admin-btn:hover {
     background-color: #5d78cc; /* slightly darker on hover */
 }
+.right {
+    width: 100%;
+    padding: 5vh 4vw;
+    background-color: #fefefe;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Form Container */
+.form-container {
+    width: 60%;
+    background-color: #ffffff;
+    padding: 4vh 4vw;
+    border-radius: 12px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+/* Upload section */
+.upload-section label {
+    font-weight: 500;
+    margin-bottom: 1vh;
+    display: block;
+    font-size: 1rem;
+}
+
+.upload-section input[type="file"] {
+    border: 1px solid #dcdcdc;
+    padding: 1vh;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    width: 100%;
+}
+
+/* Input fields */
+.form-field label {
+    font-weight: 500;
+    margin-bottom: 0.5vh;
+    display: block;
+    font-size: 1rem;
+}
+
+.form-field input,
+.form-field textarea {
+    width: 100%;
+    padding: 1vh;
+    font-size: 1rem;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.form-field textarea {
+    height: 15vh;
+    resize: none;
+}
+
+/* Category and Price */
+.form-bottom {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+}
+
+.form-bottom select,
+.form-bottom input {
+    padding: 1vh;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    background-color: #f9f9f9;
+}
+
+/* Add Button */
+.add-btn {
+    background-color:#7494ec ;
+    color: white;
+    border: none;
+    padding: 1vh 2vw;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-btn:hover {
+    background-color:orange;
+}
