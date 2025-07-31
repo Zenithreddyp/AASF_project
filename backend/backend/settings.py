@@ -72,8 +72,8 @@ INSTALLED_APPS = [
     "corsheaders",
     "products",
     "recommendationsforhome",
-    "cart"
-
+    "cart",
+    "payment",
 ]
 
 MIDDLEWARE = [
@@ -174,3 +174,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # The URL that will serve the media files.
 MEDIA_URL = '/media/'
+
+
+RAZORPAY_API_KEY = 'rzp_test_XgdFHDeUlG5ENZ'
+RAZORPAY_API_SECRET_KEY = '2nS2tz19gioYTrBK1xd2Gotd'
