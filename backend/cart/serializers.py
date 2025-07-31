@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers  #compulsory becoz of serilizer 
 
 
-from .models import Cart,Cartitem,Orders
+from .models import Cart,Cartitem,Orders, OrderItem
 from products.serializers import ProductSerializer
 import requests
 from products.models import Products
@@ -46,4 +46,69 @@ class OrdersSerializers(serializers.ModelSerializer):
             'cart': {'required': False},
             'user': {'required': False},
         }
+
+# New serializers for Order processing
+class OrderItemSerializer(serializers.ModelSerializer):
+    # Use PrimaryKeyRelatedField to handle product ID from the frontend
+    product_id = serializers.PrimaryKeyRelatedField(
+        queryset=Products.objects.all(),
+        source='product',
+        write_only=True
+    )
+    # Read-only field to display product name
+    product_name = serializers.CharField(source='product.name', read_only=True)
+
+    class Meta:
+        model = OrderItem
+        fields = ['product_id', 'product_name', 'quantity', 'price']
+        extra_kwargs = {
+            'price': {'required': True}, # Ensure price is sent from frontend
+        }
+
+
+class OrderCreateSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True, write_only=True)
+
+    class Meta:
+        model = Orders
+        fields = [
+            'id', 'full_name', 'phone_number', 'shipping_address', 'city', 'state', 'postal_code',
+            'total_price', 'items', 'razorpay_payment_id', 'razorpay_order_id', 'razorpay_signature'
+        ]
+        read_only_fields = ['user', 'status']
+
+    def create(self, validated_data):
+        items_data = validated_data.pop('items')
+        user = self.context['request'].user
+        
+        # Create the main order instance
+        order = Orders.objects.create(user=user, status='Pending', **validated_data)
+
+        # Create OrderItem instances for the order
+        for item_data in items_data:
+            product = item_data.pop('product')
+            quantity = item_data.get('quantity')
+            price_at_purchase = item_data.get('price')
+
+            # Verify product stock and deduct it
+            if product.stock < quantity:
+                raise serializers.ValidationError(f"Not enough stock for {product.name}.")
+            product.stock -= quantity
+            product.save()
+
+            OrderItem.objects.create(
+                order=order,
+                product=product,
+                product_name=product.name,
+                price=price_at_purchase,
+                quantity=quantity
+            )
+
+        return order
+    
+class OrderReadSerializer(serializers.ModelSerializer):
+        items = OrderItemSerializer(many=True, read_only=True)
+        class Meta:
+            model = Orders
+            fields = '__all__'
 
