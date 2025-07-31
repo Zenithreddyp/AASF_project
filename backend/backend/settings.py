@@ -70,11 +70,10 @@ INSTALLED_APPS = [
     "users",
     "rest_framework",
     "corsheaders",
-    "backend.products",
+    "products",
     "recommendationsforhome",
     "cart",
-    "backend.payment",
-    "paypal.standard.ipn",
+    "payment",
 ]
 
 MIDDLEWARE = [
@@ -176,6 +175,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # The URL that will serve the media files.
 MEDIA_URL = '/media/'
 
-# Paypal integration
-PAYPAL_RECEIVER_EMAIL = 'bms_2024023@iiitm.ac.in' #where cash is paid into
-PAYPAL_TEST = True
+
+RAZORPAY_API_KEY = 'rzp_test_XgdFHDeUlG5ENZ'
+RAZORPAY_API_SECRET_KEY = '2nS2tz19gioYTrBK1xd2Gotd'
