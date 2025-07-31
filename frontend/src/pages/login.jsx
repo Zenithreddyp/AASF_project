@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// Assuming you'll have separate login and register API calls
 import { login, register } from "../api/useraccess";
-import "../styles/login.css"; // We'll create this CSS file
+import "../styles/login.css";
 import Navbar from "./Navbar";
 
 function AuthPage() {
-  const [isLoginActive, setIsLoginActive] = useState(true); // State to control which form is active
+  const [isLoginActive, setIsLoginActive] = useState(true); 
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [registerUsername, setRegisterUsername] = useState("");
@@ -14,8 +13,7 @@ function AuthPage() {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-    // Replace with your actual login logic using the API
+    e.preventDefault(); 
     const res = await login(loginUsername, loginPassword);
     if (res) {
       alert("Login successful!");
@@ -26,13 +24,11 @@ function AuthPage() {
   };
 
   const handleRegister = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-    // Replace with your actual registration logic using the API
+    e.preventDefault();
     const res = await register(registerUsername, registerPassword);
     if (res) {
       alert("Registration successful! Please log in.");
-      setIsLoginActive(true); // Switch to login form after successful registration
-      // Optionally clear register fields
+      setIsLoginActive(true);
       setRegisterUsername("");
       setRegisterPassword("");
     } else {
