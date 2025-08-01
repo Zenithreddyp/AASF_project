@@ -4,14 +4,32 @@ import "../styles/ProductPage.css";
 import Navbar from "./Navbar";
 
 import { dispCart, addtocart, singleprodCart } from "../api/cart";
+import { fetchProductbyid } from "../api/product";
+import { useParams } from 'react-router-dom';
 
 const ProductPage = () => {
-  const location = useLocation();
-  const item = location.state;
+  const { id } = useParams();
+  // const location = useLocation();
+  // const item = location.state;
   const navigate = useNavigate();
+  const [item, setItem] = useState(null);
   const [cartItems, setCartItems] = useState([]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchItem = async () => {
+      try {
+        const data = await fetchProductbyid(id);
+        setItem(data);
+      } catch (error) {
+        console.error("Failed to fetch product", error);
+      }
+    };
+
+    fetchItem();
+  }, [id]);
+
   const images = item?.images || [];
 
   useEffect(() => {
@@ -29,7 +47,7 @@ const ProductPage = () => {
       <div>No product data found. Please go back and select a product.</div>
     );
   }
-  
+
   // const addToCart = () => {
   //     const cart = JSON.parse(localStorage.getItem('cart')) || [];
   //     const existingIndex = cart.findIndex(product => product.id === item.id);

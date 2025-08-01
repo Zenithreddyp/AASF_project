@@ -71,6 +71,7 @@ const PaymentPage = () => {
         if (data.length === 0) setShowForm(true);
       } catch (error) {
         console.error("Failed fettching addresss", error);
+        setShowForm(true);
       }
     };
 
@@ -123,6 +124,7 @@ const PaymentPage = () => {
     setSavedAddresses(updated);
     localStorage.setItem("userAddresses", JSON.stringify(updated));
     setSelectedIndex(null);
+    if (updated.length===0) setShowForm(true);
   };
 
   const handlePayment = async () => {
@@ -139,6 +141,7 @@ const PaymentPage = () => {
       alert("Please fill the following field(s):\n" + missingFields.join("\n"));
       return;
     }
+    
     let res = false;
     if (selectedIndex === null) {
       const newAddress = { fullname, phone, address, city, state, pincode };

@@ -42,8 +42,7 @@ const App = () => {
 
         <Route path="/register" element={<RegisterAndLogout />} />
         <Route path="/payment" element={<PaymentPage />} />
-
-        <Route path="/product" element={<ProductPage />} />
+        <Route path="/product/:id" element={<ProductPage />} />
         <Route
           path="/orders"
           element={
@@ -52,10 +51,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-        path="/logout"
-        element={<Logout />}
-        />
+        <Route path="/logout" element={<Logout />} />
         <Route
           path="/cart"
           element={

@@ -12,3 +12,7 @@ export const searchProduct = async (searchterm) => {
   return res.data;
 }
 
+export const fetchProductbyid = async (id) => {
+  const response = await publicApi.get(`http://localhost:8000/prod/products/${id}/`);
+  return response.data;
+}
