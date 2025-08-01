@@ -12,6 +12,7 @@ import SearchPage from "./pages/Searchpage";
 import UPIPage from "./pages/UPIpage";
 import Orders from "./pages/Orderspage";
 import Footer from "./pages/Footer";
+import Adminpanel from "./pages/Adminpanel";
 
 function Logout() {
   localStorage.clear();
@@ -51,7 +52,11 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/logout" element={<Logout />} />
+        <Route path="/adminpage" element={<Adminpanel />} />
+        <Route
+          path="/logout"
+          element={<Logout />}
+        />
         <Route
           path="/cart"
           element={

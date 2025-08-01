@@ -10,9 +10,9 @@ const PaymentPage = () => {
   const location = useLocation();
   const frompage = location.state?.from;
   const navigate = useNavigate();
-  const data = location.state?.items||[];
+  const data = location.state?.items || [];
 
-  if (!data) {
+  if (!data || data.length === 0) {
     return (
       <div style={{ padding: "20px", textAlign: "center" }}>
         ❌ No products selected. Please go back and add items to your cart.
@@ -36,7 +36,7 @@ const PaymentPage = () => {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  // const [upi, setUpi] = useState("");
+
   const [submitted, setSubmitted] = useState(false);
 
   const [cartRemoved, setCartRemoved] = useState(false);
@@ -69,8 +69,11 @@ const PaymentPage = () => {
         }));
         setSavedAddresses(transformed);
         if (data.length === 0) setShowForm(true);
+        // else if (selectedIndex === null && transformed.length > 0) {
+        //   selectAddress(0);
+        // }
       } catch (error) {
-        console.error("Failed fettching addresss", error);
+        console.error("Failed fetching addresses", error);
         setShowForm(true);
       }
     };
@@ -124,7 +127,25 @@ const PaymentPage = () => {
     setSavedAddresses(updated);
     localStorage.setItem("userAddresses", JSON.stringify(updated));
     setSelectedIndex(null);
+<<<<<<< HEAD
     if (updated.length===0) setShowForm(true);
+=======
+    if (updated.length === 0) setShowForm(true);
+  };
+
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+>>>>>>> 17a1a8480c75e178678d773fc2575df322e3e42d
   };
 
   const handlePayment = async () => {
@@ -141,38 +162,104 @@ const PaymentPage = () => {
       alert("Please fill the following field(s):\n" + missingFields.join("\n"));
       return;
     }
+<<<<<<< HEAD
     
     let res = false;
+=======
+
+    let addressSaveSuccess = false;
+>>>>>>> 17a1a8480c75e178678d773fc2575df322e3e42d
     if (selectedIndex === null) {
-      const newAddress = { fullname, phone, address, city, state, pincode };
-      const updated = [...savedAddresses, newAddress];
-      setSavedAddresses(updated);
-      res = await addNewAddress(newAddress);
+      const newAddress = { full_name: fullname, phone_number: phone, address, city, state, postal_code: pincode };
+
+      const res = await addNewAddress(newAddress);
+      const updated = [...savedAddresses, res];
+      setSavedAddresses[updated];
+      // if (res) {
+      //   setSavedAddresses((prev) => [...prev, newAddress]);
+      //   addressSaveSuccess = true;
+      // } else {
+      //   alert("Failed to save new address.");
+      //   return;
+      // }
+
     } else {
-      res = true; // Address already selected
+      addressSaveSuccess = true; // Address already selected, no need to save again
     }
 
-    if (res) {
-      alert("Payment successful!");
-      setPaymentCompleted(true);
-      localStorage.removeItem("cart");
-      setSubmitted(true);
-
-      //add mark as orderd
-      try {
-        await placeOrder({
-          full_name: fullname,
-          phone_number: phone,
-          address: address,
-          city: city,
-          state: state,
-          postal_code: "100000", // or use the actual postal code if you have it
-        });
-        console.log("Order placed");
-      } catch (error) {
-        console.error("Error placing order:", error.message);
-      }
+    if (!addressSaveSuccess) {
+      return;
     }
+
+    const scriptLoaded = await loadRazorpayScript();
+
+    if (!scriptLoaded) {
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
+    }
+
+    // IMPORTANT: In a real-world scenario, you would first create an order
+    // on your backend with Razorpay and get the order_id.
+    // For this demonstration, we'll proceed directly with the payment window.
+
+    const options = {
+      key: "rzp_test_XgdFHDeUlG5ENZ", // Replace with your actual Key ID from settings
+      amount: totalPrice * 100,
+      currency: "INR",
+      name: "Acme Corp",
+      description: "Purchase from E-commerce Store",
+      image: "https://example.com/your_logo",
+      handler: async function (response) {
+
+        const orderItemsForBackend = items.map(item => ({
+          product_id: item.id,
+          quantity: item.quantity || 1,
+          price: Number(item.cost) || 0,
+        }));
+
+        try {
+          await placeOrder({
+            full_name: fullname,
+            phone_number: phone,
+            shipping_address: address, // Renamed key to match backend model
+            city: city,
+            state: state,
+            postal_code: pincode, // Renamed key to match backend model
+            total_price: totalPrice,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature,
+            items: orderItemsForBackend, // Nested items array for the serializer
+          });
+
+          console.log("Order placed successfully on backend!");
+          setSubmitted(true);
+          localStorage.removeItem("cart");
+        } catch (error) {
+          console.error("Error placing order:", error);
+          alert("Payment successful, but there was an error processing your order. Please contact support.");
+        }
+      },
+      prefill: {
+        name: fullname,
+        email: "customer@example.com",
+        contact: phone,
+      },
+      notes: {
+        address: `${address}, ${city}, ${state} - ${pincode}`,
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+
+    const rzp1 = new window.Razorpay(options);
+    rzp1.on('payment.failed', function (response) {
+      alert("Payment Failed: " + response.error.description);
+      console.error("Razorpay Error:", response.error);
+    });
+
+    rzp1.open();
   };
 
   useEffect(() => {
@@ -197,9 +284,8 @@ const PaymentPage = () => {
               {savedAddresses.map((addr, index) => (
                 <div
                   key={index}
-                  className={`address-card ${
-                    selectedIndex === index ? "selected" : ""
-                  }`}
+                  className={`address-card ${selectedIndex === index ? "selected" : ""
+                    }`}
                 >
                   <div className="address-card-top">
                     <input
@@ -298,20 +384,12 @@ const PaymentPage = () => {
             )}
 
             <div className="form-section">
-              {/* <label>UPI ID:</label>
-            <input
-              type="text"
-              value={upi}
-              onChange={(e) => setUpi(e.target.value)}
-              placeholder="e.g., yourname@upi"
-            /> */}
               <div className="amount-section">
                 <p>
                   Total Amount: <strong>₹{totalPrice}</strong>
                 </p>
               </div>
-              <button onClick={handlePayment}>Confirm Payment</button>{" "}
-              {/* still need to add few from donii */}
+              <button onClick={handlePayment}>Pay</button>{" "}
               {submitted && (
                 <p className="success-msg">
                   ✅ Payment Completed Successfully!

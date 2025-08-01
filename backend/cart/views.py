@@ -2,17 +2,19 @@ from django.forms import ValidationError
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics 
-from .serializers import CartSerializers,CartitemSerializers,OrdersSerializers
+from .serializers import CartSerializers,CartitemSerializers,OrdersSerializers, OrderCreateSerializer, OrderItemSerializer, OrderReadSerializer
 from rest_framework.permissions import IsAuthenticated,AllowAny,IsAdminUser   #	These control who can access the view (authentication permissions)
 from .models import Cart,Cartitem,Orders
 from rest_framework.response import Response
 from rest_framework import status
-
+from django.conf import settings
 
 from django.http import FileResponse
-from .invoice_generator import InvoiceGenerator
-
+# from .invoice_generator import InvoiceGenerator
+import razorpay
+import json
 # Create your views here.
+razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_API_KEY, settings.RAZORPAY_API_SECRET_KEY))
 
 class GetCart(generics.ListAPIView):
     serializer_class=CartSerializers
@@ -120,42 +122,17 @@ class ClearCart(generics.DestroyAPIView):
         instance.delete()
 
 
-
-
 class ListallOrders(generics.ListAPIView):
-    serializer_class=OrdersSerializers
+    # This serializer is for LISTING orders, so it should be a read-only serializer
+    # that can display the nested order items.
+    # We will need a new serializer for this. Let's create it.
+
+    serializer_class = OrderReadSerializer
     permission_classes=[IsAuthenticated]
 
     def get_queryset(self):
         return Orders.objects.filter(user=self.request.user)
     
-class OrderPlaced(generics.CreateAPIView):
-    
-    serializer_class=OrdersSerializers
-    permission_classes=[IsAuthenticated]
-
-    def perform_create(self, serializer):
-        user = self.request.user
-        cart = Cart.objects.filter(user=self.request.user, is_ordered=False).order_by('-created_at').first()
-        print("i came here")
-
-        if not cart:
-            raise ValidationError("No active cart found to place an order.")
-        
-        total_price = sum(item.product.price * item.quantity for item in cart.items.all())
-
-        shipping_address = self.request.data.get('shipping_address')
-        if not shipping_address:
-            raise ValidationError("Shipping address is required.")
-
-        cart.is_ordered=True
-        cart.save()
-        serializer.save(
-            user=user,
-            cart=cart,
-            total_price=total_price,
-            shipping_address=shipping_address
-        )
 
 class CancelOrder(generics.UpdateAPIView):
     serializer_class=OrdersSerializers
@@ -167,21 +144,75 @@ class CancelOrder(generics.UpdateAPIView):
     def perform_update(self, serializer):
 
         serializer.save(status="Cancelled")
+
+class OrderPlacedView(generics.CreateAPIView):
+    serializer_class = OrderCreateSerializer
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        # 1. Razorpay Signature Verification (CRUCIAL SECURITY STEP)
+        razorpay_payment_id = request.data.get('razorpay_payment_id')
+        razorpay_order_id = request.data.get('razorpay_order_id')
+        razorpay_signature = request.data.get('razorpay_signature')
+        total_amount_from_frontend = request.data.get('total_price') # Renamed to match frontend data
+
+        if not all([razorpay_payment_id, razorpay_order_id, razorpay_signature]):
+            return Response(
+                {"detail": "Missing Razorpay payment details."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            params_dict = {
+                'razorpay_order_id': razorpay_order_id,
+                'razorpay_payment_id': razorpay_payment_id,
+                'razorpay_signature': razorpay_signature
+            }
+            # The verify_payment_signature function verifies if the signature is valid.
+            razorpay_client.utility.verify_payment_signature(params_dict)
+
+            # Optional: Fetch payment details from Razorpay to re-verify the amount
+            # This is an extra layer of security
+            # payment_info = razorpay_client.payment.fetch(razorpay_payment_id)
+            # if payment_info['status'] != 'captured' or float(total_amount_from_frontend) != payment_info['amount'] / 100:
+            #     return Response(
+            #         {"detail": "Payment not captured or amount mismatch."},
+            #         status=status.HTTP_400_BAD_REQUEST
+            #     )
+
+        except razorpay.errors.SignatureVerificationError:
+            return Response(
+                {"detail": "Razorpay signature verification failed. Possible tampering."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except Exception as e:
+            return Response(
+                {"detail": f"Error during Razorpay verification: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        # 2. If verification is successful, proceed with order creation
+        # The serializer will handle creating the Order and OrderItem instances,
+        # and reducing the product stock.
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        # Update the payment status to 'Shipped' (or 'Pending' if you have a different workflow)
+        # and attach the verified Razorpay details.
+        serializer.validated_data['status'] = 'Shipped' # Or 'Pending'
+        serializer.validated_data['razorpay_payment_id'] = razorpay_payment_id
+        serializer.validated_data['razorpay_order_id'] = razorpay_order_id
+        serializer.validated_data['razorpay_signature'] = razorpay_signature
+        
+        self.perform_create(serializer)
+
+        # 3. Mark the user's cart as ordered
+        user_cart = Cart.objects.filter(user=self.request.user, is_ordered=False).order_by('-created_at').first()
+        if user_cart:
+            user_cart.is_ordered = True
+            user_cart.save()
+        
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     
-
-
-
-
-
-def download_invoice(request, order_id):
-    order = Orders.objects.get(id=order_id, user=request.user)
-    invoice = InvoiceGenerator(order)
-    pdf = invoice.generate()
-    return FileResponse(pdf, as_attachment=True, filename=f'invoice_ZEDOVA_{order.id}.pdf')
-
-def generate_and_save_invoice(request, order_id):
-    order = Orders.objects.get(id=order_id, user=request.user)
-    invoice = InvoiceGenerator(order)
-    invoice.save_to_order()
-    return FileResponse(invoice.buffer, as_attachment=True, filename=f'invoice_ZEDOVA_{order.id}.pdf')
 
