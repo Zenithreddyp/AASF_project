@@ -127,9 +127,6 @@ const PaymentPage = () => {
     setSavedAddresses(updated);
     localStorage.setItem("userAddresses", JSON.stringify(updated));
     setSelectedIndex(null);
-<<<<<<< HEAD
-    if (updated.length===0) setShowForm(true);
-=======
     if (updated.length === 0) setShowForm(true);
   };
 
@@ -145,7 +142,6 @@ const PaymentPage = () => {
       };
       document.body.appendChild(script);
     });
->>>>>>> 17a1a8480c75e178678d773fc2575df322e3e42d
   };
 
   const handlePayment = async () => {
@@ -162,13 +158,8 @@ const PaymentPage = () => {
       alert("Please fill the following field(s):\n" + missingFields.join("\n"));
       return;
     }
-<<<<<<< HEAD
     
     let res = false;
-=======
-
-    let addressSaveSuccess = false;
->>>>>>> 17a1a8480c75e178678d773fc2575df322e3e42d
     if (selectedIndex === null) {
       const newAddress = { full_name: fullname, phone_number: phone, address, city, state, postal_code: pincode };
 
