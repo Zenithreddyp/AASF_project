@@ -1,10 +1,12 @@
 from django.forms import ValidationError
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from rest_framework import generics 
-from .serializers import CartSerializers,CartitemSerializers,OrdersSerializers, OrderCreateSerializer, OrderItemSerializer, OrderReadSerializer
+from rest_framework import generics
+
+from products.models import Products 
+from .serializers import CartSerializers,CartitemSerializers,OrdersSerializers, OrderCreateSerializer, OrderItemSerializer, OrderReadSerializer, WishlistItemSerializer, WishlistSerializer
 from rest_framework.permissions import IsAuthenticated,AllowAny,IsAdminUser   #	These control who can access the view (authentication permissions)
-from .models import Cart,Cartitem,Orders
+from .models import Cart,Cartitem,Orders, Wishlist, WishlistItem
 from rest_framework.response import Response
 from rest_framework import status
 from django.conf import settings
@@ -216,3 +218,47 @@ class OrderPlacedView(generics.CreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     
 
+class GetWishlist(generics.ListAPIView):
+    serializer_class = WishlistSerializer
+    permission_classes=[IsAuthenticated]
+
+    def get_queryset(self):
+        return Wishlist.objects.filter(user=self.request.user)
+    
+class AddWishlistitem(generics.CreateAPIView):
+    serializer_class = WishlistItemSerializer
+    permission_classes=[IsAuthenticated]
+
+    def perform_create(self, serializer):
+        product = serializer.validated_data['product']
+    
+class RemoveWIshlistitem(generics.DestroyAPIView):
+    serializer_class = WishlistItemSerializer
+    permission_classes=[IsAuthenticated]
+
+    def get_queryset(self):
+        return WishlistItem.objects.filter(Wishlist__user=self.request.user)
+    
+
+class MoveWishListitemtoCart(generics.ListAPIView):
+    permission_classes=[IsAuthenticated]
+
+    def post(self,request,product_id):
+        user=self.request.user
+        
+        cart, _ = Cart.objects.get_or_create(user=user)
+        product = Products.objects.get(id=product_id)
+
+        cart_item, created = Cartitem.objects.get_or_create(
+            cart=cart, product=product,
+            defaults={'quantity': 1}
+        )
+
+        if not created:
+            cart_item.quantity += 1
+            cart_item.save()
+
+        WishlistItem.objects.filter(
+            wishlist__user=user,
+            product=product
+        ).delete()

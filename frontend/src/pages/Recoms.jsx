@@ -31,7 +31,7 @@ const Recoms = () => {
   }, []);
 
   const goToProduct = (item) => {
-    navigate("/product", { state: item });
+    navigate(`/product/${item.id}`);
   };
 
   if (loading) {
@@ -51,7 +51,6 @@ const Recoms = () => {
 
         <img className="basicimage" src="/header1.png" alt="" />
         <img className="basicimage" src="/header1.png" alt="" />
-
       </div>
       <p className="newlyadded">newly added</p>
       <div className="recom-container">

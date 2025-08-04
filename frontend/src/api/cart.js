@@ -1,11 +1,12 @@
 import { privateApi } from "./axiosprivate";
 import { validateToken } from "../components/authCheck";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const addtocart = async (item) => {
   const isAuth = await validateToken();
   if (!isAuth) {
     alert("Please login to add items to cart.");
-    window.location.href = "/login"; // or use navigate if inside a component
+    navigate("/login", { state: { from: location.pathname } });
     return;
   }
 
@@ -27,7 +28,7 @@ export const singleprodCart = async (item) => {
   const isAuth = await validateToken();
   if (!isAuth) {
     alert("Please login to buy items.");
-    window.location.href = "/login";
+    window.location.href = "/login?from=" + encodeURIComponent(window.location.pathname);
     return;
   }
   try {
@@ -79,7 +80,7 @@ export const updateQuant = async (cartItemId, newQuantity) => {
 export const removeItem = async (cartItemId) => {
   try {
     const res = await privateApi.delete(`/cart/cart/remove/${cartItemId}/`);
-    
+
     alert("Item removed");
     return res;
   } catch (error) {
@@ -93,7 +94,7 @@ export const placeOrder = async (shippingAddress) => {
 
     const response = await privateApi.post("/cart/cart/order/", {
       shipping_address: formattedAddress,
-    });    
+    });
     alert("Prder placed");
     return response.data;
   } catch (error) {
@@ -102,17 +103,15 @@ export const placeOrder = async (shippingAddress) => {
   }
 };
 
-
 export const retriveallorders = async () => {
   try {
-    const res = await privateApi.get("/cart/orders/");    
+    const res = await privateApi.get("/cart/orders/");
     return res.data;
   } catch (error) {
     console.error("Error fetching orders:", error);
     return [];
   }
-}
-
+};
 
 export const dispCart = async () => {
   try {
@@ -142,10 +141,7 @@ export const clearCart = async () => {
   }
 };
 
-
-
 //not in use yet
-
 
 export const downloadInvoice = async (orderId) => {
   const token = localStorage.getItem("ACCESS_TOKEN");

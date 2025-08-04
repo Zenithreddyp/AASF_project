@@ -1,6 +1,6 @@
 # cart/urls.py
 from django.urls import path
-from .views import GetCart,AddCartorGetItem,RemoveCartItem,ListallOrders,OrderPlacedView,CancelOrder,CartItemUpdateView,ClearCart,CreateCart,DeleteCart # Notice OrderPlacedView
+from .views import AddWishlistitem, GetCart,AddCartorGetItem, GetWishlist, MoveWishListitemtoCart,RemoveCartItem,ListallOrders,OrderPlacedView,CancelOrder,CartItemUpdateView,ClearCart,CreateCart,DeleteCart, RemoveWIshlistitem # Notice OrderPlacedView
 # from .views import download_invoice,generate_and_save_invoice
 
 
@@ -19,4 +19,10 @@ urlpatterns = [
 
     # path("order/invoice/download/<int:order_id>/", download_invoice, name="download_invoice"),
     # path("order/invoice/generate/<int:order_id>/", generate_and_save_invoice, name="generate_and_save_invoice"),
+
+    
+    path("wishlist/", GetWishlist.as_view(), name="get-wishlist"),    
+    path("wishlist/add/", AddWishlistitem.as_view(), name="add-wishlist-item"),
+    path("wishlist/remove/<int:pk>/", RemoveWIshlistitem.as_view(), name="remove-wishlist-item"),
+    path("wishlist/move-to-cart/<int:product_id>/", MoveWishListitemtoCart.as_view(), name="move-wishlist-to-cart"),
 ]
