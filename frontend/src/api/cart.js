@@ -166,3 +166,15 @@ export const downloadInvoice = async (orderId) => {
     alert("Failed to download invoice.");
   }
 };
+
+
+// export const fetchWishlist = async () => {
+//   try {
+//     const res = await privateApi.get(/* add url */);
+
+//     return res.data;
+
+//   } catch (error) {
+    
+//   }
+// }

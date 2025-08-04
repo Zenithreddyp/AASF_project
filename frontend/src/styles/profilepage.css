@@ -1,0 +1,235 @@
+/* Container for the whole profile page */
+.profile-container {
+  justify-self: center;
+  width: 90vw;
+  padding: 5vh;
+  background-color: aliceblue;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Header section with user info and edit button */
+.profile-header {
+  width: 80vw;
+  justify-self: center;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile image and name wrapper */
+.user-info {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Profile Picture */
+.profilepic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Edit button */
+.edit-btn {
+  padding: 10px 20px;
+  background-color: #7494ec;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.edit-btn:hover {
+  background-color: #5f7fd3;
+}
+
+/* Body layout */
+.profile-body {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  width: 90vw;
+}
+
+/* Recent Orders Section */
+.recent-orders {
+  flex: 3;
+}
+
+.recent-orders h3 {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  color: #333;
+}
+
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.order-card {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: 0.3s;
+}
+
+.order-card:hover {
+  transform: translateY(-4px);
+}
+
+.order-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.order-card p {
+  margin: 0.5rem 0;
+  font-weight: 500;
+}
+
+.order-card span {
+  color: #7494ec;
+  font-size: 0.9rem;
+}
+
+/* Quick Links Section */
+.quick-links {
+  flex: 1;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  color: gray;
+}
+
+.quick-links >*{
+  width: 100%;
+  padding: 10px;
+  background-color: #7494ec;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  transition: 0.3s ease;
+}
+
+.quick-links .wishlist:hover {
+  background-color: #5f7fd3;
+}
+
+/* Logout Button */
+.logout-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #7494ec;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: red;
+}
+
+/* Popup styling */
+.inline-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 2rem;
+  width: 60vw;
+  height: 90vh;
+  border-radius: 12px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.inline-popup  address-list address-item{
+  border-color: #7494ec;
+  background-color: black;
+  border-radius: 10px;
+
+}
+.inline-popup h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* Form inside popup */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0 5vw;
+}
+
+.edit-form input {
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.2s ease;
+}
+
+.edit-form input:focus {
+  border-color: #7494ec;
+  outline: none;
+}
+
+.edit-form button {
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.edit-form button[type="submit"] {
+  background-color: #7494ec;
+  color: white;
+}
+
+.edit-form button[type="submit"]:hover {
+  background-color: #5f7fd3;
+}
+
+.edit-form button[type="button"] {
+  background-color: #ccc;
+  color: black;
+}
+
+.edit-form button[type="button"]:hover {
+  background-color: #bbb;
+}

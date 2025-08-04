@@ -5,6 +5,11 @@ import { validateToken } from "../components/authCheck"; // Assuming this path i
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
+const logoimages = [
+  '/logo.png',
+  '/logoname.png',
+]
+
 const Navbar = () => {
   const [menu, setMenu] = useState("home"); // Changed to setMenu for consistency
   const [searchTerm, setSearchTerm] = useState("");
@@ -52,38 +57,46 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="logo">
-        Zedova
+      <img
+        src={logoimages[0]}
+        alt="logo"
+      />
+      </div>
+      <div className="logoname">
+      <img
+        src={logoimages[1]}
+        alt="Zedova"
+      />
       </div>
 
       <ul className="navbarlinks">
         <li
           onClick={() => handleMenuClick("")}
-          className={location.pathname === "/" ? "active" : ""} // Updated to check location.pathname
+          className={location.pathname === "/" ? "active" : ""} 
         >
           Home
         </li>
 
         <li
           onClick={() => handleMenuClick("cart")}
-          className={location.pathname === "/cart" ? "active" : ""} // Updated to check location.pathname
+          className={location.pathname === "/cart" ? "active" : ""} 
         >
           Cart
         </li>
         <li
           onClick={() => handleMenuClick("orders")}
-          className={location.pathname === "/orders" ? "active" : ""} // Updated to check location.pathname
+          className={location.pathname === "/orders" ? "active" : ""} 
         >
           Orders
         </li>
         <li
-          onClick={() => handleMenuClick("profile")}
-          className={location.pathname === "/profile" ? "active" : ""} // Updated to check location.pathname
+          onClick={() => handleMenuClick("profilepage")}
+          className={location.pathname === "/profilepage" ? "active" : ""} // Updated to check location.pathname
         >
           Profile
         </li>
       </ul>
 
-      {/* New Search Bar Implementation */}
       <form
         className={`search-form ${isSearchExpanded ? "expanded" : ""}`}
         onSubmit={handleSearchSubmit}

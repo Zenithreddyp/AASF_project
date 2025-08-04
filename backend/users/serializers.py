@@ -1,7 +1,20 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers,validators #compulsory becoz of serilizer 
-from .models import ShippingAddress
+from .models import ShippingAddress, VendorUser
 import requests
+
+class VendorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =VendorUser
+        fields = ["id","user","shop_name","phone_number","address","GSTIN"]
+        extra_kwargs = {"user": {"read_only": True}}
+
+    def create(self, validated_data):
+        user = self.context["request"].user
+        vendor = VendorUser.objects.create(user=user,**validated_data)
+        return vendor
+    
+
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -41,7 +54,7 @@ class ShippingAddressSerializer(serializers.ModelSerializer):
         model = ShippingAddress
         fields = ["id","full_name", "phone_number","postal_code","address","city","state", "created_at",]
         extra_kwargs = {"created_at": {"read_only": True}}
-    #     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     # full_name = models.CharField(max_length=100)
     # phone_number = models.CharField(max_length=10)
     # address = models.TextField()
