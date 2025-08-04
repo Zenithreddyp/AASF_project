@@ -90,8 +90,8 @@ const Navbar = () => {
           Orders
         </li>
         <li
-          onClick={() => handleMenuClick("profile")}
-          className={location.pathname === "/profile" ? "active" : ""} 
+          onClick={() => handleMenuClick("profilepage")}
+          className={location.pathname === "/profilepage" ? "active" : ""} // Updated to check location.pathname
         >
           Profile
         </li>
