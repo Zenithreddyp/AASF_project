@@ -7,13 +7,13 @@ const Menubar = () => {
   const navigate = useNavigate();
 
   const categories = [
-    { name: "Mobiles", image: "/images/phone.png" },
-    { name: "Laptops", image: "/images/laptop.png" },
-    { name: "Shoes", image: "/images/shoes.png" },
-    { name: "Watches", image: "/images/watch.png" },
-    { name: "Tablets", image: "/images/tablet.png" },
-    { name: "Headphones", image: "/images/heaphones.png" },
-    { name: "Smart TVs", image: "/images/tv.png" },
+    { name: "ELectronics", image: "/images/electronics.png" },
+    { name: "Clothing", image: "/images/clothing.png" },
+    { name: "Appliances", image: "/images/fridge.png" },
+    { name: "Daily Needs", image: "/images/bottle.png" },
+    { name: "Cosmetics", image: "/images/cosmetics.png" },
+    { name: "Furniture", image: "/images/sofa.png" },
+    { name: "Groceries", image: "/images/grocery.png" },
   ];
   const handleCategoryClick = (category) => {
     navigate(`/products?category=${category.toLowerCase().replace(' ', '+')}`);

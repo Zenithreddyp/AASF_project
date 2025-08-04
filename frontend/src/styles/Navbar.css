@@ -6,24 +6,25 @@
 
 body {
   background-color: rgb(248, 248, 248);
-  /* Set Roboto as the default font */
-  font-family: "Roboto", sans-serif; /* Moved font family here for global effect */
+  font-family: "Roboto", sans-serif;
 }
 
 .navbar {
   display: flex;
   background-color: #7494ec;
-  justify-content: space-around; /* Changed to space-around for better distribution */
-  align-items: center; /* Added to vertically center items */
+  align-items: center;
   height: 10vh;
   width: 100vw;
   color: black;
+  font-family: V;
+  justify-content: center;
 }
 
 .navbarlinks li {
   padding-bottom: 0.1rem;
   color: rgb(0, 0, 0);
   transition: color 0.3s ease, transform 0.3s ease, border-radius 0.3s ease;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .navbarlinks li.active {
@@ -40,32 +41,32 @@ body {
   transform: translateY(-6px);
 }
 
-.videomini {
-  height: 10vh;
-  width: 25%;
-  border-radius: 20px;
-  margin: 10px;
+.logo {
+  height: 50px;
+  width: auto;
+  display: flex;
+  margin-left: 2vw;
+  margin-right: 1vw;
+  filter: hue-rotate(-150deg)
 }
 
-.logo {
-  width: 20%; /* Adjusted width to accommodate new search bar */
+.logoname {
+  height: 23px;
+  width: auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.8rem;
+  filter: hue-rotate(-150deg)
 }
 
 .navbarlinks {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40%;
-  gap: 5%;
+  width: 100%;
+  gap: 3%;
   list-style-type: none;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }
 
-/* New Search Bar CSS */
 .search-form {
   position: relative;
   transition: all 1s;
@@ -75,10 +76,10 @@ body {
   box-sizing: border-box;
   border-radius: 25px;
   border: 4px solid white;
-  padding: 5px;
-  display: flex; /* To align icon and input */
+  padding: 20px;
+  display: flex;
   align-items: center;
-  margin-right: 20px; /* Add some margin from the right edge */
+  margin-right: 7vw;
 }
 
 .search-form input {
@@ -90,11 +91,11 @@ body {
   line-height: 30px;
   outline: 0;
   border: 0;
-  display: none; /* Hidden by default */
+  display: none;
   font-size: 1em;
   border-radius: 20px;
   padding: 0 20px;
-  background: transparent; /* Make input background transparent to show form background */
+  background: transparent;
 }
 
 .search-icon {
@@ -110,17 +111,16 @@ body {
   text-align: center;
   font-size: 1.2em;
   transition: all 1s;
-  cursor: pointer; /* Indicate it's clickable */
+  cursor: pointer;
 }
 
-/* Styles when the search form is expanded */
 .search-form.expanded {
-  width: 300px; /* Expanded width */
-  cursor: text; /* Change cursor to text when expanded */
+  width: 300px;
+  cursor: text;
 }
 
 .search-form.expanded input {
-  display: block; /* Show input when expanded */
+  display: block;
 }
 
 .search-form.expanded .search-icon {
@@ -128,7 +128,6 @@ body {
   color: white;
 }
 
-/* Responsive adjustments (optional, but good practice) */
 @media (max-width: 768px) {
   .navbar {
     flex-wrap: wrap;
@@ -150,6 +149,6 @@ body {
   }
 
   .search-form.expanded {
-    width: 90%; /* Adjust expanded width for smaller screens */
+    width: 90%;
   }
 }

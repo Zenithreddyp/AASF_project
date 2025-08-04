@@ -9,8 +9,8 @@
   list-style: none;
 }
 .loginbox{
-  padding-left: 19vw;
-
+  justify-self: center;
+  display: flex;
 }
 
 

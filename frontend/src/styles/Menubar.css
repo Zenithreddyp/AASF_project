@@ -6,11 +6,11 @@
   padding: 15px;
   background-color: rgb(248,248,248);
   width: 95vw;
-  gap: 10vh; /* This might create very large gaps. Consider using a smaller unit like 'px' or 'rem' for gap. */
+  gap: 10vh; 
   border-radius: 15px;
 }
 
-.recom { /* This class doesn't seem to be used in the provided JSX */
+.recom { 
   font-size: 2rem;
   padding: 3px;
   background-color: orange;
@@ -18,9 +18,9 @@
 }
 
 .menu-item {
-  display: flex; /* Make it a flex container to stack text and image */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
   padding:  16px;
   background-color: rgb(236,236,236);
   border-radius: 6px;
@@ -31,34 +31,32 @@
   transition: padding-bottom 0.5s ease,
               background-color 0.3s ease,
               color 0.3s ease,
-              transform 0.3s ease-in-out, /* Added for smooth scaling */
-              box-shadow 0.3s ease-in-out; /* Added for smooth shadow */
-  text-align: center; /* Center text if it's not wrapped in a span */
+              transform 0.3s ease-in-out,
+              box-shadow 0.3s ease-in-out;
+  text-align: center; 
 }
 
 .menu-item:hover {
-  background-color: rgb(44,95,121); /* Slightly darker orange on hover */
+  background-color: rgb(44,95,121); 
   color: white;
   padding-bottom: 2vh;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Slightly larger shadow on hover */
-  transform: scale(1.05); /* Makes the item 5% bigger */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
+  transform: scale(1.05); 
 }
 
-.menu-item span { /* Style for the text within the menu item */
-    margin-bottom: 5px; /* Space between text and image */
-    font-weight: bold; /* Make the text stand out */
+.menu-item span { 
+    margin-bottom: 5px; 
+    font-weight: bold; 
 }
 
 .menu-item-image {
-  width: 100px; /* Adjust image width as needed */
-  height: 100px; /* Adjust image height as needed */
-  object-fit: cover; /* Ensures the entire image is visible within the bounds */
-  margin-top: 5px; /* Space between text and image */
+  width: 100px; 
+  height: 100px; 
+  object-fit: contain; 
 }
 
-/* Optional: Adjust gap if 10vh is too large */
 @media (min-width: 768px) {
   .menubar {
-    gap: 20px; /* Example: a fixed pixel gap for larger screens */
+    gap: 20px; 
   }
 }
