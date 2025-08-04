@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/profilepage.css';
 import { useNavigate } from 'react-router-dom';
-import { fetchuserAllAddress, addNewAddress } from '../api/useraddress';
+import { fetchuserAllAddress } from '../api/useraddress';
 
 const ProfilePage = () => {
     const navigate = useNavigate();
+
     const [showProfileModal, setShowProfileModal] = useState(false);
     const [showAddressModal, setShowAddressModal] = useState(false);
+    const [addresses, setAddresses] = useState([]);
 
     const [formData, setFormData] = useState({
         name: 'doni',
-        username: 'doni',
-    });
-
-    const [addresses, setAddresses] = useState([]);
-    const [addressForm, setAddressForm] = useState({
-        house_no: '',
-        city: '',
-        pincode: '',
-        landmark: '',
-        state: '',
+        username: 'doni'
     });
 
     const handleLogout = () => {
@@ -27,10 +20,7 @@ const ProfilePage = () => {
     };
 
     const handleProfileChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleProfileSubmit = (e) => {
@@ -39,41 +29,16 @@ const ProfilePage = () => {
         setShowProfileModal(false);
     };
 
-    const handleAddressChange = (e) => {
-        setAddressForm({
-            ...addressForm,
-            [e.target.name]: e.target.value,
-        });
-    };
-
-    const handleAddressSubmit = async (e) => {
-        e.preventDefault();
+    const fetchAddresses = async () => {
         try {
-            await addNewAddress(addressForm);
             const data = await fetchuserAllAddress();
             setAddresses(data);
-            setAddressForm({
-                house_no: '',
-                city: '',
-                pincode: '',
-                landmark: '',
-                state: '',
-            });
-            setShowAddressModal(false);
-        } catch (error) {
-            console.error('Error saving address:', error);
+        } catch (err) {
+            console.error('Error fetching addresses:', err);
         }
     };
 
     useEffect(() => {
-        const fetchAddresses = async () => {
-            try {
-                const data = await fetchuserAllAddress();
-                setAddresses(data);
-            } catch (err) {
-                console.error('Error fetching addresses:', err);
-            }
-        };
         fetchAddresses();
     }, []);
 
@@ -81,7 +46,7 @@ const ProfilePage = () => {
         <div className="profile-container">
             <div className="profile-header">
                 <div className="user-info">
-                    <img src="./header2.png" alt="" className="profilepic" />
+                    <img src="./header2.png" alt="Profile" className="profilepic" />
                     <div>
                         <h2>{formData.name}</h2>
                         <p>{formData.username}</p>
@@ -99,7 +64,7 @@ const ProfilePage = () => {
                         {[...Array(4)].map((_, i) => (
                             <div key={i} className="order-card">
                                 <img src="/header1.png" alt="Product" className="order-img" />
-                                <p>samsung s23</p>
+                                <p>Samsung S23</p>
                                 <span>Delivered</span>
                             </div>
                         ))}
@@ -109,30 +74,16 @@ const ProfilePage = () => {
                 <div className="quick-links">
                     <h4>Quick Links</h4>
                     <button className="wishlist">Wishlist</button>
-                    <button onClick={() => setShowAddressModal(true)}>Edit Address</button>
+                    <button onClick={() => setShowAddressModal(true)}>
+                        Manage Addresses
+                    </button>
                     <button onClick={handleLogout} className="logout-btn">
                         Logout
                     </button>
                 </div>
-
-                <div className="saved-addresses">
-                    <h4>Saved Addresses</h4>
-                    {addresses.length === 0 ? (
-                        <p>No saved addresses.</p>
-                    ) : (
-                        <ul>
-                            {addresses.map((addr, index) => (
-                                <li key={index}>
-                                    {addr.house_no}, {addr.city}, {addr.state}, {addr.pincode}{' '}
-                                    {addr.landmark && `(${addr.landmark})`}
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </div>
             </div>
 
-            {/* Profile Edit Popup */}
+            {/* Profile Edit Modal */}
             {showProfileModal && (
                 <div className="inline-popup">
                     <h3>Edit Profile Info</h3>
@@ -159,55 +110,29 @@ const ProfilePage = () => {
                 </div>
             )}
 
-            {/* Address Edit Popup */}
+            {/* Address View Modal */}
             {showAddressModal && (
                 <div className="inline-popup">
-                    <h3>Add/Edit Address</h3>
-                    <form onSubmit={handleAddressSubmit} className="edit-form">
-                        <input
-                            type="text"
-                            name="house_no"
-                            placeholder="House No"
-                            value={addressForm.house_no}
-                            onChange={handleAddressChange}
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="city"
-                            placeholder="City"
-                            value={addressForm.city}
-                            onChange={handleAddressChange}
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="pincode"
-                            placeholder="Pincode"
-                            value={addressForm.pincode}
-                            onChange={handleAddressChange}
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="state"
-                            placeholder="State"
-                            value={addressForm.state}
-                            onChange={handleAddressChange}
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="landmark"
-                            placeholder="Landmark (optional)"
-                            value={addressForm.landmark}
-                            onChange={handleAddressChange}
-                        />
-                        <button type="submit">Save Address</button>
-                        <button type="button" onClick={() => setShowAddressModal(false)}>
-                            Cancel
-                        </button>
-                    </form>
+                    <h3>Your Addresses</h3>
+                    {addresses.length === 0 ? (
+                        <p>No saved addresses</p>
+                    ) : (
+                        <ul className="address-list">
+                            {addresses.map((addr, index) => (
+                                <li key={index} className="address-item">
+                                    <strong>{addr.full_name}</strong><br />
+                                    {addr.address}, {addr.city}, {addr.state} - {addr.postal_code}<br />
+                                    Phone: {addr.phone_number}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                    <button
+                        type="button"
+                        onClick={() => setShowAddressModal(false)}
+                    >
+                        Close
+                    </button>
                 </div>
             )}
         </div>

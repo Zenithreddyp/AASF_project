@@ -120,7 +120,7 @@
   color: gray;
 }
 
-.quick-links .wishlist {
+.quick-links >*{
   width: 100%;
   padding: 10px;
   background-color: #7494ec;
@@ -172,7 +172,12 @@
   flex-direction: column;
   justify-content: center;
 }
+.inline-popup  address-list address-item{
+  border-color: #7494ec;
+  background-color: black;
+  border-radius: 10px;
 
+}
 .inline-popup h3 {
   text-align: center;
   margin-bottom: 1rem;
