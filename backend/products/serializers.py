@@ -18,11 +18,13 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Products
         fields = [
-            "id", "name", "description", "price", "stock", 
+            "id", "vendor", "name", "description", "price", "stock", 
             "category", "brand", "rating", 
             "images", 
             "uploaded_images"
         ]
+        extra_kwargs = {"vendor": {"read_only": True}}
+
 
     def create(self, validated_data):
         uploaded_images_data = validated_data.pop("uploaded_images", [])

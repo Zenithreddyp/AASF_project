@@ -80,3 +80,4 @@ class DefaultShippingAddress(generics.RetrieveAPIView):
             raise Http404("No default address set.")
 
         return ShippingAddress.objects.filter(user=self.request.user,is_default=True)
+    

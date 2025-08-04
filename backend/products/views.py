@@ -77,7 +77,7 @@ class getcategorysearch(generics.ListAPIView):
         return Products.objects.all()
     
 
-class getbrandsearch(generics.ListAPIView):
+class getbrandsearch(generics.ListAPIView): #not being used
     serializer_class=ProductSerializer
     permission_classes=[AllowAny]
 
