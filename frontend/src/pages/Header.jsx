@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import '../styles/Header.css';
 
 const images = [
-  '/header1.png',
-  '/header2.png',
+  '/model1zedova.png',
+  '/model2zedova.png',
 ];
 
 const Header = () => {
