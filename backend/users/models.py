@@ -8,6 +8,15 @@ from django.contrib.auth.models import User
 #     # phonenumber=models.CharField(max_length=10)
 #     # address=models.TextField()
 
+class VendorUser(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name="vendor")
+    GSTIN = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=10)
+    shop_name = models.CharField(max_length=40)
+    address = models.TextField()
+
+    
+
 
 
 class ShippingAddress(models.Model):
