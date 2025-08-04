@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from products.models import Products
 
+## important note that   ######################
+#  onotoone , foreignkey(many to one) , many to many
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -62,3 +64,22 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} x {self.product_name} for Order {self.order.id}"
+    
+
+
+class Wishlist(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name="wishlist")
+
+
+
+    
+class WishlistItem(models.Model):
+    wishlist = models.ForeignKey(Wishlist, on_delete=models.CASCADE, related_name='items')
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('wishlist', 'product')
+        # constraints = [                this can also be used
+        #     models.UniqueConstraint(fields=['user', 'product'], name='unique_user_product')
+        # ]

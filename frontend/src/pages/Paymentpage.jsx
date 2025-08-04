@@ -192,9 +192,8 @@ const PaymentPage = () => {
     // IMPORTANT: In a real-world scenario, you would first create an order
     // on your backend with Razorpay and get the order_id.
     // For this demonstration, we'll proceed directly with the payment window.
-
     const options = {
-      key: "rzp_test_XgdFHDeUlG5ENZ", // Replace with your actual Key ID from settings
+      key: "rzp_test_XgdFHDeUlG5ENZ", 
       amount: totalPrice * 100,
       currency: "INR",
       name: "Acme Corp",
