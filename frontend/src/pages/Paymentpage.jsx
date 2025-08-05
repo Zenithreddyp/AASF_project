@@ -150,7 +150,6 @@ const PaymentPage = () => {
 
   const handlePayment = async () => {
     const missingFields = [];
-    let addressSaveSuccess = false;
 
     if (!fullname) missingFields.push("Full Name");
     if (!phone) missingFields.push("Phone Number");
@@ -165,30 +164,39 @@ const PaymentPage = () => {
     }
 
     let res = false;
+    let addressSaveSuccess = false;
+
     if (selectedIndex === null) {
       const newAddress = {
-        full_name: fullname,
-        phone_number: phone,
+        fullname,
+        phone,
         address,
         city,
         state,
-        postal_code: pincode,
+        pincode,
       };
 
       const res = await addNewAddress(newAddress);
-      const updated = [...savedAddresses, res];
-      setSavedAddresses(updated);
-      // if (res) {
-      //   setSavedAddresses((prev) => [...prev, newAddress]);
-      //   addressSaveSuccess = true;
-      // } else {
-      //   alert("Failed to save new address.");
-      //   return;
-      // }
-    } else {
-      addressSaveSuccess = true; // Address already selected, no need to save again
-    }
 
+      if (res) {
+        const updated = [...savedAddresses, res];
+        setSavedAddresses(updated);
+        setSelectedIndex(savedAddresses.length); // ✅ Optionally select the new address
+        addressSaveSuccess = true;
+      } else {
+        alert("Failed to save new address.");
+        return;
+      }
+    } else {
+      addressSaveSuccess = true;
+    }
+    // if (res) {
+    //   setSavedAddresses((prev) => [...prev, newAddress]);
+    //   addressSaveSuccess = true;
+    // } else {
+    //   alert("Failed to save new address.");
+    //   return;
+    // }
     if (!addressSaveSuccess) {
       return;
     }
@@ -218,19 +226,24 @@ const PaymentPage = () => {
         }));
 
         try {
-          await placeOrder({
+          const shippingAddress = {
             full_name: fullname,
             phone_number: phone,
-            shipping_address: address, // Renamed key to match backend model
-            city: city,
-            state: state,
-            postal_code: pincode, // Renamed key to match backend model
+            address,
+            city,
+            state,
+            postal_code: pincode,
             total_price: totalPrice,
+            items: orderItemsForBackend,
+          };
+
+          const razorpayDetails = {
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_order_id: response.razorpay_order_id,
             razorpay_signature: response.razorpay_signature,
-            items: orderItemsForBackend, // Nested items array for the serializer
-          });
+          };
+
+          await placeOrder(shippingAddress, razorpayDetails);
 
           console.log("Order placed successfully on backend!");
           setSubmitted(true);
