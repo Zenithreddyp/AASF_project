@@ -7,6 +7,7 @@ import Menubar from './Menubar.jsx'
 import Recoms from './Recoms.jsx'
 
 
+
 function Home() {
     return (
         <div className='homeslider'>

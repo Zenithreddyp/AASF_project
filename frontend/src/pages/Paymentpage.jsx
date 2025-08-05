@@ -290,10 +290,10 @@ const PaymentPage = () => {
                     selectedIndex === index ? "selected" : ""
                   }`}
                 >
-                  <div className="address-card-top">
+                 <label > <div className="address-card-top">
                     <input
                       type="radio"
-                      name="selectedAddress"
+                      name="radio"
                       checked={selectedIndex === index}
                       onChange={() => selectAddress(index)}
                     />
@@ -306,7 +306,7 @@ const PaymentPage = () => {
                         {addr.pincode}
                       </p>
                     </div>
-                  </div>
+                  </div></label>
                   <button
                     className="delete-btn"
                     onClick={() => deleteAddress(index)}
