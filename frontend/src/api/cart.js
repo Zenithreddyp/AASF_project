@@ -89,12 +89,22 @@ export const removeItem = async (cartItemId) => {
   }
 };
 
-export const placeOrder = async (shippingAddress) => {
+export const placeOrder = async (shippingAddress,razorpayDetails) => {
   try {
     const formattedAddress = `${shippingAddress.full_name}, ${shippingAddress.phone_number}, ${shippingAddress.address}, ${shippingAddress.city}, ${shippingAddress.state}, ${shippingAddress.postal_code}`;
 
     const response = await privateApi.post("/cart/cart/order/", {
+      full_name: shippingAddress.full_name,
+      phone_number: shippingAddress.phone_number,
       shipping_address: formattedAddress,
+      city: shippingAddress.city,
+      state: shippingAddress.state,
+      postal_code: shippingAddress.postal_code,
+      total_price: shippingAddress.total_price,
+      items: shippingAddress.items,
+      razorpay_payment_id: razorpayDetails.razorpay_payment_id,
+      razorpay_order_id: razorpayDetails.razorpay_order_id,
+      razorpay_signature: razorpayDetails.razorpay_signature,
     });
     alert("Prder placed");
     return response.data;

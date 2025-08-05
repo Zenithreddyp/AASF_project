@@ -41,7 +41,7 @@ export const addNewAddress = async (shippingaddress) => {
 
     
     alert("Address added successfully!");
-    return true;
+    return res.data;;
   } catch (error) {
     
     if (error.response && error.response.data) {
