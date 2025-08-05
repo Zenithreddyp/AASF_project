@@ -19,6 +19,7 @@ const SearchPage = () => {
 
     if (cachedData) {
       setResults(JSON.parse(cachedData));
+      
       setLoading(false);
     } else {
       setLoading(true);
@@ -35,7 +36,7 @@ const SearchPage = () => {
           setLoading(false);
         });
     }
-  }, [searchTerm]);
+  }, [searchTerm,]);
 
   const goToProduct = (item) => {
     navigate("/product", { state: item });

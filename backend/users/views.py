@@ -37,6 +37,7 @@ class UserListView(generics.ListAPIView): #for my sake
 
 
 class CreateShippingAddressView(generics.CreateAPIView):
+    print("modda guduvu")
     serializer_class = ShippingAddressSerializer
     permission_classes=[IsAuthenticated]
 
