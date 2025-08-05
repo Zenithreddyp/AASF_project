@@ -35,7 +35,9 @@ const Recoms = () => {
   };
 
   if (loading) {
-    return <div className="recom">Loading recommendations...</div>;
+    return <div className="loading">
+      <img src="/loading.gif" alt="Loading..." />
+    </div>
   }
 
   if (error) {

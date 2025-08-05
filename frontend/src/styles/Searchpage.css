@@ -95,11 +95,14 @@
 
 
 .loading {
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: #555;
-  text-align: center;
-  padding: 2rem;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+.loading img {
+  width: 50vh; 
+  height: auto; 
 }
 
 .error {

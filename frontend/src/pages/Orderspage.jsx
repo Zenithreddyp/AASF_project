@@ -8,6 +8,7 @@ import jsPDF from "jspdf";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [showDownloadVideo, setShowDownloadVideo] = useState(false); // New state for video visibility
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -38,6 +39,7 @@ const Orders = () => {
         console.error("Failed to fetch orders", error);
         setOrders([]);
       }
+      setLoading(false);
     };
 
     fetchOrders();
@@ -77,6 +79,16 @@ const Orders = () => {
   const handleVideoEnded = () => {
     setShowDownloadVideo(false); // Hide the video when it finishes playing
   };
+
+  if (loading) {
+    return(
+    <>
+      <Navbar />
+      <div className="loading">
+        <img src="/loading.gif" alt="Loading..." />
+      </div>
+    </>)
+  }
 
   return (
     <>

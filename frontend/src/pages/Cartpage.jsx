@@ -7,6 +7,8 @@ import { dispCart, removeItem, updateQuant } from "../api/cart";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,6 +35,7 @@ const CartPage = () => {
       }));
 
       setCartItems(formattedCart);
+      setLoading(false);
     };
 
     fetchCart();
@@ -98,6 +101,16 @@ const CartPage = () => {
     );
     return parseFloat(total.toFixed(2));
   };
+
+  if (loading) {
+    return(
+    <>
+      <Navbar />
+      <div className="loading">
+        <img src="/loading.gif" alt="Loading..." />
+      </div>
+    </>)
+  }
 
   return (
     <>

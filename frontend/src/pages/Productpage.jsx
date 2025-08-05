@@ -14,7 +14,7 @@ const ProductPage = () => {
   const navigate = useNavigate();
   const [item, setItem] = useState(null);
   const [cartItems, setCartItems] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -22,8 +22,11 @@ const ProductPage = () => {
       try {
         const data = await fetchProductbyid(id);
         setItem(data);
+        setLoading(false);
+
       } catch (error) {
         console.error("Failed to fetch product", error);
+        setLoading(false);
       }
     };
 
@@ -42,11 +45,7 @@ const ProductPage = () => {
     }
   }, [images]);
 
-  if (!item) {
-    return (
-      <div>No product data found. Please go back and select a product.</div>
-    );
-  }
+
 
   // const addToCart = () => {
   //     const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -89,6 +88,22 @@ const ProductPage = () => {
 
   const currentImage =
     images.length > 0 ? images[currentIndex].image : "/fallback.png";
+
+  if (loading) {
+    return(
+    <>
+      <Navbar />
+      <div className="loading">
+        <img src="/loading.gif" alt="Loading..." />
+      </div>
+    </>)
+  }
+
+  if (!item) {
+    return (
+      <div>No product data found. Please go back and select a product.</div>
+    );
+  }
 
   return (
     <>

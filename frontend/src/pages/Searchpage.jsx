@@ -43,7 +43,9 @@ const SearchPage = () => {
   };
 
   if (loading) {
-    return <div className="loading">Loading recommendations...</div>;
+    return <div className="loading">
+      <img src="/loading.gif" alt="Loading..." />
+    </div>
   }
 
   if (error) {
