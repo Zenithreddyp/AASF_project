@@ -54,14 +54,14 @@ class getproductsearch(generics.ListAPIView):
 
         return queryset
     
-class getrecoms(generics.ListAPIView):
-    serializer_class=ProductSerializer
-    permission_classes=[IsAuthenticated]
-        # if data is empty, display all products
-    def get_queryset(self):
-        top4=recoprod(self.request.user)
-        matched_ids = [p for p in top4]
-        queryset = queryset.filter(id__in=matched_ids)
+# class getrecoms(generics.ListAPIView):
+#     serializer_class=ProductSerializer
+#     permission_classes=[IsAuthenticated]
+#         # if data is empty, display all products
+#     def get_queryset(self):
+#         top4=recoprod(self.request.user)
+#         matched_ids = [p for p in top4]
+#         queryset = queryset.filter(id__in=matched_ids)
 
 
     

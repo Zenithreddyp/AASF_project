@@ -92,10 +92,11 @@ const CartPage = () => {
   };
 
   const getTotalPrice = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.cost * item.quantity,
+    const total = cartItems.reduce(
+      (sum, item) => sum + item.cost * item.quantity,
       0
     );
+    return parseFloat(total.toFixed(2));
   };
 
   return (

@@ -43,11 +43,15 @@ const PaymentPage = () => {
 
   const [paymentCompleted, setPaymentCompleted] = useState(false);
 
-  const totalPrice = items.reduce((acc, item) => {
-    console.log("Item:", item); // Log full item object
-    console.log("Cost:", item?.cost);
-    return acc + (Number(item.cost) || 0) * (item.quantity || 1);
-  }, 0);
+  const totalPrice = parseFloat(
+    items
+      .reduce((acc, item) => {
+        // console.log("Item:", item); // Log full item object
+        // console.log("Cost:", item?.cost);
+        return acc + (Number(item.cost) || 0) * (item.quantity || 1);
+      }, 0)
+      .toFixed(2)
+  );
 
   useEffect(() => {
     // const stored = JSON.parse(localStorage.getItem('userAddresses')) || [];
@@ -115,7 +119,7 @@ const PaymentPage = () => {
   //   return () => {
   //     window.removeEventListener("pagehide", handlePageHide);
   //     if (!isReload) {
-  //       cleanupTempCart(); 
+  //       cleanupTempCart();
   //     }
   //   };
 
@@ -146,6 +150,7 @@ const PaymentPage = () => {
 
   const handlePayment = async () => {
     const missingFields = [];
+    let addressSaveSuccess = false;
 
     if (!fullname) missingFields.push("Full Name");
     if (!phone) missingFields.push("Phone Number");
@@ -158,14 +163,21 @@ const PaymentPage = () => {
       alert("Please fill the following field(s):\n" + missingFields.join("\n"));
       return;
     }
-    
+
     let res = false;
     if (selectedIndex === null) {
-      const newAddress = { full_name: fullname, phone_number: phone, address, city, state, postal_code: pincode };
+      const newAddress = {
+        full_name: fullname,
+        phone_number: phone,
+        address,
+        city,
+        state,
+        postal_code: pincode,
+      };
 
       const res = await addNewAddress(newAddress);
       const updated = [...savedAddresses, res];
-      setSavedAddresses[updated];
+      setSavedAddresses(updated);
       // if (res) {
       //   setSavedAddresses((prev) => [...prev, newAddress]);
       //   addressSaveSuccess = true;
@@ -173,7 +185,6 @@ const PaymentPage = () => {
       //   alert("Failed to save new address.");
       //   return;
       // }
-
     } else {
       addressSaveSuccess = true; // Address already selected, no need to save again
     }
@@ -193,15 +204,14 @@ const PaymentPage = () => {
     // on your backend with Razorpay and get the order_id.
     // For this demonstration, we'll proceed directly with the payment window.
     const options = {
-      key: "rzp_test_XgdFHDeUlG5ENZ", 
+      key: "rzp_test_XgdFHDeUlG5ENZ",
       amount: totalPrice * 100,
       currency: "INR",
       name: "Acme Corp",
       description: "Purchase from E-commerce Store",
       image: "https://example.com/your_logo",
       handler: async function (response) {
-
-        const orderItemsForBackend = items.map(item => ({
+        const orderItemsForBackend = items.map((item) => ({
           product_id: item.id,
           quantity: item.quantity || 1,
           price: Number(item.cost) || 0,
@@ -227,7 +237,9 @@ const PaymentPage = () => {
           localStorage.removeItem("cart");
         } catch (error) {
           console.error("Error placing order:", error);
-          alert("Payment successful, but there was an error processing your order. Please contact support.");
+          alert(
+            "Payment successful, but there was an error processing your order. Please contact support."
+          );
         }
       },
       prefill: {
@@ -244,7 +256,7 @@ const PaymentPage = () => {
     };
 
     const rzp1 = new window.Razorpay(options);
-    rzp1.on('payment.failed', function (response) {
+    rzp1.on("payment.failed", function (response) {
       alert("Payment Failed: " + response.error.description);
       console.error("Razorpay Error:", response.error);
     });
@@ -274,8 +286,9 @@ const PaymentPage = () => {
               {savedAddresses.map((addr, index) => (
                 <div
                   key={index}
-                  className={`address-card ${selectedIndex === index ? "selected" : ""
-                    }`}
+                  className={`address-card ${
+                    selectedIndex === index ? "selected" : ""
+                  }`}
                 >
                   <div className="address-card-top">
                     <input

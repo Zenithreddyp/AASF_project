@@ -6,7 +6,8 @@ export const addtocart = async (item) => {
   const isAuth = await validateToken();
   if (!isAuth) {
     alert("Please login to add items to cart.");
-    navigate("/login", { state: { from: location.pathname } });
+    window.location.href = "/login";
+    // navigate("/login", { state: { from: location.pathname } });
     return;
   }
 

@@ -14,7 +14,7 @@ urlpatterns = [
     path("orders/",ListallOrders.as_view(),name="all-placed-orders"),
     path("orders/cancel/<int:pk>/",CancelOrder.as_view(),name="cancel-order"),
 
-    path("cart/order/",OrderPlacedView.as_view(),name="order-placed"), # Updated URL
+    path("cart/order/",OrderPlacedView.as_view(),name="order-placed"), # Updated URL                    important
     path("cart/clear/", ClearCart.as_view(), name="clear-cart"),
 
     # path("order/invoice/download/<int:order_id>/", download_invoice, name="download_invoice"),
