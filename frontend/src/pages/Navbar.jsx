@@ -13,7 +13,7 @@ const logoimages = [
 const Navbar = () => {
   const [menu, setMenu] = useState("home"); // Changed to setMenu for consistency
   const [searchTerm, setSearchTerm] = useState("");
-  const [isSearchExpanded, setIsSearchExpanded] = useState(false); // New state for search bar animation
+  const [isSearchExpanded, setIsSearchExpanded] = useState(true); // New state for search bar animation
 
   const navigate = useNavigate();
   const location = useLocation(); // Initialize useLocation
@@ -101,12 +101,16 @@ const Navbar = () => {
         className={`search-form ${isSearchExpanded ? "expanded" : ""}`}
         onSubmit={handleSearchSubmit}
       >
+        <div className="searchbar">
+
+        
         <input
           type="search"
           placeholder="Search here ..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+</div>
         <FontAwesomeIcon icon={faSearch} className="search-icon" onClick={handleSearchIconClick} />
       </form>
     </div>

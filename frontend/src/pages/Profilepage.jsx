@@ -79,8 +79,12 @@ const ProfilePage = () => {
           </div>
 
           <div className="quick-links">
-            <h4>Quick Links</h4>
-            <button className="wishlist">Wishlist</button>
+           
+           <button className="button1">botton1</button>
+           
+<button className="button2">botton2</button>
+           
+
             <button onClick={() => setShowAddressModal(true)}>
               Manage Addresses
             </button>
@@ -144,7 +148,7 @@ const ProfilePage = () => {
                       Phone: {addr.phone_number}
                       <div className="address-actions">
                         <button className="edit-btn">Edit</button>
-                        <button className="delete-btn">Delete</button>
+                        <button className="delete">delete</button>
                       </div>
                     </div>
                   </label>
