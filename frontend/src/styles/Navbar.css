@@ -127,28 +127,58 @@ body {
   background: #8c52ff;
   color: white;
 }
+@media(max-width:700px){
 
+}
 @media (max-width: 768px) {
   .navbar {
-    flex-wrap: wrap;
-    height: auto;
-    padding: 10px 0;
+    display: flex;
+    height: 40vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
   }
 
-  .logo,
-  .navbarlinks,
-  .search-form {
-    width: 100%;
-    justify-content: center;
-    margin: 10px 0;
-  }
+ 
 
   .navbarlinks {
-    flex-direction: column;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+   
+    gap: 10px 30vw;
+    justify-content: center;
+    margin-bottom: 15px;
   }
 
-  .search-form.expanded {
-    width: 90%;
+  .navbarlinks li {
+    list-style: none;
+    font-size: 16px;
+    cursor: pointer;
+    width: 30vw;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .search-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .search-form input {
+    width: 80%;
+    padding: 8px;
+    font-size: 14px;
+  }
+.searchbar{
+  justify-content: center;
+}
+  .search-icon {
+    margin-left: 10px;
+    font-size: 16px;
+    cursor: pointer;
   }
 }
