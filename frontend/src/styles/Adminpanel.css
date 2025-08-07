@@ -19,7 +19,7 @@
     background-color: aliceblue;
     flex-direction: column;
     gap: 2vh;
-    padding-top: 4vh;
+    padding: 4vh;
 }
 
 .admin-btn {
@@ -46,7 +46,6 @@
     align-items: flex-start;
 }
 
-/* Form Container */
 .form-container {
     width: 60%;
     background-color: #ffffff;
