@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
-from rest_framework import serializers,validators #compulsory becoz of serilizer 
+from rest_framework import serializers,validators
+
+from cart.serializers import OrdersSerializers, WishlistSerializer #compulsory becoz of serilizer 
 from .models import ShippingAddress, VendorUser
 import requests
 
@@ -89,3 +91,16 @@ class ShippingAddressSerializer(serializers.ModelSerializer):
     #         if not attrs.get("state"):
     #             attrs["state"] = post_office.get("State")
     #     return attrs
+
+
+# class UserDetailsSerializer(serializers.Serializer):
+#     orders = OrdersSerializers(many=True)
+#     wishlist = WishlistSerializer(many=True)
+#     addresses = ShippingAddressSerializer(many=True)
+
+
+
+class UsernameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username']

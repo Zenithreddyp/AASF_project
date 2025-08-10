@@ -1,8 +1,11 @@
 from django.http import Http404
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from rest_framework import generics ,response #Sends back a JSON response
-from .serializers import UserSerializer,ShippingAddressSerializer,ChangePasswordSerializer
+from rest_framework.response import Response
+from rest_framework import generics ,response
+
+from cart.models import Orders, Wishlist
+from .serializers import UserSerializer,ShippingAddressSerializer,ChangePasswordSerializer, UsernameSerializer
 from rest_framework.permissions import IsAuthenticated,AllowAny   #	These control who can access the view (authentication permissions)
 from .models import ShippingAddress
 
@@ -81,4 +84,29 @@ class DefaultShippingAddress(generics.RetrieveAPIView):
             raise Http404("No default address set.")
 
         return ShippingAddress.objects.filter(user=self.request.user,is_default=True)
+    
+# class fetchUserDetails(generics.ListAPIView):   #very important concept  ( revision required after project )
+#     # serializer_class=UserDetailsSerializer
+#     permission_classes=[IsAuthenticated]
+
+#     def get(self, request, *args, **kwargs):
+#         user=request.user
+#         data={
+#             "orders": Orders.objects.filter(user=user),
+#             "wishlist": Wishlist.objects.filter(user=user),
+#             # "addresses": ShippingAddress.objects.filter(user=user)
+#         }
+#         serializer = UserDetailsSerializer(instance=data)
+#         return Response(serializer.data)
+    
+class FetchUserDetails(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UsernameSerializer
+
+    # def get(self, request):
+    #     user = request.user
+    #     serializer = self.get_serializer({'username': user.username})
+    #     return Response(serializer.data)
+    def get_object(self):
+        return self.request.user
     

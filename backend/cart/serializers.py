@@ -45,6 +45,7 @@ class OrdersSerializers(serializers.ModelSerializer):
             "shipping_address": {"required": False},
             "cart": {"required": False},
             "user": {"required": False},
+            "total_price":{"read_only":True},
         }
 
 class OrderItemSerializer(serializers.ModelSerializer):

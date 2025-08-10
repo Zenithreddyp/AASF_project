@@ -125,9 +125,9 @@ class ClearCart(generics.DestroyAPIView):
 
 
 class ListallOrders(generics.ListAPIView):
-    # This serializer is for LISTING orders, so it should be a read-only serializer
-    # that can display the nested order items.
-    # We will need a new serializer for this. Let's create it.
+    # This serializer is for listing orders so it should be a read-only serializer
+    # that can display the nested order items
+    # we will need a new serializer for this
 
     serializer_class = OrderReadSerializer
     permission_classes=[IsAuthenticated]
