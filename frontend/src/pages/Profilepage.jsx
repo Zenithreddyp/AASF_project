@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import "../styles/profilepage.css";
 import { useNavigate } from "react-router-dom";
 import { fetchuserAllAddress } from "../api/useraddress";
+import { fetchusername } from "../api/profile";
+import { retriveallorders } from "../api/cart";
 import Navbar from "./Navbar";
-
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -11,11 +12,75 @@ const ProfilePage = () => {
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showAddressModal, setShowAddressModal] = useState(false);
   const [addresses, setAddresses] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  // const [formData, setFormData] = useState({
+  //   name: "doni",
+  //   username: "doni",
+  // });
 
   const [formData, setFormData] = useState({
-    name: "doni",
-    username: "doni",
+    username: "",
+    email: "example@gmail.com",
   });
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const data = await fetchusername(); // should return { username, email }
+        setFormData({
+          username: data.username || "",
+          email: "example@gmail.com",
+        });
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
+
+    const fetchOrders = async () => {
+      try {
+        const data = await retriveallorders();
+        console.log(data);
+        const formatedOrders = data.map((order) => {
+          const addressParts = order.shipping_address?.split(",") || [];
+
+          return {
+            ...order,
+            date: new Date(order.bought_at).toLocaleString(),
+            total: order.total_price,
+            address: {
+              fullname: addressParts[0] || "",
+              phone: addressParts[1] || "",
+              address: addressParts[2] || "",
+              city: addressParts[3] || "",
+              state: addressParts[4] || "",
+              pincode: addressParts[5] || "",
+            },
+            items: order.items || [],
+          };
+        });
+
+        setOrders(formatedOrders.reverse());
+      } catch (error) {
+        console.error("Failed to fetch orders", error);
+        setOrders([]);
+      }
+      setLoading(false);
+    };
+
+    const fetchAddresses = async () => {
+      try {
+        const data = await fetchuserAllAddress();
+        setAddresses(data);
+      } catch (err) {
+        console.error("Error fetching addresses:", err);
+      }
+    };
+
+    fetchDetails();
+    fetchOrders();
+    fetchAddresses
+  }, []);
 
   const handleLogout = () => {
     navigate("/logout");
@@ -31,29 +96,17 @@ const ProfilePage = () => {
     setShowProfileModal(false);
   };
 
-  const fetchAddresses = async () => {
-    try {
-      const data = await fetchuserAllAddress();
-      setAddresses(data);
-    } catch (err) {
-      console.error("Error fetching addresses:", err);
-    }
-  };
-
-  useEffect(() => {
-    fetchAddresses();
-  }, []);
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <div className="profile-container">
         <div className="profile-header">
           <div className="user-info">
             <img src="./header2.png" alt="Profile" className="profilepic" />
             <div>
-              <h2>{formData.name}</h2>
-              <p>{formData.username}</p>
+              <h2>{formData.username}</h2>
+              <p>{formData.email}</p>
             </div>
           </div>
           <button
@@ -67,24 +120,30 @@ const ProfilePage = () => {
         <div className="profile-body">
           <div className="recent-orders">
             <h3>Recent Orders</h3>
-            <div className="orders-grid">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="order-card">
-                  <img src="/header1.png" alt="Product" className="order-img" />
-                  <p>Samsung S23</p>
-                  <span>Delivered</span>
-                </div>
-              ))}
-            </div>
+            {loading ? (
+              <p>Loading orders...</p>
+            ) : orders.length > 0 ? (
+              <div className="orders-grid">
+                {orders.slice(0, 4).map((order, i) => (
+                  <div key={order.id || i} className="order-card">
+                    <img
+                      src={order.items[0]?.image || "/placeholder.png"}
+                      alt={order.items[0]?.name || "Product"}
+                      className="order-img"
+                    />
+                    <p>{order.items[0]?.name || "Unknown Product"}</p>
+                    <span>{order.status}</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No recent orders</p>
+            )}
           </div>
 
           <div className="quick-links">
-           
-           <button className="button1">botton1</button>
-           
-<button className="button2">botton2</button>
-           
-
+            <button className="button1">button1</button>
+            <button className="button2">button2</button>
             <button onClick={() => setShowAddressModal(true)}>
               Manage Addresses
             </button>
@@ -101,16 +160,16 @@ const ProfilePage = () => {
             <form onSubmit={handleProfileSubmit} className="edit-form">
               <input
                 type="text"
-                name="name"
-                placeholder="Name"
-                value={formData.name}
-                onChange={handleProfileChange}
-              />
-              <input
-                type="text"
                 name="username"
                 placeholder="Username"
                 value={formData.username}
+                onChange={handleProfileChange}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
                 onChange={handleProfileChange}
               />
               <button type="submit">Save</button>
@@ -136,7 +195,6 @@ const ProfilePage = () => {
                       name="selectedAddress"
                       value={addr.id}
                       className="address-radio"
-                      // You can add logic for selecting address here
                       onChange={() => console.log("Selected:", addr.id)}
                     />
                     <div className="address-details">
@@ -148,7 +206,7 @@ const ProfilePage = () => {
                       Phone: {addr.phone_number}
                       <div className="address-actions">
                         <button className="edit-btn">Edit</button>
-                        <button className="delete">delete</button>
+                        <button className="delete">Delete</button>
                       </div>
                     </div>
                   </label>

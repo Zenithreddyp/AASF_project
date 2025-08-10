@@ -8,5 +8,6 @@ urlpatterns = [
     path("shippingaddress/delete/<int:pk>/", views.DeleteShippingAddress.as_view(), name="delete-address"),
     path("shippingaddress/default/", views.DefaultShippingAddress.as_view(), name="default-shipping"),
     path("user/change-password/", views.UpdateUserPassworwView.as_view(), name="change-password"),
+    path("user/username/",views.FetchUserDetails.as_view(),name="user-details"),
 
 ]
