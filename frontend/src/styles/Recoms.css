@@ -1,7 +1,7 @@
 /* Base Styles */
 .recom-container {
   width: 100%;
-  max-width: 1200px;
+ 
   height: auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -118,7 +118,7 @@
   color: #2c3e50;
 }
 
-/* Tablet & Medium Screens */
+
 @media (max-width: 1199px) {
   .recom-container {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -155,7 +155,7 @@
   }
 }
 
-/* Small Tablets */
+
 @media (max-width: 768px) {
   .recom-container {
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -197,7 +197,7 @@
   }
 }
 
-/* Mobile Phones */
+
 @media (max-width: 480px) {
   .recom-container {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -251,7 +251,7 @@
   }
 }
 
-/* Very Small Phones */
+
 @media (max-width: 320px) {
   .recom-container {
     grid-template-columns: repeat(2, 1fr);
@@ -282,4 +282,4 @@
     font-size: 9px;
     line-height: 1.1;
   }
-}
+} 
