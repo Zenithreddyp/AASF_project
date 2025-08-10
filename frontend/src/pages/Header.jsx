@@ -11,7 +11,7 @@ const Header = () => {
   const [fade, setFade] = useState(true);
 
   useEffect(() => {
-    const fadeTimeout = setTimeout(() => setFade(false), 2500);
+    const fadeTimeout = setTimeout(() => setFade(false), 2000);
     const slideTimeout = setTimeout(() => {
       setCurrent((prev) => (prev + 1) % images.length);
       setFade(true);

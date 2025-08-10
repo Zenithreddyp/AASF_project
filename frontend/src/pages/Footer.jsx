@@ -5,10 +5,9 @@ function Footer() {
   return (
     <div className="App">
       <main className="App-content">
-        {/* Your main page content would go here */}
-        <h1>Welcome to My Page</h1>
-        <p>Morena Rd, IIITM Campus, Gwalior, Madhya Pradesh 474015</p>
-        <p>Please support us by following us on our platforms</p>
+        <h1>You've reached the end of the page</h1>
+        <p style={{ fontSize: '20px' }}>Please support us by following us on our platforms</p>
+        <p style={{ fontSize: '15px' }}>Morena Rd, IIITM Campus, Gwalior, Madhya Pradesh 474015</p>   
       </main>
 
       <footer className="footer-social-icons">

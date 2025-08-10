@@ -13,6 +13,7 @@ import UPIPage from "./pages/UPIpage";
 import Orders from "./pages/Orderspage";
 import Footer from "./pages/Footer";
 import Adminpanel from "./pages/Adminpanel";
+
 import Profilepage from "./pages/profilepage";
 // import Loadingpage from "./pages/Loadingpage";
 
@@ -39,7 +40,7 @@ const App = () => {
             </>
           }
         />
-
+         
         <Route path="/profilepage" element={<Profilepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/search" element={<SearchPage />} />

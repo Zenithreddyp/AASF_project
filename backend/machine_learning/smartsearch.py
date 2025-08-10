@@ -20,23 +20,23 @@ def fetch_products():
         })
     return products
 
-def fuzzy_search(query, products, threshold=55):
+def fuzzy_search(query, products, threshold=60):
     results = []
     for product in products:
-        combined = (product["name"] + " " + product["description"]).lower()
+        combined = (product["name"]).lower()
         score = fuzz.partial_ratio(query.lower(), combined)
-        if score >= threshold:
+        if score > threshold:
             results.append((product, score))
     results.sort(key=lambda x: x[1], reverse=True)
     return [r[0] for r in results]
 
 def semantic_search(query, products):
-    docs = [p["name"] + " " + p["description"] for p in products]
+    docs = [p["name"] + p["description"] for p in products]
     vectorizer = TfidfVectorizer().fit(docs + [query])
     vectors = vectorizer.transform(docs + [query])
     similarities = cosine_similarity(vectors[-1], vectors[:-1]).flatten()
     ranked = sorted(zip(products, similarities), key=lambda x: x[1], reverse=True)
-    return [p for p, score in ranked if score > 0.1]
+    return [p for p, score in ranked if score > 0]
 
 def hybrid_search(query, products):
     fuzzy_results = fuzzy_search(query, products)
@@ -45,7 +45,7 @@ def hybrid_search(query, products):
     seen_ids = set()
     final = []
 
-    for prod in fuzzy_results + semantic_results:
+    for prod in fuzzy_results:
         if prod["id"] not in seen_ids:
             final.append(prod)
             seen_ids.add(prod["id"])

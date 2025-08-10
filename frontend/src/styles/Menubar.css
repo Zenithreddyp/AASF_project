@@ -60,3 +60,9 @@
     gap: 20px; 
   }
 }
+
+@media (max-width: 768px) {
+  .menubar {
+    gap: 10px; 
+  }
+}

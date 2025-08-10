@@ -31,7 +31,9 @@ const Recoms = () => {
   }, []);
 
   const goToProduct = (item) => {
+      
     navigate(`/product/${item.id}`);
+    
   };
 
   if (loading) {
@@ -46,15 +48,14 @@ const Recoms = () => {
 
   return (
     <>
-      <div className="recom">Based on your profile</div>
-      <div className="singlerecom">
+      {/* <div className="singlerecom">
         <img className="basicimage" src="/header1.png" alt="" />
         <img className="basicimage" src="/header1.png" alt="" />
 
         <img className="basicimage" src="/header1.png" alt="" />
         <img className="basicimage" src="/header1.png" alt="" />
-      </div>
-      <p className="newlyadded">newly added</p>
+      </div> */}
+      {/* <p className="newlyadded">newly added</p> */}
       <div className="recom-container">
         {items.map((item, index) => (
           <div
