@@ -116,7 +116,6 @@ const CartPage = () => {
     <>
       <Navbar />
       <div className="cart-page">
-        <h2>Your Cart</h2>
         {cartItems.length === 0 ? (
           <p className="empty-cart">Your CartPage is empty.</p>
         ) : (

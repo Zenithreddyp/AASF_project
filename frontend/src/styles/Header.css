@@ -3,7 +3,7 @@
 .header {
   position: relative;
   width: 95vw;
-  height: 60vh;
+  height: 55vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;

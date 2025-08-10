@@ -1,9 +1,11 @@
+/* General styling for the cart page */
 .cart-page {
-  padding: 2rem;
+  padding: 1rem; /* Reduced padding for smaller screens */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #414141;
+  background-color: rgb(236,236,236);
 }
 
+/* Empty cart message */
 .empty-cart {
   color: #666;
   font-size: 1.2rem;
@@ -11,13 +13,15 @@
   margin-top: 2rem;
 }
 
+/* Cart item container */
 .cart-item {
   display: flex;
-  gap: 1.5rem;
+  flex-direction: column; /* Stacks items vertically on small screens */
+  gap: 1rem; /* Reduced gap */
   border: 1px solid #ccc;
   border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
+  padding: 1rem; /* Reduced padding */
+  margin-bottom: 1.5rem; /* Reduced margin */
   background: #ffffff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.2s ease-in-out;
@@ -27,44 +31,53 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
+/* Cart item image */
 .cart-image {
-  width: 130px;
-  height: 130px;
+  width: 100%; /* Image takes full width on small screens */
+  max-width: 130px; /* Max width to prevent it from getting too big */
+  height: auto; /* Maintain aspect ratio */
   object-fit: contain;
   border-radius: 10px;
   border: 1px solid #ddd;
   background-color: #fff;
+  margin: 0 auto; /* Center the image */
 }
 
+/* Cart info section */
 .cart-info {
   flex: 1;
+  text-align: center; /* Center text on small screens */
 }
-.cart-page h2{
+
+.cart-page h2 {
   color: #c45500;
+  text-align: center; /* Center heading */
 }
 
 .cart-info h3 {
   margin: 0 0 0.5rem;
-  font-size: 1.4rem;
+  font-size: 1.2rem; /* Reduced font size */
   color: #222;
 }
 
 .cart-info p {
   margin: 0.3rem 0;
   color: #444;
-  font-size: 1rem;
+  font-size: 0.9rem; /* Reduced font size */
 }
 
+/* Cart controls (quantity and delete buttons) */
 .cart-controls {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: center; /* Center controls on small screens */
+  gap: 0.5rem; /* Reduced gap */
   margin-top: 0.8rem;
 }
 
 .qty-btn {
-  padding: 0.4rem 1rem;
-  font-size: 1.1rem;
+  padding: 0.3rem 0.8rem; /* Reduced padding */
+  font-size: 1rem; /* Reduced font size */
   background-color: #ffd814;
   border: 1px solid #a88734;
   border-radius: 6px;
@@ -80,7 +93,7 @@
   background-color: transparent;
   color: #c45500;
   border: none;
-  font-size: 1rem;
+  font-size: 0.9rem; /* Reduced font size */
   cursor: pointer;
   font-weight: 500;
 }
@@ -89,28 +102,76 @@
   text-decoration: underline;
 }
 
+/* Total price section */
 .total-price {
-  margin-top: 2rem;
-  font-size: 1.4rem;
+  margin-top: 1.5rem; /* Reduced margin */
+  font-size: 1.2rem; /* Reduced font size */
   font-weight: bold;
-  color: orange;
-  text-align: right;
+  color: rgb(0, 0, 0);
+  text-shadow: 1px 1px 12px #000000;
+  text-align: center; /* Center text on small screens */
 }
 
+/* Order button */
 .order-btn {
-  margin-top: 1rem;
-  padding: 0.75rem 2rem;
-  background-color: #ffa41c;
-  border: 1px solid #a88734;
+  margin: 1rem auto 0 auto; /* Center button */
+  padding: 0.6rem 1.5rem; /* Reduced padding */
+  background-color: #bafffa;
+  border: 1px solid #000000;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 0.9rem; /* Reduced font size */
   cursor: pointer;
   color: #111;
   font-weight: bold;
   display: block;
+  width: 100%; /* Button takes full width */
+  max-width: 300px; /* Max width to prevent it from getting too wide */
   transition: background-color 0.2s ease-in-out;
 }
 
 .order-btn:hover {
-  background-color: #f08804;
+  background-color: #7494ec;
+}
+
+/* Media query for larger screens (e.g., tablets and desktops) */
+@media (min-width: 768px) {
+  .cart-page {
+    padding: 2rem;
+  }
+
+  .cart-item {
+    flex-direction: row; /* Horizontal layout for larger screens */
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .cart-info {
+    text-align: left; /* Align text to the left */
+  }
+
+  .cart-image {
+    width: 130px;
+    height: 130px;
+    margin: 0; /* Remove centering */
+  }
+
+  .cart-controls {
+    justify-content: flex-start; /* Align controls to the left */
+    gap: 1rem;
+  }
+
+  .cart-info h3 {
+    font-size: 1.4rem;
+  }
+
+  .cart-info p {
+    font-size: 1rem;
+  }
+
+  .qty-btn {
+    padding: 0.4rem 1rem;
+    font-size: 1.1rem;
+  }
 }

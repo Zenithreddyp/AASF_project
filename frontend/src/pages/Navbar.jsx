@@ -84,10 +84,10 @@ const Navbar = () => {
           Cart
         </li>
         <li
-          onClick={() => handleMenuClick("orders")}
-          className={location.pathname === "/orders" ? "active" : ""} 
+          onClick={() => handleMenuClick("wishlist")}
+          className={location.pathname === "/wishlist" ? "active" : ""} 
         >
-          Orders
+          Wishlist
         </li>
         <li
           onClick={() => handleMenuClick("profilepage")}
@@ -106,7 +106,7 @@ const Navbar = () => {
         
         <input
           type="search"
-          placeholder="Search here ..."
+          placeholder="Search here..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />

@@ -12,8 +12,8 @@ function Home() {
     return (
         <div className='homeslider'>
             <Navbar />
-            <Header />
             <Menubar />
+            <Header />
             <Recoms />
 
 

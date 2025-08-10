@@ -1,9 +1,11 @@
-.adminzedova {
-    padding: 3vh;
-    padding-left: 6vw;
-    font-size: larger;
-    background-color: rgb(49, 131, 190);
-    color: black;
+.navbar {
+  height: 80px; /* Set a fixed height */
+  padding-left: 6vw; /* Keep horizontal padding responsive */
+  font-size: larger;
+  background-color: rgb(49, 131, 190);
+  color: black;
+  display: flex; /* Use flexbox to align content */
+  align-items: center; /* Vertically center the content */
 }
 
 .leftright {
@@ -34,9 +36,18 @@
     transition: background-color 0.3s;
 }
 
-.admin-btn:hover {
-    background-color: #5d78cc; /* slightly darker on hover */
+.admin-btn.add:hover {
+    background-color: #03b000; /* slightly darker on hover */
 }
+
+.admin-btn.delete:hover {
+    background-color: #bc0000; /* slightly darker on hover */
+}
+
+.admin-btn.orders:hover {
+    background-color: #b4be00; /* slightly darker on hover */
+}
+
 .right {
     width: 100%;
     padding: 5vh 4vw;
@@ -187,3 +198,150 @@
   background-color: orange;
 }
 
+.form-bottom {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    align-items: center;
+    gap: 2vw;
+}
+
+.form-bottom select,
+.form-bottom input {
+    flex-grow: 1; /* Allow elements to grow and shrink */
+    min-width: 120px; /* Ensure a minimum width */
+    padding: 1vh;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    background-color: #f9f9f9;
+}
+
+/* Add Button */
+.add-btn {
+    background-color: #7494ec;
+    color: white;
+    border: none;
+    padding: 1vh 2vw;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    min-width: 80px;
+}
+
+.add-btn:hover {
+    background-color: orange;
+}
+
+.delete-panel {
+    width: 100%;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+}
+
+.delete-items-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+.delete-item-box {
+    width: 100%; /* Default to 100% width on small screens */
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease;
+}
+
+.delete-item-box:hover {
+    transform: scale(1.02);
+}
+
+.delete-img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    border-bottom: 1px solid #ddd;
+}
+
+.delete-details {
+    padding: 12px;
+    text-align: center;
+}
+
+.delete-details p {
+    margin: 6px 0;
+    font-weight: 500;
+}
+
+.delete-btn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #7494ec;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: orange;
+}
+
+@media (min-width: 768px) {
+    .delete-item-box {
+        width: calc(50% - 10px); 
+    }
+}
+
+@media (min-width: 1024px) {
+    .delete-item-box {
+        width: calc(33.333% - 13.333px); 
+    }
+    .form-bottom {
+        flex-wrap: nowrap;
+    }
+}
+
+@media (min-width: 1200px) {
+    .delete-item-box {
+        width: calc(25% - 15px); 
+    }
+}
+
+@media (max-width: 768px) {
+    .leftright {
+        flex-direction: column;
+    }
+
+    .left {
+        width: 100%; 
+        height: auto;
+        flex-direction: row; 
+        justify-content: center;
+        padding: 2vh;
+    }
+
+    .admin-btn {
+        width: auto;
+        flex-grow: 1; 
+        font-size: 0.9rem;
+        padding: 1vh 2vw;
+    }
+
+    .right {
+        padding: 3vh 2vw;
+    }
+
+    .form-container, .delete-panel {
+        padding: 2vh 2vw;
+    }
+
+    .navbar {
+      height: 100px;
+    }
+}
