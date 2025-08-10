@@ -1,6 +1,11 @@
 import "../styles/Adminpanel.css";
 import React, { useState } from 'react';
 
+const logoimages = [
+  '/logo.png',
+  '/logoname.png',
+]
+
 const Adminpanel = () => {
     const [activePanel, setActivePanel] = useState("add"); // default to "add"
 
@@ -62,8 +67,20 @@ const Adminpanel = () => {
 
     return (
         <>
-            <div className="adminzedova">zedova</div>
-
+        <div className="navbar">
+            <div className="logo">
+            <img
+                src={logoimages[0]}
+                alt="logo"
+            />
+            </div>
+            <div className="logoname">
+            <img
+                src={logoimages[1]}
+                alt="Zedova"
+            />
+            </div>
+        </div>
             <div className="leftright">
                 <div className="left">
                     <button className="admin-btn add" onClick={() => setActivePanel("add")}>Add Items</button>
@@ -97,7 +114,7 @@ const Adminpanel = () => {
                                 </select>
 
                                 <input type="text" placeholder="₹25,000" className="price-input" />
-                                <button className="add-btn">ADD</button>
+                                <button  onClick={() => alert("added successfully") } className="add"> add </button>
                             </div>
                         </div>
                     )}

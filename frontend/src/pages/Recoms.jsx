@@ -48,7 +48,6 @@ const Recoms = () => {
 
   return (
     <>
-      <div className="recom">Based on your profile</div>
       {/* <div className="singlerecom">
         <img className="basicimage" src="/header1.png" alt="" />
         <img className="basicimage" src="/header1.png" alt="" />
