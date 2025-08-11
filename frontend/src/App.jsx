@@ -41,13 +41,20 @@ const App = () => {
             </>
           }
         />
-          <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/wishlist" element={<Wishlist />} />
 
-        <Route path="/profilepage" element={<Profilepage />} />
+        <Route
+          path="/profilepage"
+          element={
+            <ProtectedRoute>
+              <Profilepage />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/login" element={<Login />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/upi" element={<UPIPage />} />
-
 
         <Route path="/register" element={<RegisterAndLogout />} />
         <Route path="/payment" element={<PaymentPage />} />
@@ -69,10 +76,8 @@ const App = () => {
           }
         />
         <Route path="/adminpage" element={<Adminpanel />} />
-        <Route
-          path="/logout"
-          element={<Logout />}
-        />
+
+        <Route path="/logout" element={<Logout />} />
         <Route
           path="/cart"
           element={

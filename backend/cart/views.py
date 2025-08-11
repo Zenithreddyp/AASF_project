@@ -134,7 +134,12 @@ class ListallOrders(generics.ListAPIView):
     permission_classes=[IsAuthenticated]
 
     def get_queryset(self):
-        return Orders.objects.filter(user=self.request.user)
+        # Prefetch related items and product images for efficient and complete serialization
+        return (
+            Orders.objects
+            .filter(user=self.request.user)
+            .prefetch_related("items__product__images")
+        )
     
 
 class CancelOrder(generics.UpdateAPIView):

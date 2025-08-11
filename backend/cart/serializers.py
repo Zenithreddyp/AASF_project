@@ -49,16 +49,25 @@ class OrdersSerializers(serializers.ModelSerializer):
         }
 
 class OrderItemSerializer(serializers.ModelSerializer):
+    # For writes (creating order items)
     product_id = serializers.PrimaryKeyRelatedField(
         queryset=Products.objects.all(),
         source="product",
-        write_only=True
+        write_only=True,
     )
+    # For reads (displaying order items with product details and images)
+    product = ProductSerializer(read_only=True)
     product_name = serializers.CharField(source="product.name", read_only=True)
 
     class Meta:
         model = OrderItem
-        fields = ["product_id", "product_name", "quantity", "price"]
+        fields = [
+            "product",       # nested product with images for reads
+            "product_id",    # id for writes
+            "product_name",
+            "quantity",
+            "price",
+        ]
         extra_kwargs = {
             "price": {"required": True},
         }

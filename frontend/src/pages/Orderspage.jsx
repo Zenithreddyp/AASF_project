@@ -5,9 +5,29 @@ import { retriveallorders } from "../api/cart";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
+// Rotates through provided image URLs at a fixed interval
+const RotatingImages = ({ images, intervalMs = 3000, alt = "Order image" }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (!images || images.length === 0) return;
+    setCurrentIndex(0);
+    const timerId = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, intervalMs);
+    return () => clearInterval(timerId);
+  }, [images, intervalMs]);
+
+  if (!images || images.length === 0) {
+    return <img src="/placeholder.png" alt="No product image" />;
+  }
+
+  return <img src={images[currentIndex]} alt={alt} />;
+};
+
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const [showDownloadVideo, setShowDownloadVideo] = useState(false); // New state for video visibility
+  const [showDownloadVideo, setShowDownloadVideo] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,13 +35,14 @@ const Orders = () => {
       try {
         const data = await retriveallorders();
         console.log(data);
-        const formatedOrders = data.map((order) => {
+        const formatedOrders = (data || []).map((order) => {
           const addressParts = order.shipping_address?.split(",") || [];
-
           return {
             ...order,
-            date: new Date(order.bought_at).toLocaleString(),
-            total: order.total_price,
+            date: order.bought_at
+              ? new Date(order.bought_at).toLocaleString()
+              : "Unknown date",
+            total: order.total_price || 0,
             address: {
               fullname: addressParts[0] || "",
               phone: addressParts[1] || "",
@@ -47,11 +68,10 @@ const Orders = () => {
 
   const downloadInvoice = (order, index) => {
     setShowDownloadVideo(true);
-    
-    // We no longer need to generate a new random ID here.
-    const orderId = order.orderId;
-
+    const orderId = order.orderId || order.id || `order-${index}`;
     const input = document.getElementById(`order-invoice-${index}`);
+
+    if (!input) return;
 
     const downloadButton = input.querySelector(".download-invoice-btn");
     if (downloadButton) {
@@ -76,17 +96,18 @@ const Orders = () => {
   };
 
   const handleVideoEnded = () => {
-    setShowDownloadVideo(false); // Hide the video when it finishes playing
+    setShowDownloadVideo(false);
   };
 
   if (loading) {
-    return(
-    <>
-      <Navbar />
-      <div className="loading">
-        <img src="/loading.gif" alt="Loading..." />
-      </div>
-    </>)
+    return (
+      <>
+        <Navbar />
+        <div className="loading">
+          <img src="/loading.gif" alt="Loading..." />
+        </div>
+      </>
+    );
   }
 
   return (
@@ -99,7 +120,23 @@ const Orders = () => {
           orders.map((order, index) => (
             <div key={index} className="order-card">
               <div className="orderpictures">
-              <img  className="orderpictures" src="./header1.png" alt="" />
+                {(() => {
+                  const productImages = (order.items || [])
+                    .map(
+                      (item) =>
+                        item?.img ||
+                        item?.image ||
+                        item?.product?.images?.[0]?.image
+                    )
+                    .filter(Boolean);
+                  return (
+                    <RotatingImages
+                      images={productImages}
+                      intervalMs={3000}
+                      alt={`Order ${index + 1} product`}
+                    />
+                  );
+                })()}
               </div>
               <div
                 id={`order-invoice-${index}`}
@@ -128,52 +165,54 @@ const Orders = () => {
                 </div>
 
                 <div className="order-items">
-                  {order.items.map((item, idx) => (
-                    <div key={idx} className="order-item">
-                      <img
-                        src={item.img}
-                        alt={item.name}
-                        className="order-img"
-                      />
-                      <div>
-                        <p className="order-item-name">{item.name}</p>
-                        <p>Price: {item.cost}</p>
-                        <p>Quantity: {item.quantity}</p>
-                        <p>
-                          Subtotal: ₹
-                          {Number(item.cost.replace(/[₹,]/g, "")) *
-                            item.quantity}
-                            
-                        </p>
+                  {(order.items || []).map((item, idx) => {
+                    const productName =
+                      item?.product_name || item?.product?.name || "Unknown Item";
+                    const unitPrice = Number(
+                      item?.price ?? item?.product?.price ?? 0
+                    );
+                    const imageUrl =
+                      item?.product?.images?.[0]?.image || "/placeholder.png";
+                    const quantity = Number(item?.quantity || 0);
+                    const subtotal = (unitPrice * quantity).toFixed(2);
+                    return (
+                      <div key={idx} className="order-item">
+                        <img
+                          src={imageUrl}
+                          alt={productName}
+                          className="order-img"
+                        />
+                        <div>
+                          <p className="order-item-name">{productName}</p>
+                          <p>Price: ₹{unitPrice.toFixed(2)}</p>
+                          <p>Quantity: {quantity}</p>
+                          <p>Subtotal: ₹{subtotal}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
-                 <button
-                className="download-invoice-btn"
-                onClick={() => downloadInvoice(order, index)}
-                disabled={showDownloadVideo} // Disable button while video is playing
-              >
-                Download Invoice
-              </button>
+                <button
+                  className="download-invoice-btn"
+                  onClick={() => downloadInvoice(order, index)}
+                  disabled={showDownloadVideo}
+                >
+                  Download Invoice
+                </button>
               </div>
-             
             </div>
           ))
         )}
       </div>
 
-      {/* Video Overlay */}
       {showDownloadVideo && (
         <div className="video-overlay">
           <video
             className="download-video"
-            autoPlay // Start playing automatically
-            muted // Mute the video to avoid unexpected sound (good practice for autoplay)
-            playsInline // Important for iOS devices
-            onEnded={handleVideoEnded} // Hide the video when it ends
-            // Replace 'videos/download-animation.mp4' with the actual path to your video
-            // process.env.PUBLIC_URL is useful if your app is hosted at a sub-path
+            autoPlay
+            muted
+            playsInline
+            onEnded={handleVideoEnded}
             src={"/download-animation.mp4"}
           >
             Your browser does not support the video tag.

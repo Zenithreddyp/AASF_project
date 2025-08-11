@@ -213,7 +213,7 @@ const PaymentPage = () => {
     let createdOrderId = null;
     try {
       const orderItemsForBackend = items.map((item) => ({
-        product_id: item.id,
+        product_id: item.prod_id ?? item.id,
         quantity: item.quantity || 1,
         price: Number(item.cost) || 0,
       }));
@@ -237,7 +237,7 @@ const PaymentPage = () => {
       image: "https://example.com/your_logo",
       handler: async function (response) {
         const orderItemsForBackend = items.map((item) => ({
-          product_id: item.id,
+          product_id: item.prod_id ?? item.id,
           quantity: item.quantity || 1,
           price: Number(item.cost) || 0,
         }));
