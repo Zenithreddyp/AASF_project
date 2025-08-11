@@ -56,19 +56,14 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <div className="logo">
-      <img
-        src={logoimages[0]}
-        alt="logo"
-      />
+      <div className="brand">
+        <div className="logo">
+          <img src={logoimages[0]} alt="logo" />
+        </div>
+        <div className="logoname">
+          <img src={logoimages[1]} alt="Zedova" />
+        </div>
       </div>
-      <div className="logoname">
-      <img
-        src={logoimages[1]}
-        alt="Zedova"
-      />
-      </div>
-
       <ul className="navbarlinks">
         <li
           onClick={() => handleMenuClick("")}
@@ -84,8 +79,8 @@ const Navbar = () => {
           Cart
         </li>
         <li
-          onClick={() => handleMenuClick("wishlist")}
-          className={location.pathname === "/wishlist" ? "active" : ""} 
+          onClick={() => handleMenuClick("Wishlist")}
+          className={location.pathname === "/Wishlist" ? "active" : ""} 
         >
           Wishlist
         </li>
@@ -110,7 +105,7 @@ const Navbar = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-</div>
+      </div>
         <FontAwesomeIcon icon={faSearch} className="search-icon" onClick={handleSearchIconClick} />
       </form>
     </div>

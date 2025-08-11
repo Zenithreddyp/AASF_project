@@ -5,6 +5,7 @@ import { fetchuserAllAddress } from "../api/useraddress";
 import { fetchusername } from "../api/profile";
 import { retriveallorders } from "../api/cart";
 import Navbar from "./Navbar";
+import Orders from "./Orderspage";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -120,7 +121,8 @@ const ProfilePage = () => {
         </div>
 
         <div className="profile-body">
-          <div className="recent-orders">
+          
+          {/*<div className="recent-orders">
             <h3>Recent Orders</h3>
             {loading ? (
               <p>Loading orders...</p>
@@ -142,6 +144,7 @@ const ProfilePage = () => {
               <p>No recent orders</p>
             )}
           </div>
+          */}
 
           <div className="quick-links">
             <button className="button1">button1</button>
@@ -223,6 +226,7 @@ const ProfilePage = () => {
           </div>
         )}
       </div>
+       <Orders/>
     </>
   );
 };

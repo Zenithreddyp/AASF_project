@@ -109,7 +109,7 @@ export const placeOrder = async (shippingAddress,razorpayDetails) => {
       razorpay_order_id: razorpayDetails.razorpay_order_id,
       razorpay_signature: razorpayDetails.razorpay_signature,
     });
-    alert("Prder placed");
+    alert("Order placed");
     return response.data;
   } catch (error) {
     console.error("Order failed", error.response?.data || error.message);
