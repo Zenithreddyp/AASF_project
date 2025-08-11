@@ -13,4 +13,4 @@ pandas
 sqlalchemy 
 scikit-learn 
 fuzzywuzzy
-pkg_resources
+setuptools
