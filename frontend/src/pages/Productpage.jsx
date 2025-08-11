@@ -4,6 +4,7 @@ import "../styles/ProductPage.css";
 import Navbar from "./Navbar";
 
 import { dispCart, addtocart, singleprodCart } from "../api/cart";
+import { addToWishlist } from "../api/wishlist";
 import { fetchProductbyid } from "../api/product";
 import { useParams } from 'react-router-dom';
 
@@ -122,6 +123,7 @@ const ProductPage = () => {
           <div className="product-buttons">
             <button onClick={buyNow}>Buy Now</button>
             <button onClick={handleaddToCart}>Add to Cart</button>
+            <button onClick={() => addToWishlist(item.id)}>Add to Wishlist</button>
           </div>
         </div>
       </div>

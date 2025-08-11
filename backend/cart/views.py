@@ -258,42 +258,71 @@ class GetWishlist(generics.ListAPIView):
     permission_classes=[IsAuthenticated]
 
     def get_queryset(self):
+        # Ensure the user always has a wishlist
+        Wishlist.objects.get_or_create(user=self.request.user)
         return Wishlist.objects.filter(user=self.request.user)
     
 class AddWishlistitem(generics.CreateAPIView):
     serializer_class = WishlistItemSerializer
     permission_classes=[IsAuthenticated]
 
-    def perform_create(self, serializer):
-        product = serializer.validated_data['product']
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        product = serializer.validated_data["product"]
+        wishlist, _ = Wishlist.objects.get_or_create(user=request.user)
+
+        wishlist_item, created = WishlistItem.objects.get_or_create(
+            wishlist=wishlist,
+            product=product,
+        )
+
+        output_serializer = self.get_serializer(wishlist_item)
+        status_code = status.HTTP_201_CREATED if created else status.HTTP_200_OK
+        return Response(output_serializer.data, status=status_code)
     
 class RemoveWIshlistitem(generics.DestroyAPIView):
     serializer_class = WishlistItemSerializer
     permission_classes=[IsAuthenticated]
 
     def get_queryset(self):
-        return WishlistItem.objects.filter(Wishlist__user=self.request.user)
+        return WishlistItem.objects.filter(wishlist__user=self.request.user)
     
 
-class MoveWishListitemtoCart(generics.ListAPIView):
+class MoveWishListitemtoCart(APIView):
     permission_classes=[IsAuthenticated]
 
-    def post(self,request,product_id):
-        user=self.request.user
-        
-        cart, _ = Cart.objects.get_or_create(user=user)
-        product = Products.objects.get(id=product_id)
+    def post(self, request, product_id):
+        user = request.user
+
+        # Ensure active cart exists
+        cart = Cart.objects.filter(user=user, is_ordered=False).order_by("-created_at").first()
+        if cart is None:
+            cart = Cart.objects.create(user=user)
+
+        try:
+            product = Products.objects.get(id=product_id)
+        except Products.DoesNotExist:
+            return Response({"detail": "Product not found."}, status=status.HTTP_404_NOT_FOUND)
 
         cart_item, created = Cartitem.objects.get_or_create(
-            cart=cart, product=product,
-            defaults={'quantity': 1}
+            cart=cart,
+            product=product,
+            defaults={"quantity": 1},
         )
 
         if not created:
             cart_item.quantity += 1
             cart_item.save()
 
+        # Remove from wishlist if present
         WishlistItem.objects.filter(
             wishlist__user=user,
-            product=product
+            product=product,
         ).delete()
+
+        return Response({
+            "detail": "Item moved to cart",
+            "cart_item_id": cart_item.id,
+            "quantity": cart_item.quantity,
+        }, status=status.HTTP_200_OK)

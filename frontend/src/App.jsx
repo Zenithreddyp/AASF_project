@@ -13,6 +13,7 @@ import UPIPage from "./pages/UPIpage";
 import Orders from "./pages/Orderspage";
 import Footer from "./pages/Footer";
 import Adminpanel from "./pages/Adminpanel";
+import Wishlist from "./pages/Wishlist";
 
 import Profilepage from "./pages/profilepage";
 // import Loadingpage from "./pages/Loadingpage";
@@ -50,6 +51,14 @@ const App = () => {
         <Route path="/register" element={<RegisterAndLogout />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/product/:id" element={<ProductPage />} />
+        <Route
+          path="/wishlist"
+          element={
+            <ProtectedRoute>
+              <Wishlist />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/orders"
           element={
