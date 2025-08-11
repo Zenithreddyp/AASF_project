@@ -1,5 +1,6 @@
 import "../styles/Adminpanel.css";
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const logoimages = [
   '/logo.png',
@@ -8,6 +9,10 @@ const logoimages = [
 
 const Adminpanel = () => {
     const [activePanel, setActivePanel] = useState("add"); // default to "add"
+    const navigate = useNavigate();
+
+
+
 
     const [items, setItems] = useState([
         {
@@ -68,18 +73,22 @@ const Adminpanel = () => {
     return (
         <>
         <div className="navbar">
+            <button onClick={() => navigate("/")} className="adminhome">
+
             <div className="logo">
+
             <img
                 src={logoimages[0]}
                 alt="logo"
-            />
+                />
             </div>
             <div className="logoname">
             <img
                 src={logoimages[1]}
                 alt="Zedova"
-            />
+                />
             </div>
+                </button>
         </div>
             <div className="leftright">
                 <div className="left">

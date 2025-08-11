@@ -1,5 +1,5 @@
 .navbar {
-  height: 80px; /* Set a fixed height */
+  height: 100px; /* Set a fixed height */
   padding-left: 6vw; /* Keep horizontal padding responsive */
   font-size: larger;
   background-color: rgb(49, 131, 190);
@@ -11,7 +11,13 @@
 .leftright {
     display: flex;
 }
+.adminhome{
+    background-color: #7494ec;
 
+}
+.adminhome:hover{
+    background-color: #7494ec;
+}
 .left {
     align-items: center;
     display: flex;

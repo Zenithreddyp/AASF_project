@@ -15,7 +15,7 @@ import Footer from "./pages/Footer";
 import Adminpanel from "./pages/Adminpanel";
 import Wishlist from "./pages/Wishlist";
 
-import Profilepage from "./pages/profilepage";
+import Profilepage from "./pages/Profilepage.jsx";
 // import Loadingpage from "./pages/Loadingpage";
 
 function Logout() {
