@@ -45,7 +45,7 @@ def hybrid_search(query, products):
     seen_ids = set()
     final = []
 
-    for prod in fuzzy_results:
+    for prod in fuzzy_results + semantic_results:
         if prod["id"] not in seen_ids:
             final.append(prod)
             seen_ids.add(prod["id"])

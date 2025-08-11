@@ -46,33 +46,32 @@ const Orders = () => {
   }, []);
 
   const downloadInvoice = (order, index) => {
-    setShowDownloadVideo(true); // Show the video when download starts
+    setShowDownloadVideo(true);
+    
+    // We no longer need to generate a new random ID here.
+    const orderId = order.orderId;
 
-    // The rest of your PDF generation logic
     const input = document.getElementById(`order-invoice-${index}`);
-    html2canvas(input, { scale: 2 }).then((canvas) => {
+
+    const downloadButton = input.querySelector(".download-invoice-btn");
+    if (downloadButton) {
+      downloadButton.style.display = "none";
+    }
+
+    html2canvas(input, { scale: 4 }).then((canvas) => {
+      if (downloadButton) {
+        downloadButton.style.display = "block";
+      }
+
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-      const imgWidth = 210; // A4 width in mm
-      const pageHeight = 297; // A4 height in mm
+      const imgWidth = 210;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
+      const xOffset = (210 - imgWidth) / 2;
+      const yOffset = (297 - imgHeight) / 4;
 
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
-      pdf.save(`invoice-order-${order.order_id}.pdf`);
-
-      // We won't hide the video here; instead, the video's onEnded will handle it.
-      // If you want the video to disappear immediately after PDF is saved, regardless of video length,
-      // you could setShowDownloadVideo(false) here, but the user asked for "video must be played".
+      pdf.addImage(imgData, "PNG", xOffset, yOffset, imgWidth, imgHeight);
+      pdf.save(`invoice-${orderId}.pdf`);
     });
   };
 
