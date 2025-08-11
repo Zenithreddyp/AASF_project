@@ -1,185 +1,400 @@
+/* Responsive Orders Page CSS */
+
 .orders-page {
-
-    padding: 20px;
-
-    width: 95vw;
-
-    margin: auto;
-
+  max-width: 95vw;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
-
 .orders-page h2 {
+  color:orange;
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
 
-    color: orange;
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+}
 
+.loading img {
+  width: 80px;
+  height: 80px;
 }
 
 .no-orders {
-
-    text-align: center;
-
-    font-size: 1.2rem;
-
-    color: #777;
-
-    margin-top: 50px;
-
+  text-align: center;
+  font-size: 1.2rem;
+  color: #777;
+  margin-top: 50px;
+  padding: 3rem;
+  background: #f9f9f9;
+  border-radius: 15px;
 }
-
-
 
 .order-card {
-
-    border: 1px solid #ccc;
-
-    border-radius: 10px;
-
-    padding: 15px;
-
-    margin-bottom: 20px;
-
-    background-color: #f9f9f9;
-
-    position: relative;
-    /* Added for button positioning if needed */
-
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 25px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-columns: 35% 1fr;
+  min-height: 400px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.order-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
 
+/* Left side - Image section */
+.orderpictures {
+  background: linear-gradient(135deg, #268adb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+}
 
-.order-header,
+.orderpictures img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Right side - Content section */
+.order-invoice-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.order-header p {
+  margin: 0;
+  font-weight: 500;
+  color: #555;
+}
+
+.order-header p:last-child {
+  color: #ff6b35;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
 
 .order-address {
-
-    margin-bottom: 10px;
-
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
 }
 
+.order-address p {
+  margin: 0.25rem 0;
+  color: #666;
+}
 
+.order-address p:first-of-type {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+
+.order-address p:nth-of-type(2) {
+  font-weight: 600;
+  color: #333;
+}
 
 .order-items {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-
+  flex: 1;
+  margin-bottom: 1.5rem;
 }
-
-
 
 .order-item {
-
-    display: flex;
-
-    gap: 15px;
-
-    border-top: 1px solid #ddd;
-
-    padding-top: 10px;
-
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  transition: background-color 0.2s ease;
 }
 
-
+.order-item:hover {
+  background: #e9ecef;
+}
 
 .order-img {
-
-    width: 100px;
-
-    height: 100px;
-
-    object-fit: cover;
-
-    border-radius: 5px;
-
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
 }
 
-
+.order-item div {
+  flex: 1;
+}
 
 .order-item-name {
-
-    font-weight: bold;
-
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
 }
 
+.order-item p {
+  margin: 0.25rem 0;
+  color: #666;
+  font-size: 0.9rem;
+}
 
+.order-item p:last-child {
+  font-weight: 600;
+  color: #ff6b35;
+}
 
 .download-invoice-btn {
-
-    background-color: #007bff;
-
-    color: white;
-
-    padding: 10px 15px;
-
-    border: none;
-
-    border-radius: 5px;
-
-    cursor: pointer;
-
-    font-size: 1rem;
-
-    margin-top: 15px;
-
-    display: block;
-    /* Ensures button takes full width within its container */
-
-    width: fit-content;
-
-    margin-left: auto;
-    /* Aligns to the right */
-
-    margin-right: auto;
-    /* Aligns to the right */
-
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: fit-content;
+  margin-left: auto;
+  transition: all 0.2s ease;
+  min-width: 180px;
 }
 
-
-
-.download-invoice-btn:hover {
-
-    background-color: #0056b3;
-
+.download-invoice-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  transform: translateY(-1px);
 }
 
-
-
-/* New style to hide the invoice content during PDF generation if desired */
-
-/*.order-invoice-content {
-
-    /* You can add styles here if you want to visually hide or adjust the content
-
-     while it's being captured by html2canvas, though it's usually not necessary
-
-     as the capture is very fast. 
-
+.download-invoice-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #6c757d;
 }
-/* Orderspage.css */
 
-/* ... (your existing CSS) ... */
-
+/* Video Overlay Styles */
 .video-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  /*background-color: rgba(0, 0, 0, 0.9); /* Dark semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2000; /* Ensure it's on top of all other content */
+  z-index: 2000;
 }
 
 .download-video {
-    margin-top: 70%;
-  max-width: 30%; /* Adjust size as needed */
-  max-height: 10%; /* Adjust size as needed */
-  border-radius: 10px; /* Optional: adds rounded corners to the video */
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); /* Optional: a subtle glow */
+  max-width: 400px;
+  max-height: 300px;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+}
+
+/* Responsive Design */
+
+/* Large screens (1200px and up) */
+@media (min-width: 1200px) {
+  .orders-page {
+    max-width: 1140px;
+  }
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 1024px) {
+  .orders-page {
+    padding: 15px;
+  }
+
+  .order-card {
+    grid-template-columns: 40% 1fr;
+  }
+
+  .orders-page h2 {
+    font-size: 2rem;
+  }
+
+  .order-invoice-content {
+    padding: 1.25rem;
+  }
+}
+
+/* Small tablets and large phones */
+@media (max-width: 768px) {
+  .orders-page {
+    max-width: 100vw;
+    padding: 10px;
+  }
+
+  .order-card {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .orderpictures {
+    height: 200px;
+    width: 100%;
+  }
+
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .order-invoice-content {
+    padding: 1rem;
+  }
+
+  .orders-page h2 {
+    font-size: 1.8rem;
+  }
+
+  .download-invoice-btn {
+    align-self: stretch;
+    margin-left: 0;
+    min-width: auto;
+  }
+
+  .download-video {
+    max-width: 90%;
+    max-height: 50%;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .orders-page {
+    padding: 8px;
+  }
+
+  .order-card {
+    margin-bottom: 1.5rem;
+  }
+
+  .orderpictures {
+    height: 150px;
+    padding: 0.5rem;
+  }
+
+  .order-invoice-content {
+    padding: 0.75rem;
+  }
+
+  .order-header {
+    margin-bottom: 1rem;
+  }
+
+  .order-address {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .order-item {
+    flex-direction: column;
+    text-align: center;
+    padding: 0.75rem;
+  }
+
+  .order-img {
+    align-self: center;
+    width: 60px;
+    height: 60px;
+  }
+
+  .orders-page h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .download-invoice-btn {
+    padding: 0.625rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .download-video {
+    max-width: 95%;
+    max-height: 40%;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 320px) {
+  .orders-page {
+    padding: 5px;
+  }
+
+  .order-invoice-content {
+    padding: 0.5rem;
+  }
+
+  .order-header p {
+    font-size: 0.9rem;
+  }
+
+  .order-item-name {
+    font-size: 0.9rem;
+  }
+
+  .order-item p {
+    font-size: 0.8rem;
+  }
+
+  .download-invoice-btn {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+
+@media print {
+  .download-invoice-btn {
+    display: none;
+  }
+  
+  .video-overlay {
+    display: none;
+  }
+  
+  .order-card {
+    box-shadow: none;
+    border: 1px solid #000;
+    break-inside: avoid;
+  }
 }
