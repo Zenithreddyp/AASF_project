@@ -5,6 +5,20 @@
   background-color: rgb(236,236,236);
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Optional: center vertically */
+  width: 100vw;
+  height: 100vh;
+}
+
+.loading img {
+  transform: scale(3);      /* Keep aspect ratio */
+  object-fit: contain;
+  max-width: none;
+}
+
 /* Empty cart message */
 .empty-cart {
   color: #666;
