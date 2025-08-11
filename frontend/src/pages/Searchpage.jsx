@@ -39,8 +39,8 @@ const SearchPage = () => {
   }, [searchTerm,]);
 
   const goToProduct = (item) => {
-    navigate("/product", { state: item });
-    // navigate(`/product/${item.id}`);
+    // navigate("/product", { state: item });
+    navigate(`/product/${item.id}`);
   };
 
   if (loading) {
