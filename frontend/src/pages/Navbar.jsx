@@ -84,8 +84,8 @@ const Navbar = () => {
           Cart
         </li>
         <li
-          onClick={() => handleMenuClick("wishlist")}
-          className={location.pathname === "/wishlist" ? "active" : ""} 
+          onClick={() => handleMenuClick("Wishlist")}
+          className={location.pathname === "/Wishlist" ? "active" : ""} 
         >
           Wishlist
         </li>

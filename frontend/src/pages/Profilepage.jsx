@@ -3,6 +3,7 @@ import "../styles/profilepage.css";
 import { useNavigate } from "react-router-dom";
 import { fetchuserAllAddress } from "../api/useraddress";
 import Navbar from "./Navbar";
+import Orders from "./Orderspage";
 
 
 const ProfilePage = () => {
@@ -47,6 +48,7 @@ const ProfilePage = () => {
   return (
     <>
     <Navbar/>
+   
       <div className="profile-container">
         <div className="profile-header">
           <div className="user-info">
@@ -65,18 +67,7 @@ const ProfilePage = () => {
         </div>
 
         <div className="profile-body">
-          <div className="recent-orders">
-            <h3>Recent Orders</h3>
-            <div className="orders-grid">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="order-card">
-                  <img src="/header1.png" alt="Product" className="order-img" />
-                  <p>Samsung S23</p>
-                  <span>Delivered</span>
-                </div>
-              ))}
-            </div>
-          </div>
+       
 
           <div className="quick-links">
            
@@ -163,6 +154,7 @@ const ProfilePage = () => {
           </div>
         )}
       </div>
+       <Orders/>
     </>
   );
 };

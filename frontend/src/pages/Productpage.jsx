@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "../styles/ProductPage.css";
 import Navbar from "./Navbar";
-
 import { dispCart, addtocart, singleprodCart } from "../api/cart";
 import { fetchProductbyid } from "../api/product";
-import { useParams } from 'react-router-dom';
 
 const ProductPage = () => {
   const { id } = useParams();
-  // const location = useLocation();
-  // const item = location.state;
   const navigate = useNavigate();
   const [item, setItem] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isWishlisted, setIsWishlisted] = useState(false);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -24,6 +21,9 @@ const ProductPage = () => {
         setItem(data);
         setLoading(false);
 
+        // Check if product is already in wishlist
+        const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+        setIsWishlisted(wishlist.some((prod) => prod.id === data.id));
       } catch (error) {
         console.error("Failed to fetch product", error);
         setLoading(false);
@@ -40,26 +40,9 @@ const ProductPage = () => {
       const interval = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % images.length);
       }, 2000);
-
       return () => clearInterval(interval);
     }
   }, [images]);
-
-
-
-  // const addToCart = () => {
-  //     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  //     const existingIndex = cart.findIndex(product => product.id === item.id);
-
-  //     if (existingIndex !== -1) {
-  //         cart[existingIndex].quantity += 1;
-  //     } else {
-  //         cart.push({ ...item, quantity: 1 });
-  //     }
-
-  //     localStorage.setItem('cart', JSON.stringify(cart));
-  //     alert('Item added to cart!');
-  // };
 
   const handleaddToCart = async () => {
     await addtocart(item);
@@ -67,7 +50,6 @@ const ProductPage = () => {
 
   const buyNow = async () => {
     await singleprodCart(item);
-
     const data = await dispCart();
     const cart = data[0];
 
@@ -77,32 +59,48 @@ const ProductPage = () => {
       name: item.product.name,
       prod_id: item.product.id,
       cost: parseFloat(item.product.price),
-      img: item.product.images[0]?.image, // use the first image
+      img: item.product.images[0]?.image,
     }));
     setCartItems(formattedCart);
-
     navigate("/payment", {
       state: { from: "product", items: formattedCart },
     });
   };
 
+const toggleWishlist = () => {
+  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+  const exists = wishlist.some((prod) => prod.id === item.id);
+
+  if (exists) {
+    wishlist = wishlist.filter((prod) => prod.id !== item.id);
+    setIsWishlisted(false);
+    alert("Removed from wishlist");
+  } else {
+    wishlist.push(item);
+    setIsWishlisted(true);
+    alert("Added to wishlist");
+  }
+
+  localStorage.setItem("wishlist", JSON.stringify(wishlist));
+};
+
+
   const currentImage =
     images.length > 0 ? images[currentIndex].image : "/fallback.png";
 
   if (loading) {
-    return(
-    <>
-      <Navbar />
-      <div className="loading">
-        <img src="/loading.gif" alt="Loading..." />
-      </div>
-    </>)
+    return (
+      <>
+        <Navbar />
+        <div className="loading">
+          <img src="/loading.gif" alt="Loading..." />
+        </div>
+      </>
+    );
   }
 
   if (!item) {
-    return (
-      <div>No product data found. Please go back and select a product.</div>
-    );
+    return <div>No product data found. Please go back and select a product.</div>;
   }
 
   return (
@@ -113,7 +111,20 @@ const ProductPage = () => {
           <img src={currentImage} alt={item.name} className="product-image" />
         </div>
         <div className="product-details-section">
-          <h2 className="product-name">{item.name}</h2>
+          <h2 className="product-name">
+            {item.name}
+            <span
+              onClick={toggleWishlist}
+              style={{
+                cursor: "pointer",
+                marginLeft: "10px",
+                color: isWishlisted ? "red" : "grey",
+                fontSize: "54px",
+              }}
+            >
+              ♥
+            </span>
+          </h2>
           <p className="product-cost">{item.cost || `₹${item.price}`}</p>
           <p className="product-desc">
             {item.description ||

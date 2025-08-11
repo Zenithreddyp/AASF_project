@@ -92,8 +92,6 @@ const Orders = () => {
 
   return (
     <>
-      <Navbar currentPage="orders" />
-
       <div className="orders-page">
         <h2>Your Orders</h2>
         {orders.length === 0 ? (
@@ -101,6 +99,9 @@ const Orders = () => {
         ) : (
           orders.map((order, index) => (
             <div key={index} className="order-card">
+              <div className="orderpictures">
+              <img  className="orderpictures" src="./header1.png" alt="" />
+              </div>
               <div
                 id={`order-invoice-${index}`}
                 className="order-invoice-content"
