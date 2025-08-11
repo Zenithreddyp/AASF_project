@@ -11,12 +11,13 @@
 .leftright {
     display: flex;
 }
-.adminhome{
-    background-color: #7494ec;
-
+.adminhome {
+    background-color: transparent;
+    border: none; /* remove default button border */
+    padding: 0; /* optional: remove extra space */
 }
-.adminhome:hover{
-    background-color: #7494ec;
+.adminhome:hover {
+    background-color: transparent;
 }
 .left {
     align-items: center;

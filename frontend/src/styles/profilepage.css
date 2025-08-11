@@ -90,7 +90,7 @@
 }
 
 .quick-links button {
-  background: #1e3a8a;
+  background: #8ca4a7;
   color: white;
   border: none;
   padding: 1.2rem;
@@ -123,12 +123,14 @@
 }
 
 .logout-btn {
-  background: #dc2626 !important;
+  background: #8ca4a7 !important;
 }
 
 .logout-btn:hover {
   background: #b91c1c !important;
 }
+
+
 
 /* Modal Styles */
 .inline-popup {

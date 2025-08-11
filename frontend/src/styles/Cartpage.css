@@ -122,7 +122,6 @@
   font-size: 1.2rem; /* Reduced font size */
   font-weight: bold;
   color: rgb(0, 0, 0);
-  text-shadow: 1px 1px 12px #000000;
   text-align: center; /* Center text on small screens */
 }
 
