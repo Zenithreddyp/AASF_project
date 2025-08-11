@@ -13,6 +13,20 @@
   margin: 1vw;
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Optional: center vertically */
+  width: 100vw;
+  height: 100vh;
+}
+
+.loading img {
+  transform: scale(3);      /* Keep aspect ratio */
+  object-fit: contain;
+  max-width: none;
+}
+
 .basicrecom {
   width: 95vw;
   height: 10vh;
