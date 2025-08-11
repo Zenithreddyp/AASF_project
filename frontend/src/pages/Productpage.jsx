@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "../styles/ProductPage.css";
+import "../styles/Productpage.css";
 import Navbar from "./Navbar";
 import { dispCart, addtocart, singleprodCart } from "../api/cart";
 import { addToWishlist } from "../api/wishlist";
