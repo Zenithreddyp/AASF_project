@@ -2,6 +2,7 @@ from django.forms import ValidationError
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics
+from rest_framework.views import APIView
 
 from products.models import Products 
 from .serializers import CartSerializers,CartitemSerializers,OrdersSerializers, OrderCreateSerializer, OrderItemSerializer, OrderReadSerializer, WishlistItemSerializer, WishlistSerializer
@@ -147,6 +148,42 @@ class CancelOrder(generics.UpdateAPIView):
 
         serializer.save(status="Cancelled")
 
+class CreateRazorpayOrderView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        from decimal import Decimal
+        try:
+            items = request.data.get("items", [])
+            total_price = request.data.get("total_price")
+
+            if items:
+                computed_total = Decimal("0.00")
+                for item in items:
+                    price = Decimal(str(item.get("price", 0)))
+                    quantity = int(item.get("quantity", 1))
+                    computed_total += price * quantity
+                amount_rupees = computed_total
+            elif total_price is not None:
+                amount_rupees = Decimal(str(total_price))
+            else:
+                return Response({"detail": "Either items or total_price is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+            amount_paise = int(amount_rupees * 100)
+            order = razorpay_client.order.create(data={
+                "amount": amount_paise,
+                "currency": "INR",
+                "payment_capture": 1,
+            })
+
+            return Response({
+                "order_id": order.get("id"),
+                "amount": amount_paise,
+                "currency": "INR",
+            }, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"detail": f"Failed to create Razorpay order: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 class OrderPlacedView(generics.CreateAPIView):
     serializer_class = OrderCreateSerializer
     permission_classes = [IsAuthenticated]
@@ -199,9 +236,7 @@ class OrderPlacedView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        # Update the payment status to 'Shipped' (or 'Pending' if you have a different workflow)
-        # and attach the verified Razorpay details.
-        serializer.validated_data['status'] = 'Shipped' # Or 'Pending'
+        # Attach the verified Razorpay details.
         serializer.validated_data['razorpay_payment_id'] = razorpay_payment_id
         serializer.validated_data['razorpay_order_id'] = razorpay_order_id
         serializer.validated_data['razorpay_signature'] = razorpay_signature

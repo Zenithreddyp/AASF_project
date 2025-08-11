@@ -11,7 +11,8 @@ const ProfilePage = () => {
 
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [showAddressModal, setShowAddressModal] = useState(false);
-  const [addresses, setAddresses] = useState([]);
+  const [
+    addresses, setAddresses] = useState([]);
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   // const [formData, setFormData] = useState({
@@ -71,6 +72,7 @@ const ProfilePage = () => {
     const fetchAddresses = async () => {
       try {
         const data = await fetchuserAllAddress();
+        console.log(data);
         setAddresses(data);
       } catch (err) {
         console.error("Error fetching addresses:", err);

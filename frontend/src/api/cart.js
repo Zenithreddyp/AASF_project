@@ -102,6 +102,9 @@ export const placeOrder = async (shippingAddress,razorpayDetails) => {
       postal_code: shippingAddress.postal_code,
       total_price: shippingAddress.total_price,
       items: shippingAddress.items,
+      // Include order creation details for verification context
+      amount: shippingAddress.total_price * 100,
+      currency: "INR",
       razorpay_payment_id: razorpayDetails.razorpay_payment_id,
       razorpay_order_id: razorpayDetails.razorpay_order_id,
       razorpay_signature: razorpayDetails.razorpay_signature,

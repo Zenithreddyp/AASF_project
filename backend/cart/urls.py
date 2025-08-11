@@ -1,6 +1,6 @@
 # cart/urls.py
 from django.urls import path
-from .views import AddWishlistitem, GetCart,AddCartorGetItem, GetWishlist, MoveWishListitemtoCart,RemoveCartItem,ListallOrders,OrderPlacedView,CancelOrder,CartItemUpdateView,ClearCart,CreateCart,DeleteCart, RemoveWIshlistitem # Notice OrderPlacedView
+from .views import AddWishlistitem, GetCart,AddCartorGetItem, GetWishlist, MoveWishListitemtoCart,RemoveCartItem,ListallOrders,OrderPlacedView,CancelOrder,CartItemUpdateView,ClearCart,CreateCart,DeleteCart, RemoveWIshlistitem, CreateRazorpayOrderView # Notice OrderPlacedView
 # from .views import download_invoice,generate_and_save_invoice
 
 
@@ -16,6 +16,7 @@ urlpatterns = [
 
     path("cart/order/",OrderPlacedView.as_view(),name="order-placed"), # Updated URL                    important
     path("cart/clear/", ClearCart.as_view(), name="clear-cart"),
+    path("razorpay/create-order/", CreateRazorpayOrderView.as_view(), name="razorpay-create-order"),
 
     # path("order/invoice/download/<int:order_id>/", download_invoice, name="download_invoice"),
     # path("order/invoice/generate/<int:order_id>/", generate_and_save_invoice, name="generate_and_save_invoice"),

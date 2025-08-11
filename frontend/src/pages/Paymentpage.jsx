@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 
 import { fetchuserAllAddress, addNewAddress } from "../api/useraddress";
 import { placeOrder, removetempcart } from "../api/cart";
+import { privateApi } from "../api/axiosprivate";
 
 const PaymentPage = () => {
   const location = useLocation();
@@ -208,13 +209,29 @@ const PaymentPage = () => {
       return;
     }
 
-    // IMPORTANT: In a real-world scenario, you would first create an order
-    // on your backend with Razorpay and get the order_id.
-    // For this demonstration, we'll proceed directly with the payment window.
+    // Create order on backend to get razorpay order_id
+    let createdOrderId = null;
+    try {
+      const orderItemsForBackend = items.map((item) => ({
+        product_id: item.id,
+        quantity: item.quantity || 1,
+        price: Number(item.cost) || 0,
+      }));
+      const createOrderRes = await privateApi.post("/cart/razorpay/create-order/", {
+        items: orderItemsForBackend,
+        total_price: totalPrice,
+      });
+      createdOrderId = createOrderRes.data.order_id;
+    } catch (e) {
+      alert("Failed to initialize payment. Please try again.");
+      return;
+    }
+
     const options = {
       key: "rzp_test_XgdFHDeUlG5ENZ",
       amount: totalPrice * 100,
       currency: "INR",
+      order_id: createdOrderId,
       name: "Acme Corp",
       description: "Purchase from E-commerce Store",
       image: "https://example.com/your_logo",
