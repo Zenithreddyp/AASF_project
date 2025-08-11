@@ -1,23 +1,15 @@
 import "../styles/Adminpanel.css";
-<<<<<<< HEAD
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-=======
-import React, { useState } from "react";
->>>>>>> 962fa4da93a5a9b51eb34bcef8342bf9322bdbad
 
 const logoimages = ["/logo.png", "/logoname.png"];
 
 const Adminpanel = () => {
-<<<<<<< HEAD
     const [activePanel, setActivePanel] = useState("add"); // default to "add"
     const navigate = useNavigate();
 
 
 
-=======
-  const [activePanel, setActivePanel] = useState("add"); // default to "add"
->>>>>>> 962fa4da93a5a9b51eb34bcef8342bf9322bdbad
 
   const [items, setItems] = useState([
     {
