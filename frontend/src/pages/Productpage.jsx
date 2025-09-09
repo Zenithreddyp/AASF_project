@@ -19,6 +19,7 @@ const ProductPage = () => {
     const fetchItem = async () => {
       try {
         const data = await fetchProductbyid(id);
+        console.log(data);
         setItem(data);
         setLoading(false);
 
@@ -68,26 +69,49 @@ const ProductPage = () => {
     });
   };
 
-const toggleWishlist = () => {
-  let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-  const exists = wishlist.some((prod) => prod.id === item.id);
+  const toggleWishlist = () => {
+    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const exists = wishlist.some((prod) => prod.id === item.id);
 
-  if (exists) {
-    wishlist = wishlist.filter((prod) => prod.id !== item.id);
-    setIsWishlisted(false);
-    alert("Removed from wishlist");
-  } else {
-    wishlist.push(item);
-    setIsWishlisted(true);
-    alert("Added to wishlist");
-  }
+    if (exists) {
+      wishlist = wishlist.filter((prod) => prod.id !== item.id);
+      setIsWishlisted(false);
+      alert("Removed from wishlist");
+    } else {
+      wishlist.push(item);
+      setIsWishlisted(true);
+      alert("Added to wishlist");
+    }
 
-  localStorage.setItem("wishlist", JSON.stringify(wishlist));
-};
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  };
 
 
   const currentImage =
     images.length > 0 ? images[currentIndex].image : "/fallback.png";
+
+  // Function to render stars based on rating
+  const renderRatingStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push(<span key={i} className="star filled">&#9733;</span>);
+      } else {
+        stars.push(<span key={i} className="star">&#9733;</span>);
+      }
+    }
+    return stars;
+  };
+
+  const getStockStatus = (stock) => {
+    if (stock > 10) {
+      return "In Stock";
+    } else if (stock > 0 && stock <= 10) {
+      return "High Demand";
+    } else {
+      return "Out of Stock";
+    }
+  };
 
   if (loading) {
     return (
@@ -126,6 +150,17 @@ const toggleWishlist = () => {
               ♥
             </span>
           </h2>
+
+          {/* Rating and Stock Section */}
+          <div className="product-meta">
+            <div className="rating-bar">
+              {renderRatingStars(item.rating)}
+            </div>
+            <div className={`stock-count ${getStockStatus(item.stock).toLowerCase().replace(/\s/g, '-')}`}>
+              {getStockStatus(item.stock)} ({item.stock} left)
+            </div>
+          </div>
+
           <p className="product-cost">{item.cost || `₹${item.price}`}</p>
           <p className="product-desc">
             {item.description ||

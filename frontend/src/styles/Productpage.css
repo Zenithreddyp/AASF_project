@@ -142,3 +142,42 @@ body {
     flex-direction: column;
   }
 }
+
+.product-meta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.rating-bar {
+  font-size: 1.5rem;
+  color: #ccc; /* Grey for empty stars */
+  margin-right: 1rem;
+}
+
+.star.filled {
+  color: #ffc107; /* Orange/Yellow for filled stars */
+}
+
+.stock-count {
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.stock-count.in-stock {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.stock-count.high-demand {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.stock-count.out-of-stock {
+  background-color: #f8d7da;
+  color: #721c24;
+}
