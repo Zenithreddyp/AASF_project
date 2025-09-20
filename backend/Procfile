@@ -1,1 +1,1 @@
-web: gunicorn backend.wsgi
+web: gunicorn backend.wsgi --workers 1 --timeout 120 --log-level info
